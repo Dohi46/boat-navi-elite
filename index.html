@@ -52,26 +52,7 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 </section>
 <section id="analysis" class="page">
  <div class="section-head"><div><div class="eyebrow">PREDICTION ENGINE</div><h2>データ分析・予想</h2></div></div>
- <div class="card">
-   <div class="status">勝率・当地成績・モーター2連率・平均ST・展示タイムから作るルールベースの参考評価です。確率予測や的中保証ではありません。</div>
-   <div class="grid2" style="margin-top:12px">
-    <div><label>競艇場</label><select id="aiVenue" class="field"></select></div>
-    <div><label>レース</label><select id="aiRace" class="field"></select></div>
-   </div>
-   <button id="runAnalysis" class="btn" style="margin-top:13px">分析レポートを作成</button>
-   <div id="analysisResult" style="margin-top:14px"></div>
-  </div>
-  <div class="card" id="trifectaBuilder" style="margin-top:16px">
-   <div class="eyebrow">TRIFECTA BUILDER</div>
-   <h3 style="margin:6px 0 10px">3連単・自動買い目案</h3>
-   <p class="status">上の競艇場・レースを選び、参考スコア順に3連単候補を作成します。</p>
-   <div class="grid2">
-    <div><label>買い目点数</label><select id="ticketCount" class="field"><option value="5">5点</option><option value="10" selected>10点</option><option value="20">20点</option><option value="30">30点</option></select></div>
-    <div><label>1点あたり（円）</label><select id="ticketUnit" class="field"><option value="100">100円</option><option value="200">200円</option><option value="500">500円</option><option value="1000">1,000円</option></select></div>
-   </div>
-   <button id="buildTickets" class="btn" style="margin-top:12px">3連単の買い目を作成</button>
-   <div id="ticketResult" style="margin-top:14px"></div>
-  </div>
+ <div class="card"><div class="status">勝率・当地成績・モーター2連率・平均ST・展示タイムから作るルールベースの参考評価です。確率予測や的中保証ではありません。</div><div class="grid2" style="margin-top:12px"><div><label>競艇場</label><select id="aiVenue" class="field"></select></div><div><label>レース</label><select id="aiRace" class="field"></select></div></div><button id="runAnalysis" class="btn" style="margin-top:13px">分析レポートを作成</button><div id="analysisResult" style="margin-top:14px"></div><div class="divider" style="height:1px;background:var(--line);margin:18px 0"></div><div class="eyebrow">TRIFECTA BUILDER</div><h3 style="margin:6px 0 10px">3連単・自動買い目案</h3><div class="grid2"><div><label>買い目点数</label><select id="ticketCount" class="field"><option value="5">5点</option><option value="10" selected>10点</option><option value="20">20点</option><option value="30">30点</option></select></div><div><label>1点あたり（円）</label><select id="ticketUnit" class="field"><option value="100">100円</option><option value="200">200円</option><option value="500">500円</option><option value="1000">1,000円</option></select></div></div><button id="buildTickets" class="btn" style="margin-top:12px">3連単の買い目を作成</button><div id="ticketResult" style="margin-top:14px"></div></div>
 </section>
 <section id="manual" class="page">
  <div class="section-head"><div><div class="eyebrow">PERSONAL PICKS</div><h2>自分の予想を記録</h2></div></div>
@@ -80,8 +61,8 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 <section id="records" class="page">
  <div class="section-head"><div><div class="eyebrow">PERFORMANCE TRACKER</div><h2>予想成績・検証</h2></div></div>
  <div class="grid2"><div class="card"><div class="tiny muted">予想件数</div><b id="recordCount" style="font-size:25px">0</b></div><div class="card"><div class="tiny muted">購入予定総額</div><b id="recordStake" style="font-size:25px">0円</b></div><div class="card"><div class="tiny muted">的中数</div><b id="hitCount" style="font-size:25px">0</b></div><div class="card"><div class="tiny muted">回収率</div><b id="recovery" style="font-size:25px">--</b></div></div>
- <div class="card"><h3>保存した予想</h3><div id="history" class="status">まだ記録がありません。</div></div>
- <div class="notice">現段階では購入予定額のみを記録します。的中・払戻金の入力と回収率計算は次の開発段階で追加します。</div>
+ <div class="card"><h3>保存した予想</h3><div class="status">各予想の「結果入力」から、実際の3連単結果とその予想の払戻額を入力できます。</div><div id="history" class="status" style="margin-top:10px">まだ記録がありません。</div></div>
+ <div class="notice">回収率は入力した払戻額の合計 ÷ 購入予定額の合計で計算します。未入力のレースは成績集計の対象外です。実際の購入・払戻を自動照合する機能ではありません。</div>
 </section>
 <footer>BOAT NAVI ELITE · INDEPENDENT PROJECT<br>データ提供：Boatrace Open API（非公式） · BOAT RACE公式とは無関係です</footer>
 </div>

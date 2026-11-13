@@ -105,7 +105,40 @@ function generateTickets(){
 function buildBoatChoices(){for(let n=1;n<=6;n++){const b=document.createElement("button");b.className="pick";b.dataset.boat=n;b.innerHTML=lane(n);b.addEventListener("click",()=>{if(selected.includes(n))selected=selected.filter(x=>x!==n);else if(selected.length<3)selected.push(n);else selected=[n];paintChoices();});$("boatChoices").append(b);}}
 function paintChoices(){document.querySelectorAll("[data-boat]").forEach(b=>b.classList.toggle("selected",selected.includes(Number(b.dataset.boat))));$("selectedText").textContent=selected.length?selected.join(" → ")+" ("+selected.length+"/3)":"1着・2着・3着の順に3艇選択してください。";}
 function saveRecord(record){records.push({...record,createdAt:new Date().toISOString(),hit:false,payout:0});localStorage.setItem("bn_records",JSON.stringify(records));renderStats();page("records");}
-function renderStats(){const total=records.reduce((a,x)=>a+Number(x.stake||0),0);$("savedCount").textContent=records.length;$("recordCount").textContent=records.length;$("recordStake").textContent=yen(total);$("hitCount").textContent=records.filter(x=>x.hit).length;$("recovery").textContent="--";$("history").innerHTML=records.length?records.slice().reverse().map(x=>`<div class="boatrow"><div><b>${x.venueName} ${x.race}R</b><div class="tiny muted">${x.kind} · ${x.pick}</div><div class="tiny muted">${new Date(x.createdAt).toLocaleString("ja-JP")}</div></div><b>${yen(x.stake)}</b></div>`).join(""):"まだ記録がありません。";}
+function renderStats(){
+ const total=records.reduce((a,x)=>a+Number(x.stake||0),0);
+ const settled=records.filter(x=>x.resultEntered===true);
+ const hits=settled.filter(x=>x.hit===true).length;
+ const returned=settled.reduce((a,x)=>a+Number(x.payout||0),0);
+ const settledStake=settled.reduce((a,x)=>a+Number(x.stake||0),0);
+ const recovery=settledStake?returned/settledStake*100:0;
+ $("savedCount").textContent=records.length;$("recordCount").textContent=records.length;$("recordStake").textContent=yen(total);
+ $("hitCount").textContent=settled.length?`${hits} / ${settled.length}（${(hits/settled.length*100).toFixed(1)}%）`:"未入力";
+ $("recovery").textContent=settled.length?`${recovery.toFixed(1)}%`:"未入力";
+ const host=$("history");host.innerHTML="";
+ if(!records.length){host.textContent="まだ記録がありません。";return;}
+ records.slice().reverse().forEach(x=>{
+  const wrap=document.createElement("div");wrap.className="boatrow";wrap.style.alignItems="center";
+  const info=document.createElement("div");
+  const title=document.createElement("b");title.textContent=`${x.venueName||"競艇場"} ${x.race||""}R`;
+  const detail=document.createElement("div");detail.className="tiny muted";detail.textContent=`${x.kind||"予想"} · ${x.pick} · ${yen(x.stake)}`;
+  const status=document.createElement("div");status.className="tiny muted";status.textContent=x.resultEntered?`結果 ${x.actualResult} · ${x.hit?"的中":"不的中"} · 払戻 ${yen(x.payout)}`:"結果未入力";
+  info.append(title,detail,status);wrap.append(info);
+  const btn=document.createElement("button");btn.className="ghost";btn.style.whiteSpace="nowrap";btn.textContent=x.resultEntered?"結果を修正":"結果入力";
+  btn.addEventListener("click",()=>{
+   const actual=prompt("実際の3連単結果を入力（例：1-2-3）",x.actualResult||"");
+   if(actual===null)return;
+   const normalized=actual.trim().replace(/[＞→ー－]/g,"-").replace(/\s/g,"");
+   if(!/^[1-6]-[1-6]-[1-6]$/.test(normalized)||new Set(normalized.split("-")).size!==3){alert("1-2-3 の形式で、異なる艇番を3つ入力してください。");return;}
+   const payoutText=prompt("この予想1点の払戻額（円・外れなら0）",String(x.payout||0));
+   if(payoutText===null)return;
+   const payout=Number(payoutText);
+   if(!Number.isFinite(payout)||payout<0){alert("0以上の金額を入力してください。");return;}
+   const target=records.find(y=>y===x);target.actualResult=normalized;target.hit=target.pick===normalized;target.payout=payout;target.resultEntered=true;
+   localStorage.setItem("bn_records",JSON.stringify(records));renderStats();
+  });wrap.append(btn);host.append(wrap);
+ });
+}
 $("runAnalysis").addEventListener("click",renderAnalysis);
 $("buildTickets").addEventListener("click",generateTickets);
 $("saveManual").addEventListener("click",()=>{if(selected.length!==3){$("manualMessage").textContent="3艇を順番に選択してください。";return;}const stake=Number($("stake").value);if(!Number.isFinite(stake)||stake<100){$("manualMessage").textContent="金額は100円以上で入力してください。";return;}const venue=$("manualVenue");saveRecord({type:"manual",venue:venue.value,venueName:STADIUMS[Number(venue.value)]||venue.selectedOptions[0]?.textContent,race:$("manualRace").value,kind:"3連単",pick:selected.join("-"),stake});selected=[];paintChoices();$("manualMessage").textContent="予想を保存しました。";});
