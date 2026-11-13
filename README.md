@@ -1,2 +1,28 @@
-# boat-navi-elite
-BOAT NAVI ELITE - Boat Race Analysis
+# BOAT NAVI ELITE — 初期開発パッケージ
+
+## 内容
+- `index.html`：プレミアムUI、5画面
+- `app.js`：全国24場の当日JSON取得、出走表・直前情報表示、参考スコア、手動予想保存
+- `manifest.webmanifest`：PWA基本設定
+- `sw.js`：最低限のオフラインシェル
+- `DEPLOY.md`：公開手順と注意点
+
+## 重要な現状
+これは「実データ接続の初期版」です。Boatrace Open APIの `today.json` をブラウザから読み込みます。データは非公式で約10分間隔更新、遅延・欠損の可能性があります。オッズは含みません。
+AI LABは機械学習モデルではなく、公開されている出走表・直前情報から計算する説明可能な参考スコアです。的中率・回収率の実測機能や本物のAIモデルは未実装です。
+手動予想は端末のlocalStorageに保存されるため、別端末とは同期しません。
+
+## 開発方針
+1. この初期版をGitHub Pages等で公開し、実機で表示・データ取得を確認
+2. データ保存先を追加（Supabase等。無料枠から開始）
+3. 結果照合・払戻入力・的中率/回収率の検証を追加
+4. 過去データで時系列分割のバックテストを実施
+5. 十分なデータと評価が揃ってから機械学習/生成AI機能を追加
+
+## 出典
+Boatrace Open API (非公式・MIT License)
+https://github.com/boatraceopenapi/api
+API:
+https://boatraceopenapi.github.io/api/v1/today.json
+
+API提供者の注意事項に従い、公式発表との照合を行ってください。本サイトはBOAT RACE公式とは無関係です。

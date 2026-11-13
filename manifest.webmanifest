@@ -1,0 +1,10 @@
+{
+  "name": "BOAT NAVI ELITE",
+  "short_name": "BOAT NAVI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b1018",
+  "theme_color": "#0b1018",
+  "lang": "ja",
+  "icons": []
+}
