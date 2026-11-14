@@ -673,3 +673,72 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
  button.addEventListener('click',load);
  input.addEventListener('keydown',e=>{if(e.key==='Enter')load();});
 })();
+
+/* v14 six-player comparison: read-only, v13 and bn_records untouched */
+(function(){
+ const venue=$('compareVenue'),race=$('compareRace'),button=$('comparePlayers'),status=$('compareStatus'),host=$('compareResult');
+ if(!venue||!race||!button)return;
+ const cachePrefix='bn_player_trial_',ttl=24*60*60*1000;
+ const fmt=x=>x===null||x===undefined||x===''?'—':String(x);
+ const field=(o,keys)=>{for(const k of keys)if(o?.[k]!==undefined&&o[k]!==null&&o[k]!=='')return o[k];return null;};
+ function options(){
+  const current=venue.value,entries=stadiumEntries();
+  fillSelect(venue,entries.map(([id])=>[id,STADIUMS[Number(id)]||id]),entries.some(([id])=>id===current)?current:undefined);
+  races();
+ }
+ function races(){const v=getStadiums()[venue.value];const current=race.value;const keys=Object.keys(getRaces(v));fillSelect(race,keys.map(k=>[k,k+'R']),keys.includes(current)?current:undefined);}
+ venue.addEventListener('change',races);
+ const observer=new MutationObserver(()=>{if(data)options();});
+ observer.observe($('venueSelect'),{childList:true});
+ if(data)options();
+ function findCourse(obj,n){
+  const candidates=[obj?.courses,obj?.course_stats,obj?.stats?.courses,obj?.racer?.courses,obj?.player?.courses];
+  for(const v of candidates){
+   if(Array.isArray(v)){const row=v.find(x=>Number(field(x,['course','course_number','course_no']))===n);if(row)return row;}
+   if(v&&typeof v==='object'&&v[n]&&typeof v[n]==='object')return v[n];
+  }
+  return null;
+ }
+ async function getPlayer(number){
+  let saved=null;try{saved=JSON.parse(localStorage.getItem(cachePrefix+number)||'null');}catch{}
+  if(saved?.data&&Date.now()-saved.at<ttl)return saved.data;
+  const response=await fetch('https://boatrace-db.jp/api/racer/'+number+'/',{cache:'default'});
+  if(!response.ok)throw Error('HTTP '+response.status);
+  const obj=await response.json();
+  if(!obj||typeof obj!=='object'||Array.isArray(obj))throw Error('形式不一致');
+  try{localStorage.setItem(cachePrefix+number,JSON.stringify({at:Date.now(),data:obj}));}catch{}
+  return obj;
+ }
+ button.addEventListener('click',async()=>{
+  const selected=getRaces(getStadiums()[venue.value])?.[race.value];
+  if(!selected){status.textContent='開催中の競艇場とレースを選択してください。';return;}
+  const racers=selected.racers||{};
+  const rows=Array.from({length:6},(_,i)=>({lane:i+1,racer:racers[i+1]||racers[String(i+1)]||{}}));
+  if(rows.every(x=>!x.racer.name)){status.textContent='このレースの出走選手データがありません。';return;}
+  button.disabled=true;host.replaceChildren();status.textContent='6選手のデータを比較中…';
+  const results=await Promise.all(rows.map(async x=>{
+   const no=String(x.racer.number||'').trim();
+   if(!/^\d{4}$/.test(no))return {...x,error:'登録番号なし'};
+   try{return {...x,profile:await getPlayer(no)};}catch(e){return {...x,error:e.message};}
+  }));
+  const title=document.createElement('div');title.className='status';title.textContent=STADIUMS[Number(venue.value)]+' '+race.value+'R｜枠番順（進入コースは未確定）';host.append(title);
+  const wrap=document.createElement('div');wrap.style.cssText='overflow-x:auto;margin-top:10px';
+  const table=document.createElement('table');table.style.cssText='border-collapse:collapse;width:100%;min-width:490px;font-size:12px';
+  const headers=['枠','選手','全国勝率','当地勝率','平均ST','M2連率','同番号コース1着率','出走数'];
+  const head=document.createElement('tr');headers.forEach(h=>{const cell=document.createElement('th');cell.textContent=h;cell.style.cssText='padding:9px 6px;border-bottom:1px solid var(--line);white-space:nowrap';head.append(cell);});table.append(head);
+  results.forEach(({lane:n,racer:x,profile,error})=>{
+   const course=findCourse(profile,n),value=field(course,['win_rate','first_rate','first_place_rate']),starts=field(course,['starts','races','entries','count']);
+   const cells=[n,fmt(x.name)+'\n'+fmt(x.number),fmt(x.national_win_rate),fmt(x.local_win_rate),fmt(x.average_start_timing),fmt(x.motor_top_2_percent),error?'取得不可':value===null?'—':fmt(value)+'%',fmt(starts)];
+   const tr=document.createElement('tr');
+   cells.forEach((v,i)=>{const td=document.createElement('td');td.textContent=String(v);td.style.cssText='padding:10px 6px;border-bottom:1px solid var(--line);text-align:center;white-space:pre-line'+(i===6?';color:var(--gold);font-weight:700':'');tr.append(td);});
+   table.append(tr);
+  });
+  wrap.append(table);host.append(wrap);
+  const note=document.createElement('p');note.className='status';
+  note.textContent='※同番号コースの1着率は枠番と同じコースに進入すると仮定した参考値です。取得元JSONに対応するコース統計がない場合は「—」と表示。出走数が少ない値は過信しないでください。';
+  host.append(note);
+  const failed=results.filter(x=>x.error).length;
+  status.textContent='6選手の比較を表示しました。'+(failed?failed+'人の外部選手データは取得できませんでした。':'')+' v13の予想には未反映です。';
+  button.disabled=false;
+ });
+})();
