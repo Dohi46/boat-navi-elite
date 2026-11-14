@@ -124,6 +124,9 @@ function renderStats(){
   const detail=document.createElement("div");detail.className="tiny muted";detail.textContent=`${x.kind||"予想"} · ${x.pick} · ${yen(x.stake)}`;
   const status=document.createElement("div");status.className="tiny muted";status.textContent=x.resultEntered?`結果 ${x.actualResult} · ${x.hit?"的中":"不的中"} · 払戻 ${yen(x.payout)}`:"結果未入力";
   info.append(title,detail,status);wrap.append(info);
+  const actions=document.createElement("div");
+  actions.style.display="flex";actions.style.flexDirection="column";actions.style.gap="8px";
+  actions.style.flexShrink="0";
   const btn=document.createElement("button");btn.className="ghost";btn.style.whiteSpace="nowrap";btn.textContent=x.resultEntered?"結果を修正":"結果入力";
   btn.addEventListener("click",()=>{
    const actual=prompt("実際の3連単結果を入力（例：1-2-3）",x.actualResult||"");
@@ -136,7 +139,21 @@ function renderStats(){
    if(!Number.isFinite(payout)||payout<0){alert("0以上の金額を入力してください。");return;}
    const target=records.find(y=>y===x);target.actualResult=normalized;target.hit=target.pick===normalized;target.payout=payout;target.resultEntered=true;
    localStorage.setItem("bn_records",JSON.stringify(records));renderStats();
-  });wrap.append(btn);host.append(wrap);
+  });
+  const del=document.createElement("button");
+  del.className="ghost";
+  del.style.whiteSpace="nowrap";
+  del.style.borderColor="rgba(220,100,100,.55)";
+  del.style.color="#e58c8c";
+  del.textContent="削除";
+  del.addEventListener("click",()=>{
+   const label=`${x.venueName||"競艇場"} ${x.race||""}R · ${x.pick}`;
+   if(!confirm(`${label} の予想を削除しますか？\\nこの操作は取り消せません。`))return;
+   records=records.filter(y=>y!==x);
+   localStorage.setItem("bn_records",JSON.stringify(records));
+   renderStats();
+  });
+  actions.append(btn,del);wrap.append(actions);host.append(wrap);
  });
 }
 $("runAnalysis").addEventListener("click",renderAnalysis);
