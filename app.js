@@ -17,7 +17,7 @@ async function loadData(){
   if(!res.ok)throw new Error("HTTP "+res.status);
   const json=await res.json();
   if(!json?.programs?.stadiums)throw new Error("データ形式を確認できません");
-  data=json;sessionStorage.setItem("bn_today",JSON.stringify({at:Date.now(),data}));
+  data=json;autoLoadOdds();sessionStorage.setItem("bn_today",JSON.stringify({at:Date.now(),data}));
   setStatus(true,"本日の公開JSONを取得しました。データは約10分間隔で更新されますが、実際の反映には遅れが生じる場合があります。");
   $("dataUpdated").textContent="取得 "+new Date().toLocaleTimeString("ja-JP",{hour:"2-digit",minute:"2-digit"});
   renderVenues();populateSelectors();renderStats();
@@ -53,14 +53,38 @@ function lane(n){return `<span class="lane" style="background:${COLORS[Number(n)
 
 /* v12: 公開データに含まれる3連単オッズ。未取得時は数字を表示しない。 */
 function trifectaRows(){const p=[];for(let a=1;a<=6;a++)for(let b=1;b<=6;b++)for(let c=1;c<=6;c++)if(a!==b&&a!==c&&b!==c)p.push(a+'-'+b+'-'+c);return p;}
-function trifectaOdds(venue,race){return getRaces(getStadiums()[String(venue)])?.[String(race)]?.odds?.trifecta||null;}
+const ODDS_ENDPOINT='https://lamrongol.github.io/BoatraceOdds/v3/';
+let separateOdds=null,separateOddsDate='',separateOddsFetchedAt=null,oddsLoading=null,oddsError='';
+function jstOddsDate(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}
+function trifectaOdds(venue,race){
+ if(separateOddsDate!==jstOddsDate()||!Array.isArray(separateOdds?.odds))return null;
+ const found=separateOdds.odds.find(x=>Number(x.stadium_number)===Number(venue)&&Number(x.number)===Number(race)&&x.date===separateOddsDate);
+ return found?.trifecta_odds||null;
+}
+async function loadSeparateOdds(force=false){
+ const date=jstOddsDate();
+ if(!force&&separateOdds&&separateOddsDate===date)return;
+ if(oddsLoading)return oddsLoading;
+ oddsLoading=(async()=>{
+  const d=date.replaceAll('-',''),url=ODDS_ENDPOINT+d.slice(0,4)+'/'+d+'.json';
+  const response=await fetch(url,{cache:'no-store'});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  const result=await response.json();
+  if(!Array.isArray(result?.odds))throw new Error('データ形式が違います');
+  separateOdds=result;separateOddsDate=date;separateOddsFetchedAt=new Date();oddsError='';
+ })();
+ try{await oddsLoading;}catch(e){oddsError=e.message;throw e;}finally{oddsLoading=null;}
+}
+function refreshOddsViews(){if($('raceOddsPanel'))oddsHeader('race');if($('aiOddsPanel'))oddsHeader('ai');renderTicketOdds();}
+function autoLoadOdds(){loadSeparateOdds().then(refreshOddsViews).catch(refreshOddsViews);}
+
 function oddsValue(table,pick){const [a,b,c]=pick.split('-');const v=table?.[a]?.[b]?.[c];const n=Number(v);return v!==null&&v!==undefined&&v!==''&&Number.isFinite(n)&&n>0?n:null;}
 function oddsHeader(kind){
  const ai=kind==='ai',el=$(ai?'aiOddsPanel':'raceOddsPanel');if(!el)return;
  const v=$(ai?'aiVenue':'venueSelect').value,r=$(ai?'aiRace':'raceSelect').value,t=trifectaOdds(v,r);
  const count=t?trifectaRows().filter(p=>oddsValue(t,p)!==null).length:0;
- el.innerHTML='<div class="notice"><div class="row"><b>3連単オッズ '+(ai?'｜AI LAB':'｜全120通り')+'</b><button class="ghost" style="padding:8px;font-size:12px">↻ オッズ更新</button></div><div class="tiny muted" style="margin-top:7px">'+(count?count+'/120通り取得':'オッズ未取得')+' · 非公式データ（遅延あり）</div></div>';
- el.querySelector('button').addEventListener('click',async()=>{el.querySelector('button').disabled=true;try{await loadData();oddsHeader(kind);if(ai)renderTicketOdds();}catch(e){el.querySelector('button').disabled=false;}});
+ el.innerHTML='<div class="notice"><div class="row"><b>3連単オッズ '+(ai?'｜AI LAB':'｜全120通り')+'</b><button class="ghost" style="padding:8px;font-size:12px">↻ オッズ更新</button></div><div class="tiny muted" style="margin-top:7px">'+(count?count+'/120通り取得'+(separateOddsFetchedAt?' · 取得 '+separateOddsFetchedAt.toLocaleTimeString('ja-JP'):''):(oddsError?'取得できません：'+oddsError:'オッズ未取得'))+' · 非公式データ（約30分間隔・遅延あり）</div></div>';
+ el.querySelector('button').addEventListener('click',async()=>{const btn=el.querySelector('button');btn.disabled=true;btn.textContent='取得中…';try{await loadSeparateOdds(true);}catch(e){}refreshOddsViews();});
  if(!ai)renderAllOdds();
 }
 function renderAllOdds(){
