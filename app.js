@@ -835,3 +835,58 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
   button.disabled=false;
  });
 })();
+
+/* v14 pilot: venue-course calibrated scenario proxy. Read-only, not tactical win-method prediction. */
+(function(){
+ const button=$('runV14Trial'),host=$('v14TrialResult');if(!button||!host)return;
+ button.addEventListener('click',async()=>{
+  const venue=$('aiVenue').value,race=$('aiRace').value,r=selectedRace('aiVenue','aiRace');
+  host.textContent='コース統計を取得して比較中…';button.disabled=true;
+  try{
+   if(!r)throw Error('レースがありません');
+   const response=await fetch('https://boatrace-db.jp/api/stadium/'+String(venue).padStart(2,'0')+'/course/',{cache:'no-store'});
+   if(!response.ok)throw Error('コース統計 HTTP '+response.status);
+   const obj=await response.json(),courses=obj?.courses;
+   if(!Array.isArray(courses)||courses.length<6)throw Error('コース統計が不足');
+   const byCourse=new Map();
+   courses.forEach(c=>{
+    const n=Number(c.course),v=Number(c.win_rate),starts=Number(c.starts);
+    if(Number.isInteger(n)&&n>=1&&n<=6&&Number.isFinite(v)&&v>=0&&v<=100&&Number.isFinite(starts)&&starts>=30)byCourse.set(n,{rate:v/100,starts});
+   });
+   if(byCourse.size!==6)throw Error('有効な6コースのデータが不足');
+   const ranked=scoreRace(r),boats=new Map(ranked.map(x=>[x.n,x]));
+   if(ranked.some(x=>x.parts===0))throw Error('6選手の能力データが不足');
+   const weights=new Map();
+   ranked.forEach(x=>{
+    const baseline=byCourse.get(x.n).rate;
+    // Smooth course strength to avoid zero probabilities; ability is centered within this race.
+    const avg=ranked.reduce((a,b)=>a+b.score,0)/6;
+    weights.set(x.n,Math.max(.005,baseline)*Math.exp(1.6*(x.score-avg)));
+   });
+   const sum=[...weights.values()].reduce((a,b)=>a+b,0);
+   const first=new Map([...weights].map(([n,v])=>[n,v/sum]));
+   const combos=[];
+   for(let a=1;a<=6;a++)for(let b=1;b<=6;b++)if(a!==b)for(let c=1;c<=6;c++)if(c!==a&&c!==b){
+    const rest1=[...weights].filter(([n])=>n!==a).reduce((t,[,v])=>t+v,0);
+    const rest2=[...weights].filter(([n])=>n!==a&&n!==b).reduce((t,[,v])=>t+v,0);
+    combos.push({pick:a+'-'+b+'-'+c,p:first.get(a)*(weights.get(b)/rest1)*(weights.get(c)/rest2)});
+   }
+   combos.sort((a,b)=>b.p-a.p);
+   const v13=v13Combinations(r,venue,race).slice().sort((a,b)=>b.probability-a.probability).slice(0,5);
+   host.replaceChildren();
+   const summary=document.createElement('div');summary.className='status';
+   summary.textContent='場別コース統計：'+(obj.period?.from||'期間不明')+' 〜 '+(obj.period?.to||'期間不明')+' ／ v14は枠番＝進入コースの仮定。確率は未校正。';
+   host.append(summary);
+   const grid=document.createElement('div');grid.className='grid2';grid.style.marginTop='10px';
+   [[ 'v13 現行',v13.map(x=>({pick:x.pick,p:x.probability})) ],['v14 試験',combos.slice(0,5)]].forEach(([label,items])=>{
+    const panel=document.createElement('div');panel.className='card';panel.style.padding='10px';
+    const title=document.createElement('b');title.textContent=label;panel.append(title);
+    items.forEach((x,i)=>{const line=document.createElement('div');line.className='row';line.style.cssText='font-size:12px;padding:8px 0;border-bottom:1px solid var(--line)';const name=document.createElement('b');name.textContent=(i+1)+'位 '+x.pick;const pct=document.createElement('span');pct.className='muted';pct.textContent=(x.p*100).toFixed(2)+'%';line.append(name,pct);panel.append(line);});grid.append(panel);
+   });host.append(grid);
+   const note=document.createElement('div');note.className='notice';note.style.marginTop='10px';
+   note.textContent='試験案は場別の1着率で1着候補を補正し、残りの着順を能力重みから計算した仮説モデルです。差し・まくりや選手の対戦関係は未反映。数値は実際の的中確率ではありません。v13と保存記録には影響しません。';
+   host.append(note);
+  }catch(e){host.textContent='比較できません：'+e.message+'。v13はそのまま使えます。';}
+  finally{button.disabled=false;}
+ });
+})();
