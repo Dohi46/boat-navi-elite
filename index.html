@@ -25,7 +25,7 @@ nav{display:flex;gap:7px;margin:14px 0 18px;overflow:auto;padding-bottom:3px}nav
 label{font-size:12px;color:#c6ced8}.race-card{background:#0d1520;border:1px solid var(--line);border-radius:11px;padding:12px;margin:8px 0}.lane{display:inline-flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:6px;color:#111;font-weight:900;margin-right:9px}.boatrow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #263243;font-size:12px}.boatrow:last-child{border:0}
 .badge{font-size:10px;border:1px solid #5e5038;color:var(--gold);border-radius:99px;padding:4px 7px}.pick{border:1px solid var(--line);border-radius:9px;padding:11px;text-align:center;background:#0d1520}.pick.selected{border:2px solid var(--gold);background:#b68b4817}.ticket{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #263243;font-size:13px}.ticket:last-child{border:0}.ticket-rank{font-size:10px;color:var(--gold);letter-spacing:1px;display:block;margin-bottom:3px}.notice{font-size:11px;line-height:1.65;color:var(--muted);background:#101925;border-left:2px solid var(--gold2);padding:10px;margin-top:10px}
 footer{text-align:center;color:#758294;font-size:10px;margin-top:24px;border-top:1px solid var(--line);padding-top:15px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1018ed;border-top:1px solid var(--line);padding:9px max(12px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:7px;backdrop-filter:blur(12px);z-index:5}.bottom button{max-width:180px;flex:1;background:transparent;color:var(--muted);border:0;font-size:10px;padding:5px}.bottom button.active{color:var(--gold)}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b1018ed;border-top:1px solid var(--line);padding:9px max(12px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:7px;backdrop-filter:blur(12px);z-index:5}.bottom button{max-width:180px;flex:1;background:transparent;color:var(--muted);border:0;font-size:10px;padding:5px}.bottom button.active{color:var(--gold)}@media(max-width:420px){.bottom{gap:0;padding-left:4px;padding-right:4px}.bottom button{font-size:9px;padding:5px 1px;min-width:0}}
 a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 @media(min-width:700px){.wrap{padding-top:28px}.hero{padding:28px}.bottom{display:none}nav button{font-size:13px}.boatrow{font-size:13px}}
 </style>
@@ -39,7 +39,7 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
  <p>全国24場の出走情報を確認し、選手・モーター・展示データを整理。予想と結果を記録して、検証できるプラットフォーム。</p>
  <div class="stats"><div class="stat"><small>本日の開催場</small><b id="venueCount">--</b></div><div class="stat"><small>出走レース</small><b id="raceCount">--</b></div><div class="stat"><small>保存した予想</small><b id="savedCount">0</b></div></div>
 </section>
-<nav id="tabs"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">RACES</button><button data-page="analysis">AI LAB</button><button data-page="courseStats">COURSE</button><button data-page="manual">MY PICKS</button><button data-page="records">RECORD</button></nav>
+<nav id="tabs"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">RACES</button><button data-page="analysis">AI LAB</button><button data-page="courseStats">COURSE</button><button data-page="playerStats">PLAYER</button><button data-page="manual">MY PICKS</button><button data-page="records">RECORD</button></nav>
 <section id="home" class="page active">
  <div class="section-head"><div><div class="eyebrow">TODAY'S PROGRAM</div><h2>本日の開催レース</h2></div><span class="tiny muted" id="dataUpdated">データ確認中</span></div>
  <div class="card"><div class="row"><h3>データ接続状況</h3><span class="badge" id="apiBadge">接続確認中</span></div><div id="apiMessage" class="status">公開データを読み込んでいます。</div><button class="ghost" id="reload" style="margin-top:12px">データを再取得</button></div>
@@ -63,6 +63,17 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
  <div id="courseStatsResult" style="margin-top:12px"></div>
  <div class="status" style="margin-top:12px">データ提供：<a href="https://boatrace-db.jp/" target="_blank" rel="noopener noreferrer">艇愛ボートレースDB</a>（公式データを基に集計した第三者サイト）。<a id="courseStatsOfficial" href="https://www.boatrace.jp/owpc/pc/extra/data/index.html" target="_blank" rel="noopener noreferrer">BOAT RACE公式の場別データも確認</a></div>
  </div></section>
+<section id="playerStats" class="page">
+ <div class="section-head"><div><div class="eyebrow">V14 EXPERIMENT · READ ONLY</div><h2>PLAYER ANALYSIS｜選手分析</h2></div></div>
+ <div class="card">
+  <div class="status">選手登録番号（4桁）で通算・コース別成績を確認する試験機能です。予想v13・保存した記録には反映しません。出走数が少ない成績には注意してください。</div>
+  <label for="playerRegNo" style="display:block;margin-top:14px">選手登録番号</label>
+  <div style="display:flex;gap:8px;align-items:end"><input id="playerRegNo" class="field" style="flex:1;min-width:0" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="例：4238"><button id="playerStatsLoad" class="ghost" style="white-space:nowrap;min-height:43px">分析する</button></div>
+  <div id="playerStatsStatus" class="status" style="margin-top:12px" aria-live="polite">登録番号を入力して「分析する」を押してください。</div>
+  <div id="playerStatsResult" style="margin-top:12px"></div>
+  <div class="status" style="margin-top:14px">データ提供：<a href="https://boatrace-db.jp/" target="_blank" rel="noopener noreferrer">艇愛ボートレースDB</a>。取得結果は端末内に最大24時間キャッシュし、同じ選手への連続アクセスを抑えます。出典と最新の公式発表を確認してください。</div>
+ </div>
+</section>
 <section id="manual" class="page">
  <div class="section-head"><div><div class="eyebrow">PERSONAL PICKS</div><h2>自分の予想を記録</h2></div></div>
  <div class="card"><div class="grid2"><div><label>競艇場</label><select id="manualVenue" class="field"></select></div><div><label>レース</label><select id="manualRace" class="field"></select></div></div><label style="display:block;margin-top:13px">買い目（3連単・1着→2着→3着）</label><div class="grid2" id="boatChoices" style="margin-top:8px"></div><p id="selectedText" class="status">1着・2着・3着の順に3艇選択してください。</p><label>購入予定額（円）</label><input id="stake" class="field" type="number" min="100" step="100" value="1000"><button class="btn" id="saveManual" style="margin-top:13px">予想を保存</button><p id="manualMessage" class="status"></p></div>
@@ -77,6 +88,6 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 </section>
 <footer>BOAT NEXUS · INDEPENDENT PROJECT<br>データ提供：Boatrace Open API（非公式） · BOAT RACE公式とは無関係です</footer>
 </div>
-<div class="bottom" id="bottomNav"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">▤ RACES</button><button data-page="analysis">✦ AI LAB</button><button data-page="courseStats">▤ COURSE</button><button data-page="manual">✎ PICKS</button><button data-page="records">◎ RECORD</button></div>
-<script src="./app.js?v=record-compact-20261114"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+<div class="bottom" id="bottomNav"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">▤ RACES</button><button data-page="analysis">✦ AI LAB</button><button data-page="courseStats">▤ COURSE</button><button data-page="playerStats">♙ PLAYER</button><button data-page="manual">✎ PICKS</button><button data-page="records">◎ RECORD</button></div>
+<script src="./app.js?v=player-trial-20261114"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
 </body></html>
