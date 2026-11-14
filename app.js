@@ -46,17 +46,45 @@ function populateSelectors(){
  updateRaceOptions("venueSelect","raceSelect");updateRaceOptions("aiVenue","aiRace");updateRaceOptions("manualVenue","manualRace");
  ["venueSelect","aiVenue","manualVenue"].forEach(id=>$(id).addEventListener("change",()=>updateRaceOptions(id,id==="venueSelect"?"raceSelect":id==="aiVenue"?"aiRace":"manualRace")));
 }
-function updateRaceOptions(venueId,raceId){const s=getStadiums()[$(venueId).value];fillSelect($(raceId),Object.keys(getRaces(s)).map(x=>[x,x+"R"]));if(venueId==="venueSelect")renderRace();}
+function updateRaceOptions(venueId,raceId){const s=getStadiums()[$(venueId).value];fillSelect($(raceId),Object.keys(getRaces(s)).map(x=>[x,x+"R"]));if(venueId==="venueSelect")renderRace();if(venueId==="aiVenue")oddsHeader("ai");}
 function setSelectors(venue,race){$("venueSelect").value=venue;updateRaceOptions("venueSelect","raceSelect");$("raceSelect").value=race;}
 function selectedRace(venueId,raceId){return getRaces(getStadiums()[$(venueId).value])?.[$(raceId).value];}
 function lane(n){return `<span class="lane" style="background:${COLORS[Number(n)-1]||"#ddd"}">${n}</span>`;}
+
+/* v12: 公開データに含まれる3連単オッズ。未取得時は数字を表示しない。 */
+function trifectaRows(){const p=[];for(let a=1;a<=6;a++)for(let b=1;b<=6;b++)for(let c=1;c<=6;c++)if(a!==b&&a!==c&&b!==c)p.push(a+'-'+b+'-'+c);return p;}
+function trifectaOdds(venue,race){return getRaces(getStadiums()[String(venue)])?.[String(race)]?.odds?.trifecta||null;}
+function oddsValue(table,pick){const [a,b,c]=pick.split('-');const v=table?.[a]?.[b]?.[c];const n=Number(v);return v!==null&&v!==undefined&&v!==''&&Number.isFinite(n)&&n>0?n:null;}
+function oddsHeader(kind){
+ const ai=kind==='ai',el=$(ai?'aiOddsPanel':'raceOddsPanel');if(!el)return;
+ const v=$(ai?'aiVenue':'venueSelect').value,r=$(ai?'aiRace':'raceSelect').value,t=trifectaOdds(v,r);
+ const count=t?trifectaRows().filter(p=>oddsValue(t,p)!==null).length:0;
+ el.innerHTML='<div class="notice"><div class="row"><b>3連単オッズ '+(ai?'｜AI LAB':'｜全120通り')+'</b><button class="ghost" style="padding:8px;font-size:12px">↻ オッズ更新</button></div><div class="tiny muted" style="margin-top:7px">'+(count?count+'/120通り取得':'オッズ未取得')+' · 非公式データ（遅延あり）</div></div>';
+ el.querySelector('button').addEventListener('click',async()=>{el.querySelector('button').disabled=true;try{await loadData();oddsHeader(kind);if(ai)renderTicketOdds();}catch(e){el.querySelector('button').disabled=false;}});
+ if(!ai)renderAllOdds();
+}
+function renderAllOdds(){
+ const host=$('raceOddsPanel');if(!host)return;
+ const t=trifectaOdds($('venueSelect').value,$('raceSelect').value);if(!t)return;
+ const wrap=document.createElement('div');wrap.style.marginTop='10px';
+ const sel=document.createElement('select');sel.className='field';[['popular','人気順'],['high','高オッズ順'],['boat','艇番順']].forEach(([v,label])=>{let o=document.createElement('option');o.value=v;o.textContent=label;sel.append(o)});
+ const list=document.createElement('div');list.style.cssText='max-height:420px;overflow:auto;margin-top:8px';
+ const draw=()=>{const rows=trifectaRows().map(p=>({p,o:oddsValue(t,p)}));if(sel.value==='popular')rows.sort((a,b)=>(a.o??Infinity)-(b.o??Infinity));if(sel.value==='high')rows.sort((a,b)=>(b.o??-1)-(a.o??-1));list.innerHTML=rows.map(x=>'<div class="ticket"><b>'+x.p+'</b><div style="text-align:right"><b>'+(x.o===null?'—':x.o.toFixed(1)+'倍')+'</b><div class="tiny muted">100円 → '+(x.o===null?'—':yen(Math.round(x.o*100)))+'</div></div></div>').join('');};
+ sel.addEventListener('change',draw);wrap.append(sel,list);host.append(wrap);draw();
+}
+function renderTicketOdds(){
+ const host=$('ticketResult');if(!host)return;
+ const t=trifectaOdds($('aiVenue').value,$('aiRace').value);
+ host.querySelectorAll('[data-ticket-odds]').forEach(el=>{const o=oddsValue(t,el.dataset.ticketOdds);el.textContent=o===null?'オッズ未取得':o.toFixed(1)+'倍 · 100円→'+yen(Math.round(o*100));});
+}
+
 function renderRace(){
  const r=selectedRace("venueSelect","raceSelect");if(!r){$("raceDetail").textContent="レースデータがありません。";return;}
  const racers=r.racers||{},preview=r.preview||{},pr=preview.racers||{};
  let html=`<div class="eyebrow">${STADIUMS[Number(r.stadium_number)]||"BOAT RACE"} / ${r.race_number}R</div><h3 style="margin:6px 0">${r.title||"出走表"}</h3><div class="tiny muted">締切 ${r.closed_at||"未取得"} · ${r.distance||1800}m</div>`;
  for(let n=1;n<=6;n++){const x=racers[n]||{},p=pr[n]||{};html+=`<div class="boatrow"><div>${lane(n)}<b>${x.name||"選手情報なし"}</b><div class="tiny muted" style="margin:4px 0 0 37px">${x.number||""} · ${x.rank_number_source||""}</div></div><div style="text-align:right"><b>${x.national_win_rate??"-"}</b><div class="tiny muted">全国勝率</div></div></div><div class="tiny muted" style="padding:4px 0 7px 37px">当地 ${x.local_win_rate??"-"} · M2連率 ${x.motor_top_2_percent??"-"}% · 平均ST ${x.average_start_timing??"-"} · 展示 ${p.exhibition_time??"-"}</div>`;}
  const w=preview.wind_speed,wh=preview.wave_height;html+=`<div class="notice">直前情報：風速 ${w??"-"}m · 波高 ${wh??"-"}cm · 展示タイム・進入は取得できた項目のみ表示します。</div>`;
- $("raceDetail").innerHTML=html;
+ $("raceDetail").innerHTML=html;oddsHeader("race");
 }
 function scoreRace(r){
  const racers=r?.racers||{},pr=r?.preview?.racers||{};let rows=[];
@@ -68,7 +96,7 @@ function scoreRace(r){
  rows.push({n,name:x.name||"選手情報なし",score,parts:parts.length,stats:x});}
  return rows.sort((a,b)=>b.score-a.score);
 }
-function renderAnalysis(){
+function renderAnalysis(){oddsHeader("ai");
  const r=selectedRace("aiVenue","aiRace");if(!r){$("analysisResult").textContent="対象レースがありません。";return;}
  const scores=scoreRace(r),max=scores[0]?.score||1;
  $("analysisResult").innerHTML=`<div class="eyebrow">REFERENCE SCORE · NOT WIN PROBABILITY</div>`+scores.map((x,i)=>`<div class="boatrow"><div>${lane(x.n)}<b>${x.name}</b><div class="tiny muted">${x.parts}項目で評価</div></div><div style="width:43%;text-align:right"><b class="gold">${x.score.toFixed(2)}</b><div style="height:5px;background:#283547;border-radius:8px;margin-top:5px"><div style="height:5px;width:${Math.max(2,x.score/max*100)}%;background:linear-gradient(90deg,#a98548,#e2c88f);border-radius:8px"></div></div></div></div>`).join("")+`<div class="notice">スコアは出走表・取得できた直前情報を単純加重した参考値です。オッズ、展開、気象の変化、欠損値を十分に補正していません。的中確率や利益を保証するものではありません。</div>`;
@@ -94,8 +122,9 @@ function generateTickets(){
  const total=unit*generatedTickets.length;
  const venueId=$("aiVenue").value,venueName=STADIUMS[Number(venueId)]||"競艇場";
  $("ticketResult").innerHTML=`<div class="row" style="margin:12px 0"><b>${venueName} ${$("aiRace").value}R</b><span class="badge">${count}点 / ${yen(total)}</span></div>`+
- generatedTickets.map(x=>`<div class="ticket"><div><span class="ticket-rank">${x.category} · ${x.rank}番目</span><b>${x.pick}</b></div><span class="muted">${yen(x.stake)}</span></div>`).join("")+
+ generatedTickets.map(x=>`<div class="ticket"><div><span class="ticket-rank">${x.category} · ${x.rank}番目</span><b>${x.pick}</b><div class="tiny muted" data-ticket-odds="${x.pick}">オッズ未取得</div></div><span class="muted">${yen(x.stake)}</span></div>`).join("")+
  `<div class="notice">順位スコアと簡易的な1コース補正で並べた買い目候補です。オッズ・進入変化・選手コメント等は十分に反映していません。確率や期待値を示すものではありません。</div><button id="saveAutoTickets" class="btn" style="margin-top:12px">この${count}点を予想記録に保存</button><div id="autoSaveMessage" class="status"></div>`;
+ renderTicketOdds();
  $("saveAutoTickets").addEventListener("click",()=>{
   const stamp=new Date().toISOString();
   generatedTickets.forEach(x=>records.push({type:"auto",venue:venueId,venueName,race:$("aiRace").value,kind:"3連単・自動案",pick:x.pick,stake:x.stake,createdAt:stamp,hit:false,payout:0}));
