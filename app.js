@@ -734,6 +734,29 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
    table.append(tr);
   });
   wrap.append(table);host.append(wrap);
+  // v14 experimental commentary: only verifiable, observed comparisons; no inferred tactics.
+  const analysis=document.createElement('div');
+  analysis.style.cssText='margin-top:14px;padding:12px;border:1px solid #705d3e;border-radius:12px;background:#d4b06c0c';
+  const analysisTitle=document.createElement('b');analysisTitle.textContent='6選手の注目ポイント｜データ比較';analysis.append(analysisTitle);
+  const notes=[];
+  const usable=(key)=>results.filter(x=>x.racer[key]!==null&&x.racer[key]!==undefined&&x.racer[key]!=='').map(x=>({lane:x.lane,name:x.racer.name||x.lane+'号艇',value:Number(x.racer[key])})).filter(x=>x.value>0&&Number.isFinite(x.value));
+  const wins=usable('national_win_rate').sort((a,b)=>b.value-a.value);
+  if(wins.length>=2&&wins[0].value>wins[1].value)notes.push(wins[0].lane+'号艇 '+wins[0].name+'は全国勝率'+wins[0].value.toFixed(2)+'で、この6人の中で最も高い。');
+  const starts=usable('average_start_timing').sort((a,b)=>a.value-b.value);
+  if(starts.length>=2&&starts[0].value<starts[1].value)notes.push(starts[0].lane+'号艇 '+starts[0].name+'は平均ST '+starts[0].value.toFixed(2)+'で、この6人の中で最も小さい（スタートの早さの参考）。');
+  const motors=usable('motor_top_2_percent').sort((a,b)=>b.value-a.value);
+  if(motors.length>=2&&motors[0].value>motors[1].value)notes.push(motors[0].lane+'号艇 '+motors[0].name+'のモーター2連率は'+motors[0].value.toFixed(1)+'%で、この6艇の中で最も高い。');
+  const courseStats=results.map(x=>{const c=findCourse(x.profile,x.lane);return {lane:x.lane,name:x.racer.name,win:Number(field(c,['win_rate','first_rate','first_place_rate'])),starts:Number(field(c,['starts','races','entries','count']))};}).filter(x=>Number.isFinite(x.win)&&Number.isFinite(x.starts)&&x.starts>0);
+  if(courseStats.length>=2){
+   const reliable=courseStats.filter(x=>x.starts>=30).sort((a,b)=>b.win-a.win);
+   if(reliable.length>=2&&reliable[0].win>reliable[1].win)notes.push('枠番と同じ進入コースを仮定すると、30走以上のデータがある選手の中では'+reliable[0].lane+'号艇のコース別1着率'+reliable[0].win.toFixed(1)+'%が最も高い。');
+   if(courseStats.some(x=>x.starts<30))notes.push('コース別成績には30走未満の選手がいるため、率の比較には注意。');
+  }else notes.push('選手別コース成績は十分に取得できていないため、差し・まくりの得意不得意はまだ判定しません。');
+  if(!notes.length)notes.push('比較できる数値が不足しています。データ取得後に再確認してください。');
+  const ul=document.createElement('ul');ul.style.cssText='padding-left:20px;margin:10px 0;line-height:1.7;font-size:12px';
+  notes.forEach(t=>{const li=document.createElement('li');li.textContent=t;ul.append(li);});analysis.append(ul);
+  const caution=document.createElement('div');caution.className='status';caution.textContent='※統計の相対比較であり、展開・的中確率・回収率の予測ではありません。進入コース未確定、数値の集計期間もデータ提供元に依存します。';analysis.append(caution);
+  host.append(analysis);
   const note=document.createElement('p');note.className='status';
   note.textContent='※同番号コースの1着率は枠番と同じコースに進入すると仮定した参考値です。取得元JSONに対応するコース統計がない場合は「—」と表示。出走数が少ない値は過信しないでください。';
   host.append(note);
