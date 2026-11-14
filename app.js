@@ -877,6 +877,15 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
    const summary=document.createElement('div');summary.className='status';
    summary.textContent='場別コース統計：'+(obj.period?.from||'期間不明')+' 〜 '+(obj.period?.to||'期間不明')+' ／ v14は枠番＝進入コースの仮定。確率は未校正。';
    host.append(summary);
+   // Weather is displayed as observed context; no unvalidated probability multiplier.
+   const preview=r.preview||{},wind=Number(preview.wind_speed),wave=Number(preview.wave_height);
+   const windOK=preview.wind_speed!==null&&preview.wind_speed!==undefined&&preview.wind_speed!==''&&Number.isFinite(wind)&&wind>=0;
+   const waveOK=preview.wave_height!==null&&preview.wave_height!==undefined&&preview.wave_height!==''&&Number.isFinite(wave)&&wave>=0;
+   const weather=document.createElement('div');weather.className='notice';weather.style.marginTop='10px';
+   const windDirection=preview.wind_direction??preview.wind_direction_name??null;
+   const dir=typeof windDirection==='string'&&windDirection.trim()?windDirection.trim():'未取得';
+   weather.textContent='水面状況（取得データ）：風向 '+dir+' ／ 風速 '+(windOK?wind+'m/s':'未取得')+' ／ 波高 '+(waveOK?wave+'cm':'未取得')+'。'+(windOK&&waveOK?'風・波の影響は今後、場別の過去結果で検証して補正します。':'直前情報が未取得の項目は補正しません。')+' 現時点では予想順位に反映していません。';
+   host.append(weather);
    const grid=document.createElement('div');grid.className='grid2';grid.style.marginTop='10px';
    [[ 'v13 現行',v13.map(x=>({pick:x.pick,p:x.probability})) ],['v14 試験',combos.slice(0,5)]].forEach(([label,items])=>{
     const panel=document.createElement('div');panel.className='card';panel.style.padding='10px';
