@@ -117,6 +117,48 @@ function renderStats(){
  $("recovery").textContent=settled.length?`${recovery.toFixed(1)}%`:"未入力";
  const host=$("history");host.innerHTML="";
  if(!records.length){host.textContent="まだ記録がありません。";return;}
+ // 買い目を選択してまとめて削除（チェック式）
+ const selectedForDelete=new Set();
+ const toolbar=document.createElement("div");
+ toolbar.style.cssText="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px";
+ const selectionCount=document.createElement("span");
+ selectionCount.className="tiny muted";
+ selectionCount.textContent="削除する買い目を選択してください";
+ const selectAll=document.createElement("button");
+ selectAll.className="ghost";
+ selectAll.style.cssText="padding:8px 10px;font-size:12px";
+ selectAll.textContent="表示中をすべて選択";
+ const clearSelection=document.createElement("button");
+ clearSelection.className="ghost";
+ clearSelection.style.cssText="padding:8px 10px;font-size:12px";
+ clearSelection.textContent="選択解除";
+ const deleteSelected=document.createElement("button");
+ deleteSelected.className="ghost";
+ deleteSelected.style.cssText="border-color:#8d4b59;color:#e59aa5;padding:8px 10px;font-size:12px";
+ deleteSelected.textContent="選択した予想を削除";
+ deleteSelected.disabled=true;
+ const updateSelectionUI=()=>{
+  selectionCount.textContent=`選択中：${selectedForDelete.size}件`;
+  deleteSelected.disabled=selectedForDelete.size===0;
+  deleteSelected.style.opacity=deleteSelected.disabled?".45":"1";
+ };
+ selectAll.addEventListener("click",()=>{
+  records.forEach(x=>selectedForDelete.add(x));
+  host.querySelectorAll('input[data-delete-pick="1"]').forEach(c=>c.checked=true);
+  updateSelectionUI();
+ });
+ clearSelection.addEventListener("click",()=>{
+  selectedForDelete.clear();
+  host.querySelectorAll('input[data-delete-pick="1"]').forEach(c=>c.checked=false);
+  updateSelectionUI();
+ });
+ deleteSelected.addEventListener("click",()=>{
+  if(!selectedForDelete.size)return;
+  if(!confirm(`選択した ${selectedForDelete.size}件の予想を削除します。よろしいですか？`))return;
+  records=records.filter(x=>!selectedForDelete.has(x));
+  localStorage.setItem("bn_records",JSON.stringify(records));renderStats();
+ });
+ toolbar.append(selectionCount,selectAll,clearSelection,deleteSelected);host.append(toolbar);updateSelectionUI();
  // 競艇場 → レース → 買い目。競艇場・レースごとに折りたたみ可能
  const venues=new Map();
  records.forEach((x,index)=>{
@@ -129,15 +171,28 @@ function renderStats(){
  [...venues.values()].sort((a,b)=>a.id-b.id).forEach(v=>{
   const venueBox=document.createElement("section");
   venueBox.className="card";venueBox.style.cssText="margin-top:14px;padding:0;overflow:hidden";
+  const venueTop=document.createElement("div");
+  venueTop.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px 0";
+  const venueTitle=document.createElement("b");venueTitle.textContent=v.name;
+  const venueDelete=document.createElement("button");venueDelete.className="ghost";
+  venueDelete.style.cssText="border-color:#8d4b59;color:#e59aa5;padding:7px 9px;font-size:12px;min-height:32px;white-space:nowrap";
+  venueDelete.textContent="場ごと削除";
+  venueDelete.addEventListener("click",()=>{
+   const groupItems=[...v.races.values()].flat();
+   if(!confirm(`${v.name} の予想 ${groupItems.length}件をすべて削除しますか？`))return;
+   const removeSet=new Set(groupItems.map(o=>o.record));
+   records=records.filter(x=>!removeSet.has(x));
+   localStorage.setItem("bn_records",JSON.stringify(records));renderStats();
+  });
+  venueTop.append(venueTitle,venueDelete);venueBox.append(venueTop);
   const venueDetails=document.createElement("details");
   venueDetails.open=false;
   const venueSummary=document.createElement("summary");
-  venueSummary.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;padding:16px;min-height:56px;font-weight:700";
-  const venueTitle=document.createElement("span");venueTitle.textContent=v.name;
+  venueSummary.style.cssText="display:flex;align-items:center;justify-content:flex-end;gap:10px;cursor:pointer;list-style:none;padding:8px 14px 14px;min-height:44px;font-weight:700";
   const raceTotal=[...v.races.values()].reduce((n,a)=>n+a.length,0);
   const venueBadge=document.createElement("span");venueBadge.className="badge";
   venueBadge.textContent=`${v.races.size}レース・${raceTotal}点　⌄`;
-  venueSummary.append(venueTitle,venueBadge);venueDetails.append(venueSummary);
+  venueSummary.append(venueBadge);venueDetails.append(venueSummary);
   const venueContent=document.createElement("div");venueContent.style.cssText="padding:0 12px 12px";
   [...v.races.entries()].sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([race,items])=>{
    const raceBox=document.createElement("div");
@@ -156,9 +211,18 @@ function renderStats(){
     wrap.style.cssText=`display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:11px 0;${i<items.length-1?'border-bottom:1px solid var(--line)':''}`;
     const info=document.createElement("div");info.style.cssText="min-width:0;display:flex;flex-direction:column;gap:4px";
     const pickLine=document.createElement("div");pickLine.style.cssText="display:flex;align-items:center;gap:9px;flex-wrap:wrap";
+    const pickCheck=document.createElement("input");
+    pickCheck.type="checkbox";pickCheck.dataset.deletePick="1";
+    pickCheck.checked=selectedForDelete.has(x);
+    pickCheck.setAttribute("aria-label",`${v.name} ${race}R ${x.pick}を削除対象に選択`);
+    pickCheck.style.cssText="width:19px;height:19px;accent-color:#c7a35d;flex:0 0 auto";
+    pickCheck.addEventListener("change",()=>{
+     if(pickCheck.checked)selectedForDelete.add(x);else selectedForDelete.delete(x);
+     updateSelectionUI();
+    });
     const pick=document.createElement("b");pick.style.cssText="font-size:16px;letter-spacing:.04em";pick.textContent=x.pick;
     const amount=document.createElement("span");amount.className="tiny muted";amount.textContent=yen(x.stake);
-    pickLine.append(pick,amount);
+    pickLine.append(pickCheck,pick,amount);
     const status=document.createElement("div");status.className="tiny muted";
     status.textContent=x.resultEntered?`3連単・結果 ${x.actualResult}・${x.hit?"的中":"不的中"}・払戻 ${yen(x.payout)}`:`3連単・${x.kind||"予想"}・結果未入力`;
     info.append(pickLine,status);wrap.append(info);
@@ -180,7 +244,20 @@ function renderStats(){
     del.addEventListener("click",()=>{if(!confirm(`${v.name} ${race}R の買い目「${x.pick}」を削除しますか？`))return;records.splice(index,1);localStorage.setItem("bn_records",JSON.stringify(records));renderStats();});
     actions.append(btn,del);wrap.append(actions);raceContent.append(wrap);
    });
-   raceDetails.append(raceContent);raceBox.append(raceDetails);venueContent.append(raceBox);
+   raceDetails.append(raceContent);
+   const raceActions=document.createElement("div");
+   raceActions.style.cssText="display:flex;justify-content:flex-end;padding:0 0 10px";
+   const deleteRace=document.createElement("button");deleteRace.className="ghost";
+   deleteRace.style.cssText="border-color:#8d4b59;color:#e59aa5;padding:6px 9px;font-size:12px;min-height:30px";
+   deleteRace.textContent="このレースを一括削除";
+   deleteRace.addEventListener("click",()=>{
+    if(!confirm(`${v.name} ${race}R の予想 ${items.length}件をすべて削除しますか？`))return;
+    const removeSet=new Set(items.map(o=>o.record));
+    records=records.filter(x=>!removeSet.has(x));
+    localStorage.setItem("bn_records",JSON.stringify(records));renderStats();
+   });
+   raceActions.append(deleteRace);
+   raceBox.append(raceDetails,raceActions);venueContent.append(raceBox);
   });
   venueDetails.append(venueContent);venueBox.append(venueDetails);host.append(venueBox);
  });
