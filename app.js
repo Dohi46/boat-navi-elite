@@ -105,6 +105,47 @@ function generateTickets(){
 function buildBoatChoices(){for(let n=1;n<=6;n++){const b=document.createElement("button");b.className="pick";b.dataset.boat=n;b.innerHTML=lane(n);b.addEventListener("click",()=>{if(selected.includes(n))selected=selected.filter(x=>x!==n);else if(selected.length<3)selected.push(n);else selected=[n];paintChoices();});$("boatChoices").append(b);}}
 function paintChoices(){document.querySelectorAll("[data-boat]").forEach(b=>b.classList.toggle("selected",selected.includes(Number(b.dataset.boat))));$("selectedText").textContent=selected.length?selected.join(" → ")+" ("+selected.length+"/3)":"1着・2着・3着の順に3艇選択してください。";}
 function saveRecord(record){records.push({...record,createdAt:new Date().toISOString(),hit:false,payout:0});localStorage.setItem("bn_records",JSON.stringify(records));renderStats();page("records");}
+// v11: 日付をJSTで固定し、別日の同一場・同一Rを混同しない。
+function recordJstDate(x){
+ if(x.raceDate&&/^\d{4}-\d{2}-\d{2}$/.test(x.raceDate))return x.raceDate;
+ if(!x.createdAt)return null;
+ const d=new Date(x.createdAt);
+ return Number.isNaN(d.getTime())?null:new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
+}
+async function getOfficialLikeResult(date,venue,race){
+ const compact=date.replace(/-/g,'');
+ const url=`https://boatraceopenapi.github.io/api/v1/${compact.slice(0,4)}/${compact}.json`;
+ const res=await fetch(url,{cache:'no-store'});
+ if(!res.ok)throw new Error('公開データ HTTP '+res.status);
+ const json=await res.json();
+ const r=json?.programs?.stadiums?.[String(venue)]?.races?.[String(race)];
+ if(!r||r.date!==date)return null;
+ const payouts=r.result?.payouts?.trifecta;
+ if(!Array.isArray(payouts)||!payouts.length)return null;
+ const valid=payouts.map(p=>({combination:String(p.combination||''),amount:Number(p.amount)}))
+  .filter(p=>/^[1-6]-[1-6]-[1-6]$/.test(p.combination)&&new Set(p.combination.split('-')).size===3&&Number.isInteger(p.amount)&&p.amount>0);
+ if(valid.length!==payouts.length)return null;
+ return valid;
+}
+async function autoSettleRace(items,venue,race,name){
+ const dates=[...new Set(items.map(o=>recordJstDate(o.record)))];
+ if(dates.length!==1||!dates[0]){alert('開催日を特定できません。手動で一括入力してください。');return;}
+ const date=dates[0];
+ try{
+  const payouts=await getOfficialLikeResult(date,venue,race);
+  if(!payouts){alert(`${name} ${race}R（${date}）の確定払戻が未公開、または取得できません。手動入力を使ってください。`);return;}
+  const detail=payouts.map(p=>`${p.combination}：${yen(p.amount)}`).join(' / ');
+  if(!confirm(`${name} ${race}R（${date}）\n公開データの3連単：${detail}\n\n${items.length}件の予想に結果を反映しますか？\n※非公式データです。公式結果も確認してください。`))return;
+  items.forEach(({record:x})=>{
+   const hit=payouts.find(p=>p.combination===x.pick);
+   x.actualResult=payouts.map(p=>p.combination).join(' / ');
+   x.hit=!!hit;x.payout=hit?Math.round(hit.amount*Number(x.stake||0)/100):0;
+   x.resultEntered=true;x.resultSource='unofficial-api';
+  });
+  localStorage.setItem('bn_records',JSON.stringify(records));renderStats();
+  alert(`${name} ${race}R の${items.length}件を反映しました。`);
+ }catch(e){alert('自動取得に失敗しました。通信を確認するか手動入力してください。 '+e.message);}
+}
 function renderStats(){
  const total=records.reduce((a,x)=>a+Number(x.stake||0),0);
  const settled=records.filter(x=>x.resultEntered===true);
@@ -200,7 +241,8 @@ function renderStats(){
    const raceDetails=document.createElement("details");raceDetails.open=false;
    const raceHead=document.createElement("summary");
    raceHead.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none;padding:13px 2px;font-weight:700";
-   const raceTitle=document.createElement("b");raceTitle.textContent=`${race}R`;
+   const raceNumber=race.split('|')[0],raceDate=race.split('|')[1];
+   const raceTitle=document.createElement("b");raceTitle.textContent=`${raceNumber}R (${raceDate})`;
    const raceTotal=items.reduce((n,o)=>n+Number(o.record.stake||0),0);
    const raceBadge=document.createElement("span");raceBadge.className="tiny muted";
    raceBadge.textContent=`${items.length}点・合計 ${yen(raceTotal)}　⌄`;
@@ -214,7 +256,7 @@ function renderStats(){
     const pickCheck=document.createElement("input");
     pickCheck.type="checkbox";pickCheck.dataset.deletePick="1";
     pickCheck.checked=selectedForDelete.has(x);
-    pickCheck.setAttribute("aria-label",`${v.name} ${race}R ${x.pick}を削除対象に選択`);
+    pickCheck.setAttribute("aria-label",`${v.name} ${raceNumber}R ${x.pick}を削除対象に選択`);
     pickCheck.style.cssText="width:19px;height:19px;accent-color:#c7a35d;flex:0 0 auto";
     pickCheck.addEventListener("change",()=>{
      if(pickCheck.checked)selectedForDelete.add(x);else selectedForDelete.delete(x);
@@ -241,7 +283,7 @@ function renderStats(){
      localStorage.setItem("bn_records",JSON.stringify(records));renderStats();
     });
     const del=document.createElement("button");del.className="ghost";del.style.cssText="white-space:nowrap;padding:7px 9px;font-size:12px;min-height:34px;border-color:#8d4b59;color:#e59aa5";del.textContent="削除";
-    del.addEventListener("click",()=>{if(!confirm(`${v.name} ${race}R の買い目「${x.pick}」を削除しますか？`))return;records.splice(index,1);localStorage.setItem("bn_records",JSON.stringify(records));renderStats();});
+    del.addEventListener("click",()=>{if(!confirm(`${v.name} ${raceNumber}R の買い目「${x.pick}」を削除しますか？`))return;records.splice(index,1);localStorage.setItem("bn_records",JSON.stringify(records));renderStats();});
     actions.append(btn,del);wrap.append(actions);raceContent.append(wrap);
    });
    raceDetails.append(raceContent);
@@ -251,11 +293,56 @@ function renderStats(){
    deleteRace.style.cssText="border-color:#8d4b59;color:#e59aa5;padding:6px 9px;font-size:12px;min-height:30px";
    deleteRace.textContent="このレースを一括削除";
    deleteRace.addEventListener("click",()=>{
-    if(!confirm(`${v.name} ${race}R の予想 ${items.length}件をすべて削除しますか？`))return;
+    if(!confirm(`${v.name} ${raceNumber}R の予想 ${items.length}件をすべて削除しますか？`))return;
     const removeSet=new Set(items.map(o=>o.record));
     records=records.filter(x=>!removeSet.has(x));
     localStorage.setItem("bn_records",JSON.stringify(records));renderStats();
    });
+   // v10: レース単位の結果入力。全買い目を一度に照合する。
+   const enterRace=document.createElement("button");
+   enterRace.className="ghost";
+   enterRace.style.cssText="padding:7px 9px;font-size:12px;min-height:34px;margin-right:8px";
+   enterRace.textContent=items.every(o=>o.record.resultEntered)?"レース結果を修正":"このレースの結果を一括入力";
+   enterRace.addEventListener("click",()=>{
+    const existing=items.find(o=>o.record.resultEntered);
+    const raw=prompt(`${v.name} ${raceNumber}R の確定3連単を入力（例：1-2-3）`,existing?.record.actualResult||"");
+    if(raw===null)return;
+    const result=raw.trim().replace(/[＞→ー－－]/g,"-").replace(/\\s/g,"");
+    if(!/^[1-6]-[1-6]-[1-6]$/.test(result)||new Set(result.split("-")).size!==3){
+     alert("異なる艇番を 1-2-3 の形式で入力してください。");return;
+    }
+    const prior=items.find(o=>o.record.resultEntered&&o.record.hit&&o.record.actualResult===result);
+    const defaultDividend=prior&&Number(prior.record.stake)>0?String(Math.round(Number(prior.record.payout)*100/Number(prior.record.stake))):"0";
+    const dividendText=prompt("3連単の公式払戻金（100円あたり・円）を入力。的中なしでも入力してください。",defaultDividend);
+    if(dividendText===null)return;
+    const dividend=Number(dividendText.replace(/[,，円\\s]/g,""));
+    if(!Number.isFinite(dividend)||dividend<0||!Number.isInteger(dividend)){
+     alert("払戻金は0以上の整数で入力してください。");return;
+    }
+    const winners=items.filter(o=>o.record.pick===result).length;
+    if(winners&&dividend===0&&!confirm("的中する買い目がありますが払戻金が0円です。このまま登録しますか？"))return;
+    if(!confirm(`${v.name} ${raceNumber}R：結果 ${result}、100円あたり払戻 ${yen(dividend)}。${items.length}件に反映しますか？`))return;
+    items.forEach(({record:x})=>{
+     x.actualResult=result;
+     x.hit=x.pick===result;
+     x.payout=x.hit?Math.round(dividend*Number(x.stake||0)/100):0;
+     x.resultEntered=true;
+    });
+    localStorage.setItem("bn_records",JSON.stringify(records));
+    renderStats();
+    alert(`${v.name} ${raceNumber}R の${items.length}件を更新しました。`);
+   });
+   raceActions.style.flexWrap="wrap";
+   raceActions.style.gap="6px";
+   const autoRace=document.createElement('button');
+   autoRace.className='ghost';autoRace.style.cssText='padding:7px 9px;font-size:12px;min-height:34px';
+   autoRace.textContent='結果を自動取得';
+   autoRace.addEventListener('click',async()=>{
+    autoRace.disabled=true;autoRace.textContent='取得中…';
+    try{await autoSettleRace(items,v.id,raceNumber,v.name);}finally{autoRace.disabled=false;autoRace.textContent='結果を自動取得';}
+   });
+   raceActions.append(autoRace);
+   raceActions.append(enterRace);
    raceActions.append(deleteRace);
    raceBox.append(raceDetails,raceActions);venueContent.append(raceBox);
   });
