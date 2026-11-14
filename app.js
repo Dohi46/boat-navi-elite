@@ -33,11 +33,21 @@ function renderVenues(){
  if(!entries.length){host.innerHTML='<div class="card status">本日の開催データはありません。</div>';return;}
  entries.forEach(([id,s])=>{
   const name=STADIUMS[Number(id)]||("競艇場 "+id),races=Object.entries(getRaces(s));
-  const div=document.createElement("div");div.className="card";
-  const head=document.createElement("div");head.className="row";head.innerHTML=`<div><div class="eyebrow">STADIUM ${String(id).padStart(2,"0")}</div><h3 style="margin:5px 0 0">${name}</h3></div><span class="badge">${races.length} RACES</span>`;div.append(head);
-  const grid=document.createElement("div");grid.className="grid2";
-  races.forEach(([rn,r])=>{const b=document.createElement("button");b.className="race-card";b.style.textAlign="left";b.innerHTML=`<div class="row"><b>${rn}R</b><span class="tiny muted">${r.closed_at?String(r.closed_at).slice(11,16):"締切時刻未取得"}</span></div><div class="tiny muted" style="margin-top:5px">${r.title||"レース情報"}</div>`;b.addEventListener("click",()=>{setSelectors(id,rn);page("races");renderRace();});grid.append(b);});div.append(grid);host.append(div);
- });
+  const details=document.createElement("details");details.className="card home-venue";
+  const summary=document.createElement("summary");summary.className="home-venue-summary";
+  summary.innerHTML=`<span class="home-venue-title"><span class="eyebrow">STADIUM ${String(id).padStart(2,"0")}</span><strong>${name}</strong></span><span class="home-venue-right"><span class="badge">${races.length} RACES</span><span class="home-venue-chevron">⌄</span></span>`;
+  details.append(summary);
+  const grid=document.createElement("div");grid.className="home-race-grid";
+  races.forEach(([rn,r])=>{
+   const btn=document.createElement("button");btn.className="home-race-button";btn.type="button";
+   const time=r.closed_at?String(r.closed_at).slice(11,16):"—";
+   btn.innerHTML=`<b>${rn}R</b><span>${time}</span>`;
+   btn.title=(r.title||"レース情報")+" / 締切 "+time;
+   btn.addEventListener("click",()=>{setSelectors(id,rn);page("races");renderRace();});
+   grid.append(btn);
+  });
+  details.append(grid);host.append(details);
+ });;
 }
 function fillSelect(el,items,selected){el.innerHTML="";items.forEach(([v,label])=>{const o=document.createElement("option");o.value=v;o.textContent=label;el.append(o)});if(selected!==undefined)el.value=String(selected);}
 function populateSelectors(){
