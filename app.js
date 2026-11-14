@@ -577,3 +577,99 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
   }finally{button.disabled=false;}
  });
 })();
+
+/* v14 PLAYER trial: read-only lookup, never writes bn_records or alters v13 */
+(function(){
+ const input=$('playerRegNo'),button=$('playerStatsLoad'),status=$('playerStatsStatus'),host=$('playerStatsResult');
+ if(!input||!button||!status||!host)return;
+ const CACHE_PREFIX='bn_player_trial_';
+ const DAY=24*60*60*1000;
+ const show=(parent,label,value)=>{
+  if(value===null||value===undefined||typeof value==='object'||String(value).trim()==='')return;
+  const line=document.createElement('div');line.className='row';line.style.cssText='padding:9px 2px;border-bottom:1px solid var(--line);font-size:12px';
+  const a=document.createElement('span');a.className='muted';a.textContent=label;
+  const b=document.createElement('b');b.textContent=String(value);
+  line.append(a,b);parent.append(line);
+ };
+ const scalar=(obj,keys)=>{if(!obj||typeof obj!=='object')return null;for(const key of keys)if(obj[key]!==undefined&&obj[key]!==null&&typeof obj[key]!=='object')return obj[key];return null;};
+ const columns=[
+  ['出走数',['starts','races','entries','count','total','start_count']],
+  ['1着率',['win_rate','first_rate','first_place_rate']],
+  ['2連対率',['place2_rate','top2_rate','place_rate']],
+  ['3連対率',['place3_rate','top3_rate']],
+  ['平均ST',['avg_st','average_st','start_timing']]
+ ];
+ const rateFormat=(value,label)=>{
+  if(value===null||value===undefined)return '—';
+  const n=Number(value);if(!Number.isFinite(n))return String(value);
+  return label.includes('率')?n.toFixed(1)+'%':String(value);
+ };
+ function findCourses(obj){
+  const seen=new Set();
+  function visit(v,depth){
+   if(!v||typeof v!=='object'||seen.has(v)||depth>5)return null;seen.add(v);
+   if(Array.isArray(v)&&v.length>=6&&v.slice(0,6).every(x=>x&&typeof x==='object'&&!Array.isArray(x)&&scalar(x,['course','course_number','course_no'])!==null)){
+    const byCourse=new Map(v.map(x=>[Number(scalar(x,['course','course_number','course_no'])),x]));
+    if([1,2,3,4,5,6].every(n=>byCourse.has(n))&&[...byCourse.values()].some(x=>columns.some(([,keys])=>scalar(x,keys)!==null)))return [1,2,3,4,5,6].map(n=>byCourse.get(n));
+   }
+   if(!Array.isArray(v)&&[1,2,3,4,5,6].every(n=>v[n]&&typeof v[n]==='object')){
+    const arr=[1,2,3,4,5,6].map(n=>v[n]);
+    if(arr.some(x=>columns.some(([,keys])=>scalar(x,keys)!==null)))return arr;
+   }
+   for(const [k,child] of Object.entries(v)){
+    if(k==='results'||k==='races'||k==='history')continue;
+    if(child&&typeof child==='object'){const found=visit(child,depth+1);if(found)return found;}
+   }
+   return null;
+  }
+  return visit(obj,0);
+ }
+ function render(obj,number,fromCache){
+  host.replaceChildren();
+  const racer=obj?.racer&&typeof obj.racer==='object'?obj.racer:obj?.player&&typeof obj.player==='object'?obj.player:obj;
+  const name=scalar(racer,['name','racer_name','player_name','full_name'])||scalar(obj,['name','racer_name'])||'登録番号 '+number;
+  const title=document.createElement('h3');title.textContent=name+'（'+number+'）';title.style.margin='0 0 8px';host.append(title);
+  const basic=document.createElement('div');basic.style.marginBottom='12px';
+  [['登録番号',['registration_number','regno','racer_number']],['級別',['grade','class','rank']],['支部',['branch','region']],['出走数',['starts','races','total_starts']],['通算1着数',['wins','firsts','first_count']],['通算勝率',['win_rate','winning_rate']]].forEach(([label,keys])=>show(basic,label,scalar(racer,keys)));
+  host.append(basic);
+  const courses=findCourses(obj);
+  if(courses){
+   const heading=document.createElement('h3');heading.textContent='1〜6コース別成績';host.append(heading);
+   const wrap=document.createElement('div');wrap.style.overflowX='auto';
+   const table=document.createElement('table');table.style.cssText='width:100%;border-collapse:collapse;font-size:12px;min-width:350px';
+   const tr=document.createElement('tr');
+   ['コース',...columns.map(x=>x[0])].forEach(t=>{const th=document.createElement('th');th.textContent=t;th.style.cssText='padding:9px 4px;border-bottom:1px solid var(--line);white-space:nowrap';tr.append(th);});
+   table.append(tr);
+   courses.forEach((c,i)=>{
+    const row=document.createElement('tr');const values=[String(i+1),...columns.map(([label,keys])=>rateFormat(scalar(c,keys),label))];
+    values.forEach((v,j)=>{const td=document.createElement('td');td.textContent=v;td.style.cssText='text-align:center;padding:10px 4px;border-bottom:1px solid var(--line);white-space:nowrap'+(j===2?';color:var(--gold);font-weight:700':'');row.append(td);});table.append(row);
+   });
+   wrap.append(table);host.append(wrap);
+   const note=document.createElement('p');note.className='status';note.textContent='※通算・直近などの集計期間は提供元データの定義を確認してください。コースは艇番と異なる場合があります。少数出走の率は参考程度にしてください。';host.append(note);
+  }else{
+   const note=document.createElement('p');note.className='status';note.textContent='このJSONでは6コースの統計項目を確認できませんでした。下の提供元ページでコース別成績を確認してください。推測した数値は表示しません。';host.append(note);
+  }
+  const link=document.createElement('a');link.href='https://boatrace-db.jp/racer/index2/regno/'+number+'/';link.target='_blank';link.rel='noopener noreferrer';link.textContent='提供元の選手詳細・コース別成績を見る';host.append(link);
+  status.textContent=(fromCache?'保存済みデータを表示':'選手データを取得しました')+'。予想・記録への反映はありません。';
+ }
+ async function load(){
+  const number=input.value.trim();
+  if(!/^\\d{4}$/.test(number)){status.textContent='4桁の選手登録番号を入力してください。';return;}
+  button.disabled=true;status.textContent='選手データを確認中…';host.replaceChildren();
+  try{
+   let obj=null,fromCache=false;
+   try{const saved=JSON.parse(localStorage.getItem(CACHE_PREFIX+number)||'null');if(saved&&Date.now()-saved.at<DAY&&saved.data){obj=saved.data;fromCache=true;}}catch{}
+   if(!obj){
+    const response=await fetch('https://boatrace-db.jp/api/racer/'+number+'/',{cache:'default'});
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    obj=await response.json();
+    if(!obj||typeof obj!=='object'||Array.isArray(obj))throw new Error('データ形式が不正です');
+    try{localStorage.setItem(CACHE_PREFIX+number,JSON.stringify({at:Date.now(),data:obj}));}catch{}
+   }
+   render(obj,number,fromCache);
+  }catch(e){status.textContent='取得できませんでした（'+e.message+'）。時間をおいて再試行してください。';}
+  finally{button.disabled=false;}
+ }
+ button.addEventListener('click',load);
+ input.addEventListener('keydown',e=>{if(e.key==='Enter')load();});
+})();
