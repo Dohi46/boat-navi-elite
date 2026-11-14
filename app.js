@@ -117,7 +117,7 @@ function renderStats(){
  $("recovery").textContent=settled.length?`${recovery.toFixed(1)}%`:"未入力";
  const host=$("history");host.innerHTML="";
  if(!records.length){host.textContent="まだ記録がありません。";return;}
- // 競艇場 → レース → そのレースの買い目をコンパクトな一覧にまとめる
+ // 競艇場 → レース → 買い目。競艇場・レースごとに折りたたみ可能
  const venues=new Map();
  records.forEach((x,index)=>{
   const venueKey=String(x.venue??x.venueName??"unknown");
@@ -127,30 +127,43 @@ function renderStats(){
   v.races.get(raceKey).push({record:x,index});
  });
  [...venues.values()].sort((a,b)=>a.id-b.id).forEach(v=>{
-  const venueBox=document.createElement("section");venueBox.className="card";venueBox.style.marginTop="14px";venueBox.style.padding="14px";
-  const venueHead=document.createElement("div");venueHead.className="row";venueHead.style.marginBottom="10px";
-  const venueTitle=document.createElement("h3");venueTitle.style.margin="0";venueTitle.textContent=v.name;
+  const venueBox=document.createElement("section");
+  venueBox.className="card";venueBox.style.cssText="margin-top:14px;padding:0;overflow:hidden";
+  const venueDetails=document.createElement("details");
+  venueDetails.open=false;
+  const venueSummary=document.createElement("summary");
+  venueSummary.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;padding:16px;min-height:56px;font-weight:700";
+  const venueTitle=document.createElement("span");venueTitle.textContent=v.name;
   const raceTotal=[...v.races.values()].reduce((n,a)=>n+a.length,0);
-  const venueBadge=document.createElement("span");venueBadge.className="badge";venueBadge.textContent=`${v.races.size}レース・${raceTotal}点`;
-  venueHead.append(venueTitle,venueBadge);venueBox.append(venueHead);
+  const venueBadge=document.createElement("span");venueBadge.className="badge";
+  venueBadge.textContent=`${v.races.size}レース・${raceTotal}点　⌄`;
+  venueSummary.append(venueTitle,venueBadge);venueDetails.append(venueSummary);
+  const venueContent=document.createElement("div");venueContent.style.cssText="padding:0 12px 12px";
   [...v.races.entries()].sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([race,items])=>{
-   const raceBox=document.createElement("div");raceBox.style.cssText="margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(7,13,23,.28)";
-   const raceHead=document.createElement("div");raceHead.className="row";raceHead.style.cssText="padding:0 0 10px;border-bottom:1px solid var(--line);margin-bottom:4px";
+   const raceBox=document.createElement("div");
+   raceBox.style.cssText="margin-top:10px;padding:0 10px;border:1px solid var(--line);border-radius:14px;background:rgba(7,13,23,.28);overflow:hidden";
+   const raceDetails=document.createElement("details");raceDetails.open=false;
+   const raceHead=document.createElement("summary");
+   raceHead.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none;padding:13px 2px;font-weight:700";
    const raceTitle=document.createElement("b");raceTitle.textContent=`${race}R`;
    const raceTotal=items.reduce((n,o)=>n+Number(o.record.stake||0),0);
-   const raceBadge=document.createElement("span");raceBadge.className="tiny muted";raceBadge.textContent=`${items.length}点 · 合計 ${yen(raceTotal)}`;
-   raceHead.append(raceTitle,raceBadge);raceBox.append(raceHead);
+   const raceBadge=document.createElement("span");raceBadge.className="tiny muted";
+   raceBadge.textContent=`${items.length}点・合計 ${yen(raceTotal)}　⌄`;
+   raceHead.append(raceTitle,raceBadge);raceDetails.append(raceHead);
+   const raceContent=document.createElement("div");
    items.forEach(({record:x,index},i)=>{
-    const wrap=document.createElement("div");wrap.style.cssText=`display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 0;${i<items.length-1?'border-bottom:1px solid var(--line)':''}`;
-    const info=document.createElement("div");info.style.cssText="min-width:0;display:flex;flex-direction:column;gap:3px";
+    const wrap=document.createElement("div");
+    wrap.style.cssText=`display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:11px 0;${i<items.length-1?'border-bottom:1px solid var(--line)':''}`;
+    const info=document.createElement("div");info.style.cssText="min-width:0;display:flex;flex-direction:column;gap:4px";
     const pickLine=document.createElement("div");pickLine.style.cssText="display:flex;align-items:center;gap:9px;flex-wrap:wrap";
-    const pick=document.createElement("b");pick.style.cssText="font-size:15px;letter-spacing:.04em";pick.textContent=x.pick;
+    const pick=document.createElement("b");pick.style.cssText="font-size:16px;letter-spacing:.04em";pick.textContent=x.pick;
     const amount=document.createElement("span");amount.className="tiny muted";amount.textContent=yen(x.stake);
     pickLine.append(pick,amount);
-    const status=document.createElement("div");status.className="tiny muted";status.textContent=x.resultEntered?`結果 ${x.actualResult} · ${x.hit?"的中":"不的中"} · 払戻 ${yen(x.payout)}`:`${x.kind||"予想"} · 結果未入力`;
+    const status=document.createElement("div");status.className="tiny muted";
+    status.textContent=x.resultEntered?`3連単・結果 ${x.actualResult}・${x.hit?"的中":"不的中"}・払戻 ${yen(x.payout)}`:`3連単・${x.kind||"予想"}・結果未入力`;
     info.append(pickLine,status);wrap.append(info);
     const actions=document.createElement("div");actions.style.cssText="display:flex;gap:5px;align-items:center;flex-shrink:0";
-    const btn=document.createElement("button");btn.className="ghost";btn.style.cssText="white-space:nowrap;padding:7px 9px;font-size:12px;min-height:34px";btn.textContent=x.resultEntered?"修正":"結果入力";
+    const btn=document.createElement("button");btn.className="ghost";btn.style.cssText="white-space:nowrap;padding:7px 9px;font-size:12px;min-height:34px";btn.textContent=x.resultEntered?"結果修正":"結果入力";
     btn.addEventListener("click",()=>{
      const actual=prompt("実際の3連単結果を入力（例：1-2-3）",x.actualResult||"");
      if(actual===null)return;
@@ -165,11 +178,11 @@ function renderStats(){
     });
     const del=document.createElement("button");del.className="ghost";del.style.cssText="white-space:nowrap;padding:7px 9px;font-size:12px;min-height:34px;border-color:#8d4b59;color:#e59aa5";del.textContent="削除";
     del.addEventListener("click",()=>{if(!confirm(`${v.name} ${race}R の買い目「${x.pick}」を削除しますか？`))return;records.splice(index,1);localStorage.setItem("bn_records",JSON.stringify(records));renderStats();});
-    actions.append(btn,del);wrap.append(actions);raceBox.append(wrap);
+    actions.append(btn,del);wrap.append(actions);raceContent.append(wrap);
    });
-   venueBox.append(raceBox);
+   raceDetails.append(raceContent);raceBox.append(raceDetails);venueContent.append(raceBox);
   });
-  host.append(venueBox);
+  venueDetails.append(venueContent);venueBox.append(venueDetails);host.append(venueBox);
  });
 }
 $("runAnalysis").addEventListener("click",renderAnalysis);
