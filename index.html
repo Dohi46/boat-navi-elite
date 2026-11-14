@@ -11,9 +11,9 @@
 :root{--bg:#0b1018;--panel:#121a26;--panel2:#182333;--line:#293648;--gold:#d4b06c;--gold2:#a98548;--text:#f3f4f6;--muted:#9ba8b8;--green:#7ac7a0;--red:#e58c8c}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#263449 0%,var(--bg) 48%);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;min-height:100vh}
 button,select,input{font:inherit}button{cursor:pointer}.wrap{max-width:980px;margin:auto;padding:18px 16px 100px}
-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:7px 0 17px;margin-bottom:18px}
-.brand-logo{width:52px;height:52px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);flex-shrink:0}.brand{font-family:Georgia,serif;letter-spacing:2px;font-size:22px;font-weight:700}.brand span{color:var(--gold)}.sub{font-size:10px;letter-spacing:2px;color:var(--muted);margin-top:4px}
-.pill{border:1px solid #6f5b39;color:var(--gold);border-radius:99px;padding:6px 10px;font-size:10px;letter-spacing:1px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding:7px 0 17px;margin-bottom:18px}
+.brand-logo{width:72px;height:72px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);flex-shrink:0}.brand{font-family:Georgia,serif;letter-spacing:.4px;font-size:clamp(14px,3.1vw,22px);font-weight:700;white-space:nowrap}.brand span{color:var(--gold)}.sub{font-size:10px;letter-spacing:2px;color:var(--muted);margin-top:4px}
+.brand-block{display:flex;align-items:center;gap:9px;min-width:0;flex:1}.brand-copy{min-width:0}.header-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0}.header-actions .pill{font-size:9px;padding:5px 7px}@media(max-width:420px){.brand-logo{width:76px;height:76px}.brand{font-size:clamp(13px,3.7vw,17px)}.sub{font-size:8px;letter-spacing:.7px;line-height:1.5}.header-actions{max-width:96px}.header-actions .ghost{padding:8px!important;font-size:12px!important}}.pill{border:1px solid #6f5b39;color:var(--gold);border-radius:99px;padding:6px 10px;font-size:10px;letter-spacing:1px}
 .hero{background:linear-gradient(125deg,#1c2a3c,#101722 70%);border:1px solid #455267;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 18px 45px #0005}
 .eyebrow{color:var(--gold);font-size:10px;font-weight:800;letter-spacing:2px}.hero h1{font-size:clamp(21px,4vw,32px);margin:10px 0 7px}.hero p{font-size:12px;color:#b6c0cd;margin:0;line-height:1.7}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.stat{background:#ffffff0c;border:1px solid #ffffff12;border-radius:11px;padding:10px}.stat small{display:block;color:#aab5c3;font-size:10px}.stat b{font-size:19px}
@@ -32,7 +32,7 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 </head>
 <body>
 <div class="wrap">
-<header><div style="display:flex;align-items:center;gap:11px;min-width:0"><img class="brand-logo" src="./322602F9-80CD-4A86-AF63-5899759BCDA6.png" alt="BOAT NEXUS 愛犬ロゴ"><div><div class="brand">BOAT <span>NEXUS</span></div><div class="sub">DATA · RACE INTELLIGENCE · ANALYSIS</div></div></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button id="refreshApp" class="ghost" style="padding:9px 12px;font-size:13px;white-space:nowrap">↻ 更新</button><div class="pill">EARLY ACCESS</div></div></header>
+<header><div class="brand-block"><img class="brand-logo" src="./322602F9-80CD-4A86-AF63-5899759BCDA6.png" alt="BOAT NEXUS 愛犬ロゴ"><div class="brand-copy"><div class="brand">BOAT <span>NEXUS</span></div><div class="sub">DATA · RACE INTELLIGENCE · ANALYSIS</div></div></div><div class="header-actions"><button id="refreshApp" class="ghost" style="padding:9px 12px;font-size:13px;white-space:nowrap">↻ 更新</button><div class="pill">EARLY ACCESS</div></div></header>
 <section class="hero">
  <div class="eyebrow">PREMIUM BOAT RACE INTELLIGENCE</div>
  <h1>データをつなぎ、勝利への可能性を探る。</h1>
