@@ -530,7 +530,7 @@ async function refreshAppShell(){
    const keys=await caches.keys();
    await Promise.all(keys.filter(k=>k.startsWith('boat-navi-')).map(k=>caches.delete(k)));
   }
-  window.location.replace('./?refresh='+Date.now());
+  window.location.replace('./index.html?refresh='+Date.now());
  }catch(err){
   if(btn){btn.disabled=false;btn.textContent='↻ 更新';}
   alert('更新できませんでした。通信を確認してもう一度お試しください。');
