@@ -232,6 +232,7 @@ function renderStats(){
  $("savedCount").textContent=records.length;$("recordCount").textContent=records.length;$("recordStake").textContent=yen(total);
  $("hitCount").textContent=settled.length?`${hits} / ${settled.length}（${(hits/settled.length*100).toFixed(1)}%）`:"未入力";
  $("recovery").textContent=settled.length?`${recovery.toFixed(1)}%`:"未入力";
+ $("recordPayout").textContent=yen(returned);
  const host=$("history");host.innerHTML="";
  if(!records.length){host.textContent="まだ記録がありません。";return;}
  // 買い目を選択してまとめて削除（チェック式）
