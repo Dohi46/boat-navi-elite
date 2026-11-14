@@ -309,6 +309,34 @@ async function settleAllPending(){
   $('settleAllStatus').textContent='照合完了：'+done+'レース反映・'+hit+'点的中 / 結果未公開 '+unavailable+'レース / 通信エラー '+failed+'レース。既存の結果は変更していません。';
  }finally{button.disabled=false;}
 }
+/* v14 read-only venue performance: calculated only from saved prediction records. */
+function renderVenuePerformance(){
+ const host=$('venuePerformance');if(!host)return;
+ host.replaceChildren();
+ const groups=new Map();
+ records.forEach(x=>{
+  const id=Number(x.venue),name=STADIUMS[id]||x.venueName||'競艇場不明';
+  const key=Number.isInteger(id)&&id>=1&&id<=24?String(id):'name:'+name;
+  if(!groups.has(key))groups.set(key,{id,name,total:0,settled:0,hits:0,stake:0,payout:0});
+  const g=groups.get(key);g.total++;
+  if(x.resultEntered===true){
+   g.settled++;g.stake+=Number(x.stake)||0;g.payout+=Number(x.payout)||0;
+   if(x.hit===true)g.hits++;
+  }
+ });
+ if(!groups.size){host.textContent='記録がまだありません。';return;}
+ const table=document.createElement('table');table.style.cssText='width:100%;border-collapse:collapse;font-size:12px;text-align:right';
+ const head=document.createElement('thead'),tr=document.createElement('tr');
+ ['競艇場','確定/全件','的中率','回収率','仮想収支'].forEach((label,i)=>{const th=document.createElement('th');th.textContent=label;th.style.cssText='padding:9px 5px;border-bottom:1px solid var(--line);white-space:nowrap;'+(i===0?'text-align:left':'');tr.append(th);});head.append(tr);table.append(head);
+ const body=document.createElement('tbody');
+ [...groups.values()].sort((a,b)=>a.id-b.id||a.name.localeCompare(b.name,'ja')).forEach(g=>{
+  const row=document.createElement('tr');
+  const cells=[g.name,g.settled+'/'+g.total,g.settled?(100*g.hits/g.settled).toFixed(1)+'%':'—',g.stake?(100*g.payout/g.stake).toFixed(1)+'%':'—',g.stake?(g.payout-g.stake).toLocaleString('ja-JP')+'円':'—'];
+  cells.forEach((value,i)=>{const td=document.createElement('td');td.textContent=value;td.style.cssText='padding:10px 5px;border-bottom:1px solid var(--line);white-space:nowrap;'+(i===0?'text-align:left;font-weight:700':'');row.append(td);});
+  body.append(row);
+ });table.append(body);
+ const scroll=document.createElement('div');scroll.style.cssText='overflow-x:auto';scroll.append(table);host.append(scroll);
+}
 function renderStats(){
  const total=records.reduce((a,x)=>a+Number(x.stake||0),0);
  const settled=records.filter(x=>x.resultEntered===true);
@@ -320,6 +348,7 @@ function renderStats(){
  $("hitCount").textContent=settled.length?`${hits} / ${settled.length}（${(hits/settled.length*100).toFixed(1)}%）`:"未入力";
  $("recovery").textContent=settled.length?`${recovery.toFixed(1)}%`:"未入力";
  $("recordPayout").textContent=yen(returned);
+ renderVenuePerformance();
  const host=$("history");host.innerHTML="";
  if(!records.length){host.textContent="まだ記録がありません。";return;}
  // 買い目を選択してまとめて削除（チェック式）
