@@ -222,6 +222,52 @@ async function autoSettleRace(items,venue,race,name){
   alert(`${name} ${race}R の${items.length}件を反映しました。`);
  }catch(e){alert('自動取得に失敗しました。通信を確認するか手動入力してください。 '+e.message);}
 }
+async function settleAllPending(){
+ const button=$('settleAllPending'),status=$('settleAllStatus');
+ const pending=records.filter(x=>x.resultEntered!==true);
+ if(!pending.length){status.textContent='未入力の予想はありません。';return;}
+ const groups=new Map();
+ for(const x of pending){
+  const date=recordJstDate(x),venue=String(x.venue??''),race=String(x.race??'');
+  if(!date||!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)||!venue||!race)continue;
+  const key=date+'|'+venue+'|'+race;
+  if(!groups.has(key))groups.set(key,{date,venue,race,items:[]});
+  groups.get(key).items.push(x);
+ }
+ if(!groups.size){status.textContent='日付・場・レース番号が確認できる未入力データがありません。';return;}
+ if(!confirm(groups.size+'レース（'+pending.length+'件の未入力予想）を照合します。確定結果が取得できた分だけ反映しますか？'))return;
+ button.disabled=true;
+ const dateCache=new Map();let done=0,hit=0,failed=0,unavailable=0;
+ try{
+  for(const group of groups.values()){
+   status.textContent='照合中 '+(done+failed+unavailable+1)+' / '+groups.size+'レース…';
+   try{
+    let daily=dateCache.get(group.date);
+    if(!daily){
+     const compact=group.date.replace(/-/g,''),url='https://boatraceopenapi.github.io/api/v1/'+compact.slice(0,4)+'/'+compact+'.json';
+     const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);
+     daily=await res.json();dateCache.set(group.date,daily);
+    }
+    const rr=daily?.programs?.stadiums?.[group.venue]?.races?.[group.race];
+    const payouts=rr?.date===group.date?rr?.result?.payouts?.trifecta:null;
+    if(!Array.isArray(payouts)||!payouts.length){unavailable++;continue;}
+    const valid=payouts.map(p=>({combination:String(p.combination||''),amount:Number(p.amount)})).filter(p=>/^[1-6]-[1-6]-[1-6]$/.test(p.combination)&&new Set(p.combination.split('-')).size===3&&Number.isInteger(p.amount)&&p.amount>0);
+    if(valid.length!==payouts.length){unavailable++;continue;}
+    for(const x of group.items){
+     const match=valid.find(p=>p.combination===x.pick);
+     x.actualResult=valid.map(p=>p.combination).join(' / ');
+     x.hit=!!match;x.payout=match?Math.round(match.amount*Number(x.stake||0)/100):0;
+     x.resultEntered=true;x.resultSource='unofficial-api';
+     hit+=Number(!!match);
+    }
+    done++;
+    localStorage.setItem('bn_records',JSON.stringify(records));
+   }catch(e){failed++;}
+  }
+  renderStats();
+  $('settleAllStatus').textContent='照合完了：'+done+'レース反映・'+hit+'点的中 / 結果未公開 '+unavailable+'レース / 通信エラー '+failed+'レース。既存の結果は変更していません。';
+ }finally{button.disabled=false;}
+}
 function renderStats(){
  const total=records.reduce((a,x)=>a+Number(x.stake||0),0);
  const settled=records.filter(x=>x.resultEntered===true);
@@ -431,6 +477,7 @@ $("buildTickets").addEventListener("click",generateTickets);
 $("saveManual").addEventListener("click",()=>{if(selected.length!==3){$("manualMessage").textContent="3艇を順番に選択してください。";return;}const stake=Number($("stake").value);if(!Number.isFinite(stake)||stake<100){$("manualMessage").textContent="金額は100円以上で入力してください。";return;}const venue=$("manualVenue");saveRecord({type:"manual",venue:venue.value,venueName:STADIUMS[Number(venue.value)]||venue.selectedOptions[0]?.textContent,race:$("manualRace").value,kind:"3連単",pick:selected.join("-"),stake});selected=[];paintChoices();$("manualMessage").textContent="予想を保存しました。";});
 $("reload").addEventListener("click",loadData);
 $("venueSelect").addEventListener("change",renderRace);$("raceSelect").addEventListener("change",renderRace);
+$('settleAllPending')?.addEventListener('click',settleAllPending);
 buildBoatChoices();renderStats();loadData();
 
 // ページ本体を再取得。保存した予想（localStorage）は保持する。
