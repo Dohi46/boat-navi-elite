@@ -477,6 +477,43 @@ $("buildTickets").addEventListener("click",generateTickets);
 $("saveManual").addEventListener("click",()=>{if(selected.length!==3){$("manualMessage").textContent="3艇を順番に選択してください。";return;}const stake=Number($("stake").value);if(!Number.isFinite(stake)||stake<100){$("manualMessage").textContent="金額は100円以上で入力してください。";return;}const venue=$("manualVenue");saveRecord({type:"manual",venue:venue.value,venueName:STADIUMS[Number(venue.value)]||venue.selectedOptions[0]?.textContent,race:$("manualRace").value,kind:"3連単",pick:selected.join("-"),stake});selected=[];paintChoices();$("manualMessage").textContent="予想を保存しました。";});
 $("reload").addEventListener("click",loadData);
 $("venueSelect").addEventListener("change",renderRace);$("raceSelect").addEventListener("change",renderRace);
+
+function exportRecordsBackup(){
+ try{
+  const raw=localStorage.getItem('bn_records')||'[]';
+  const saved=JSON.parse(raw);
+  if(!Array.isArray(saved))throw new Error('保存形式が不正です');
+  const payload={app:'BOAT NAVI ELITE',format:'bn-records-backup',version:1,exportedAt:new Date().toISOString(),count:saved.length,records:saved};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');
+  link.href=url;link.download='boat-navi-records-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+  $('backupStatus').textContent=saved.length+'件のバックアップファイルを作成しました。iPhoneの「ファイル」に保存されたか確認してください。';
+ }catch(e){$('backupStatus').textContent='バックアップに失敗しました：'+e.message;}
+}
+async function importRecordsBackup(event){
+ const input=event.target, file=input.files?.[0];
+ if(!file)return;
+ try{
+  if(file.size>20*1024*1024)throw new Error('ファイルが大きすぎます');
+  const payload=JSON.parse(await file.text());
+  if(payload?.format!=='bn-records-backup'||payload.version!==1||!Array.isArray(payload.records)||payload.count!==payload.records.length)throw new Error('BOAT NAVI ELITEのバックアップ形式ではありません');
+  if(!payload.records.every(x=>x&&typeof x==='object'&&!Array.isArray(x)&&typeof x.pick==='string'&&typeof x.stake==='number'&&Number.isFinite(x.stake)))throw new Error('記録データが不正です');
+  const current=JSON.parse(localStorage.getItem('bn_records')||'[]');
+  if(!Array.isArray(current))throw new Error('現在の記録形式が不正です');
+  if(!confirm('バックアップ '+payload.records.length+'件を復元します。現在の'+current.length+'件は上書きされます。先に現在の記録をバックアップしましたか？'))return;
+  localStorage.setItem('bn_records',JSON.stringify(payload.records));
+  records=payload.records;
+  renderStats();
+  $('backupStatus').textContent=payload.records.length+'件を復元しました。';
+ }catch(e){$('backupStatus').textContent='復元できませんでした：'+e.message;}
+ finally{input.value='';}
+}
+$('exportRecords')?.addEventListener('click',exportRecordsBackup);
+$('importRecords')?.addEventListener('change',importRecordsBackup);
+
 $('settleAllPending')?.addEventListener('click',settleAllPending);
 buildBoatChoices();renderStats();loadData();
 
