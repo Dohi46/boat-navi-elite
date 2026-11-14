@@ -67,7 +67,17 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
  <div class="section-head"><div><div class="eyebrow">V14 EXPERIMENT · READ ONLY</div><h2>PLAYER ANALYSIS｜選手分析</h2></div></div>
  <div class="card">
   <div class="status">選手登録番号（4桁）で通算・コース別成績を確認する試験機能です。予想v13・保存した記録には反映しません。出走数が少ない成績には注意してください。</div>
-  <label for="playerRegNo" style="display:block;margin-top:14px">選手登録番号</label>
+  <div style="margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#0d1520">
+  <h3 style="margin:0 0 7px">出場6選手を自動比較</h3>
+  <div class="status">本日の出走表から6選手を読み込みます。進入コースは枠番と異なる場合があります。</div>
+  <div class="grid2" style="margin-top:10px"><div><label>競艇場</label><select id="compareVenue" class="field"></select></div><div><label>レース</label><select id="compareRace" class="field"></select></div></div>
+  <button id="comparePlayers" class="btn" style="margin-top:11px">6選手を比較する</button>
+  <div id="compareStatus" class="status" style="margin-top:10px" aria-live="polite"></div>
+  <div id="compareResult" style="margin-top:10px"></div>
+ </div>
+ <div style="height:1px;background:var(--line);margin:17px 0"></div>
+ <h3>選手を個別に調べる</h3>
+ <label for="playerRegNo" style="display:block;margin-top:14px">選手登録番号</label>
   <div style="display:flex;gap:8px;align-items:end"><input id="playerRegNo" class="field" style="flex:1;min-width:0" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="例：4238"><button id="playerStatsLoad" class="ghost" style="white-space:nowrap;min-height:43px">分析する</button></div>
   <div id="playerStatsStatus" class="status" style="margin-top:12px" aria-live="polite">登録番号を入力して「分析する」を押してください。</div>
   <div id="playerStatsResult" style="margin-top:12px"></div>
@@ -89,5 +99,5 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 <footer>BOAT NEXUS · INDEPENDENT PROJECT<br>データ提供：Boatrace Open API（非公式） · BOAT RACE公式とは無関係です</footer>
 </div>
 <div class="bottom" id="bottomNav"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">▤ RACES</button><button data-page="analysis">✦ AI LAB</button><button data-page="courseStats">▤ COURSE</button><button data-page="playerStats">♙ PLAYER</button><button data-page="manual">✎ PICKS</button><button data-page="records">◎ RECORD</button></div>
-<script src="./app.js?v=player-regex-fix-20261114"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+<script src="./app.js?v=six-player-compare-20261114"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
 </body></html>
