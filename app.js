@@ -268,3 +268,24 @@ $("saveManual").addEventListener("click",()=>{if(selected.length!==3){$("manualM
 $("reload").addEventListener("click",loadData);
 $("venueSelect").addEventListener("change",renderRace);$("raceSelect").addEventListener("change",renderRace);
 buildBoatChoices();renderStats();loadData();
+
+// ページ本体を再取得。保存した予想（localStorage）は保持する。
+async function refreshAppShell(){
+ const btn=document.getElementById('refreshApp');
+ if(btn){btn.disabled=true;btn.textContent='更新中…';}
+ try{
+  if('serviceWorker' in navigator){
+   const reg=await navigator.serviceWorker.getRegistration();
+   if(reg)await reg.update();
+  }
+  if('caches' in window){
+   const keys=await caches.keys();
+   await Promise.all(keys.filter(k=>k.startsWith('boat-navi-')).map(k=>caches.delete(k)));
+  }
+  window.location.replace('./?refresh='+Date.now());
+ }catch(err){
+  if(btn){btn.disabled=false;btn.textContent='↻ 更新';}
+  alert('更新できませんでした。通信を確認してもう一度お試しください。');
+ }
+}
+document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell);
