@@ -110,49 +110,72 @@ function renderRace(){
  const w=preview.wind_speed,wh=preview.wave_height;html+=`<div class="notice">直前情報：風速 ${w??"-"}m · 波高 ${wh??"-"}cm · 展示タイム・進入は取得できた項目のみ表示します。</div>`;
  $("raceDetail").innerHTML=html;oddsHeader("race");
 }
+function metric(x,key){const v=x?.[key];if(v===null||v===undefined||v==='')return null;const n=Number(v);return Number.isFinite(n)?n:null;}
 function scoreRace(r){
- const racers=r?.racers||{},pr=r?.preview?.racers||{};let rows=[];
- for(let n=1;n<=6;n++){const x=racers[n]||{},p=pr[n]||{};const vals=[x.national_win_rate,x.local_win_rate,x.motor_top_2_percent,x.average_start_timing,p.exhibition_time].map(Number);
- const [nat,local,motor,st,ex]=vals;
- // Simple transparent weighted score. Missing fields are excluded and weights re-normalized.
- let parts=[];if(Number.isFinite(nat)&&nat>0)parts.push([nat*4,4]);if(Number.isFinite(local)&&local>0)parts.push([local*2,2]);if(Number.isFinite(motor)&&motor>=0)parts.push([motor*.045,2]);if(Number.isFinite(st)&&st>0)parts.push([(0.25-st)*12,1]);if(Number.isFinite(ex)&&ex>0)parts.push([(7-ex)*5,1]);
- const score=parts.length?parts.reduce((a,b)=>a+b[0],0)/parts.reduce((a,b)=>a+b[1],0):0;
- rows.push({n,name:x.name||"選手情報なし",score,parts:parts.length,stats:x});}
+ const racers=r?.racers||{},preview=r?.preview||{},pr=preview.racers||{};
+ const weights={national_win_rate:.24,local_win_rate:.18,motor_top_2_percent:.20,average_start_timing:.14,exhibition_time:.14,local_top_3_percent:.10};
+ const laneBase=[.17,.09,.04,0,-.04,-.08];
+ const rows=[];
+ for(let n=1;n<=6;n++){
+  const x=racers[n]||{},p=pr[n]||{};
+  const fields=[
+   [metric(x,'national_win_rate'),.24,v=>Math.max(0,Math.min(1,v/9))],
+   [metric(x,'local_win_rate'),.18,v=>Math.max(0,Math.min(1,v/9))],
+   [metric(x,'motor_top_2_percent'),.20,v=>Math.max(0,Math.min(1,v/70))],
+   [metric(x,'average_start_timing'),.14,v=>Math.max(0,Math.min(1,(.30-v)/.25))],
+   [metric(p,'exhibition_time'),.14,v=>Math.max(0,Math.min(1,(7.4-v)/1.0))],
+   [metric(x,'local_top_3_percent'),.10,v=>Math.max(0,Math.min(1,v/85))]
+  ];
+  const valid=fields.filter(([v])=>v!==null&&v>0);
+  const total=valid.reduce((sum,[,w])=>sum+w,0);
+  const base=total?valid.reduce((sum,[v,w,f])=>sum+w*f(v),0)/total:.5;
+  const score=base+laneBase[n-1];
+  rows.push({n,name:x.name||'選手情報なし',score,parts:valid.length,coverage:Math.round(total*100),stats:x});
+ }
  return rows.sort((a,b)=>b.score-a.score);
+}
+function v13Combinations(r,venue,race){
+ const ranked=scoreRace(r),t=trifectaOdds(venue,race);
+ const entries=permutations3(ranked).map(([a,b,c])=>{
+  const raw=Math.exp(3.5*(a.score*.53+b.score*.30+c.score*.17)+(.16*(a.n===1)));
+  return {pick:a.n+'-'+b.n+'-'+c.n,raw,boats:[a.n,b.n,c.n]};
+ });
+ const sum=entries.reduce((n,x)=>n+x.raw,0);
+ return entries.map(x=>{
+  const probability=x.raw/sum,odds=oddsValue(t,x.pick);
+  return {...x,probability,odds,ev:odds?probability*odds:null};
+ });
 }
 function renderAnalysis(){oddsHeader("ai");
  const r=selectedRace("aiVenue","aiRace");if(!r){$("analysisResult").textContent="対象レースがありません。";return;}
  const scores=scoreRace(r),max=scores[0]?.score||1;
- $("analysisResult").innerHTML=`<div class="eyebrow">REFERENCE SCORE · NOT WIN PROBABILITY</div>`+scores.map((x,i)=>`<div class="boatrow"><div>${lane(x.n)}<b>${x.name}</b><div class="tiny muted">${x.parts}項目で評価</div></div><div style="width:43%;text-align:right"><b class="gold">${x.score.toFixed(2)}</b><div style="height:5px;background:#283547;border-radius:8px;margin-top:5px"><div style="height:5px;width:${Math.max(2,x.score/max*100)}%;background:linear-gradient(90deg,#a98548,#e2c88f);border-radius:8px"></div></div></div></div>`).join("")+`<div class="notice">スコアは出走表・取得できた直前情報を単純加重した参考値です。オッズ、展開、気象の変化、欠損値を十分に補正していません。的中確率や利益を保証するものではありません。</div>`;
+ $("analysisResult").innerHTML=`<div class="eyebrow">V13 REFERENCE SCORE · NOT WIN PROBABILITY</div>`+scores.map((x,i)=>`<div class="boatrow"><div>${lane(x.n)}<b>${x.name}</b><div class="tiny muted">${x.parts}項目で評価</div></div><div style="width:43%;text-align:right"><b class="gold">${x.score.toFixed(2)}</b><div style="height:5px;background:#283547;border-radius:8px;margin-top:5px"><div style="height:5px;width:${Math.max(2,x.score/max*100)}%;background:linear-gradient(90deg,#a98548,#e2c88f);border-radius:8px"></div></div></div></div>`).join("")+`<div class="notice">スコアは出走表・取得できた直前情報を単純加重した参考値です。オッズ、展開、気象の変化、欠損値を十分に補正していません。的中確率や利益を保証するものではありません。</div>`;
 }
 let generatedTickets=[];
 function permutations3(items){const out=[];for(const a of items)for(const b of items)if(b.n!==a.n)for(const c of items)if(c.n!==a.n&&c.n!==b.n)out.push([a,b,c]);return out;}
 function generateTickets(){
- const r=selectedRace("aiVenue","aiRace");
- if(!r){$("ticketResult").innerHTML='<div class="notice">対象レースのデータがありません。</div>';return;}
+ const r=selectedRace('aiVenue','aiRace');
+ if(!r){$('ticketResult').innerHTML='<div class="notice">対象レースのデータがありません。</div>';return;}
  const ranked=scoreRace(r);
- if(ranked.length!==6||ranked.every(x=>x.parts===0)){$("ticketResult").innerHTML='<div class="notice">選手データが不足しているため、買い目を作成できません。</div>';return;}
- const byLane=new Map(ranked.map(x=>[x.n,x]));
- // 参考スコアを艇間比較用に0〜1へ正規化。枠番補正も小さく加える簡易ルール。
- const vals=ranked.map(x=>x.score),min=Math.min(...vals),max=Math.max(...vals),range=max-min||1;
- const laneBonus={1:.18,2:.10,3:.04,4:0,5:-.04,6:-.08};
- const combos=permutations3(ranked).map(([a,b,c])=>{
-  const norm=x=>(x.score-min)/range;
-  const value=norm(a)*.52+norm(b)*.30+norm(c)*.18+laneBonus[a.n];
-  return {pick:`${a.n}-${b.n}-${c.n}`,value,boats:[a.n,b.n,c.n]};
- }).sort((a,b)=>b.value-a.value);
- const count=Number($("ticketCount").value),unit=Number($("ticketUnit").value);
- generatedTickets=combos.slice(0,count).map((x,i)=>({...x,rank:i+1,category:i===0?"本命":i<4?"対抗":"押さえ・穴",stake:unit}));
- const total=unit*generatedTickets.length;
- const venueId=$("aiVenue").value,venueName=STADIUMS[Number(venueId)]||"競艇場";
- $("ticketResult").innerHTML=`<div class="row" style="margin:12px 0"><b>${venueName} ${$("aiRace").value}R</b><span class="badge">${count}点 / ${yen(total)}</span></div>`+
- generatedTickets.map(x=>`<div class="ticket"><div><span class="ticket-rank">${x.category} · ${x.rank}番目</span><b>${x.pick}</b><div class="tiny muted" data-ticket-odds="${x.pick}">オッズ未取得</div></div><span class="muted">${yen(x.stake)}</span></div>`).join("")+
- `<div class="notice">順位スコアと簡易的な1コース補正で並べた買い目候補です。オッズ・進入変化・選手コメント等は十分に反映していません。確率や期待値を示すものではありません。</div><button id="saveAutoTickets" class="btn" style="margin-top:12px">この${count}点を予想記録に保存</button><div id="autoSaveMessage" class="status"></div>`;
+ if(ranked.length!==6||ranked.every(x=>x.parts===0)){$('ticketResult').innerHTML='<div class="notice">選手データが不足しているため、買い目を作成できません。</div>';return;}
+ const venueId=$('aiVenue').value,raceId=$('aiRace').value;
+ const combos=v13Combinations(r,venueId,raceId),hasOdds=combos.some(x=>x.odds!==null);
+ // 期待値を過信しないよう、確率順位を主体にしてオッズ情報は控えめに反映。
+ const rankedCombos=combos.map(x=>{
+  const appeal=hasOdds&&x.ev!==null?Math.max(-1,Math.min(1,Math.log(Math.max(.01,x.ev)))):0;
+  return {...x,priority:Math.log(x.probability)+.4*appeal};
+ }).sort((a,b)=>b.priority-a.priority);
+ const count=Math.max(1,Math.min(120,Number($('ticketCount').value)||10)),unit=Number($('ticketUnit').value);
+ generatedTickets=rankedCombos.slice(0,count).map((x,i)=>({...x,rank:i+1,category:i===0?'本命':i<4?'対抗':'押さえ・穴',stake:unit}));
+ const total=unit*generatedTickets.length,venueName=STADIUMS[Number(venueId)]||'競艇場';
+ $('ticketResult').innerHTML='<div class="row" style="margin:12px 0"><b>'+venueName+' '+raceId+'R · v13参考予想</b><span class="badge">'+count+'点 / '+yen(total)+'</span></div>'+
+ generatedTickets.map(x=>'<div class="ticket"><div><span class="ticket-rank">'+x.category+' · '+x.rank+'番目</span><b>'+x.pick+'</b><div class="tiny muted">モデル内の相対比率 '+(x.probability*100).toFixed(2)+'%（未検証）</div><div class="tiny muted" data-ticket-odds="'+x.pick+'">オッズ未取得</div>'+(x.ev!==null?'<div class="tiny muted">参考期待倍率 '+x.ev.toFixed(2)+'（未検証）</div>':'')+'</div><span class="muted">'+yen(x.stake)+'</span></div>').join('')+
+ '<div class="notice">v13試験版：能力・当地・モーター・ST・展示・枠を組み合わせています。相対比率は過去データで校正した的中確率ではありません。'+(hasOdds?'取得できた非公式オッズを控えめに反映しています。':'オッズ未取得のため配当妙味は評価していません。')+' 利益や的中は保証しません。</div><button id="saveAutoTickets" class="btn" style="margin-top:12px">この'+count+'点を予想記録に保存</button><div id="autoSaveMessage" class="status"></div>';
  renderTicketOdds();
- $("saveAutoTickets").addEventListener("click",()=>{
+ $('saveAutoTickets').addEventListener('click',()=>{
   const stamp=new Date().toISOString();
-  generatedTickets.forEach(x=>records.push({type:"auto",venue:venueId,venueName,race:$("aiRace").value,kind:"3連単・自動案",pick:x.pick,stake:x.stake,createdAt:stamp,hit:false,payout:0}));
-  localStorage.setItem("bn_records",JSON.stringify(records));renderStats();$("autoSaveMessage").textContent=`${generatedTickets.length}点を記録に保存しました。`;
+  generatedTickets.forEach(x=>records.push({type:'auto',venue:venueId,venueName,race:raceId,kind:'3連単・v13参考案',pick:x.pick,stake:x.stake,createdAt:stamp,hit:false,payout:0}));
+  localStorage.setItem('bn_records',JSON.stringify(records));renderStats();$('autoSaveMessage').textContent=generatedTickets.length+'点を記録に保存しました。';
  });
 }
 function buildBoatChoices(){for(let n=1;n<=6;n++){const b=document.createElement("button");b.className="pick";b.dataset.boat=n;b.innerHTML=lane(n);b.addEventListener("click",()=>{if(selected.includes(n))selected=selected.filter(x=>x!==n);else if(selected.length<3)selected.push(n);else selected=[n];paintChoices();});$("boatChoices").append(b);}}
