@@ -537,3 +537,32 @@ async function refreshAppShell(){
  }
 }
 document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell);
+
+/* v14 trial: data exploration only, v13 scoring remains unchanged */
+(function(){
+ const venue=$('courseStatsVenue'),button=$('courseStatsLoad'),status=$('courseStatsStatus'),result=$('courseStatsResult');
+ if(!venue||!button)return;
+ Object.entries(STADIUMS).forEach(([id,name])=>{const o=document.createElement('option');o.value=id;o.textContent=id.padStart(2,'0')+' '+name;venue.appendChild(o);});
+ venue.value='12';
+ const safeNumber=x=>typeof x==='number'&&Number.isFinite(x)?x:null;
+ button.addEventListener('click',async()=>{
+  const id=venue.value.padStart(2,'0'),url='https://boatrace-db.jp/api/stadium/'+id+'/course/';
+  status.textContent='公開データを確認中…';result.replaceChildren();button.disabled=true;
+  try{
+   const response=await fetch(url,{cache:'no-store'});
+   if(!response.ok)throw new Error('HTTP '+response.status);
+   const obj=await response.json();
+   if(!obj||typeof obj!=='object')throw new Error('データ形式を確認できません');
+   // Unknown schemas must not be interpreted as percentages.
+   const pre=document.createElement('pre');
+   pre.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;background:#0b1018;border:1px solid #293648;padding:12px;border-radius:10px;font-size:11px';
+   pre.textContent=JSON.stringify(obj,null,2).slice(0,12000);
+   const note=document.createElement('div');note.className='status';
+   note.textContent='取得成功：APIの元データを表示中（数値の意味・集計期間は未検証）。予想には未使用です。';
+   result.append(note,pre);
+   status.textContent=STADIUMS[Number(id)]+'のコース統計データを取得できました。';
+  }catch(e){
+   status.textContent='データを取得できませんでした（'+e.message+'）。公式サイトの場別データを確認してください。';
+  }finally{button.disabled=false;}
+ });
+})();
