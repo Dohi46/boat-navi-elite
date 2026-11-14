@@ -654,7 +654,7 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
  }
  async function load(){
   const number=input.value.trim();
-  if(!/^\\d{4}$/.test(number)){status.textContent='4桁の選手登録番号を入力してください。';return;}
+  if(!/^\d{4}$/.test(number)){status.textContent='4桁の選手登録番号を入力してください。';return;}
   button.disabled=true;status.textContent='選手データを確認中…';host.replaceChildren();
   try{
    let obj=null,fromCache=false;
