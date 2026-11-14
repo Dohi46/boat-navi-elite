@@ -336,10 +336,10 @@ function renderStats(){
   const venueBox=document.createElement("section");
   venueBox.className="card";venueBox.style.cssText="margin-top:14px;padding:0;overflow:hidden";
   const venueTop=document.createElement("div");
-  venueTop.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px 0";
+  venueTop.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0";
   const venueTitle=document.createElement("b");venueTitle.textContent=v.name;
   const venueDelete=document.createElement("button");venueDelete.className="ghost";
-  venueDelete.style.cssText="border-color:#8d4b59;color:#e59aa5;padding:7px 9px;font-size:12px;min-height:32px;white-space:nowrap";
+  venueDelete.style.cssText="border-color:#8d4b59;color:#e59aa5;padding:6px 9px;font-size:11px;min-height:30px;white-space:nowrap";
   venueDelete.textContent="場ごと削除";
   venueDelete.addEventListener("click",()=>{
    const groupItems=[...v.races.values()].flat();
@@ -348,27 +348,27 @@ function renderStats(){
    records=records.filter(x=>!removeSet.has(x));
    localStorage.setItem("bn_records",JSON.stringify(records));renderStats();
   });
-  venueTop.append(venueTitle,venueDelete);venueBox.append(venueTop);
+  venueTop.append(venueTitle);
   const venueDetails=document.createElement("details");
   venueDetails.open=false;
   const venueSummary=document.createElement("summary");
-  venueSummary.style.cssText="display:flex;align-items:center;justify-content:flex-end;gap:10px;cursor:pointer;list-style:none;padding:8px 14px 14px;min-height:44px;font-weight:700";
+  venueSummary.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;padding:13px 14px;min-height:48px;font-weight:700";
   const raceTotal=[...v.races.values()].reduce((n,a)=>n+a.length,0);
   const venueBadge=document.createElement("span");venueBadge.className="badge";
   venueBadge.textContent=`${v.races.size}レース・${raceTotal}点　⌄`;
-  venueSummary.append(venueBadge);venueDetails.append(venueSummary);
-  const venueContent=document.createElement("div");venueContent.style.cssText="padding:0 12px 12px";
+  venueSummary.append(venueTitle,venueBadge);venueDetails.append(venueSummary);
+  const venueContent=document.createElement("div");venueContent.style.cssText="padding:0 10px 10px";
   [...v.races.entries()].sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([race,items])=>{
    const raceBox=document.createElement("div");
-   raceBox.style.cssText="margin-top:10px;padding:0 10px;border:1px solid var(--line);border-radius:14px;background:rgba(7,13,23,.28);overflow:hidden";
+   raceBox.style.cssText="margin-top:6px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:rgba(7,13,23,.28);overflow:hidden";
    const raceDetails=document.createElement("details");raceDetails.open=false;
    const raceHead=document.createElement("summary");
-   raceHead.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none;padding:13px 2px;font-weight:700";
+   raceHead.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none;padding:10px 2px;min-height:42px;font-weight:700";
    const raceNumber=race.split('|')[0],raceDate=race.split('|')[1];
-   const raceTitle=document.createElement("b");raceTitle.textContent=`${raceNumber}R (${raceDate})`;
+   const raceTitle=document.createElement("b");raceTitle.textContent=`${raceNumber}R${raceDate&&raceDate!=="undefined"&&raceDate!=="null"?" · "+raceDate:""}`;
    const raceTotal=items.reduce((n,o)=>n+Number(o.record.stake||0),0);
    const raceBadge=document.createElement("span");raceBadge.className="tiny muted";
-   raceBadge.textContent=`${items.length}点・合計 ${yen(raceTotal)}　⌄`;
+   raceBadge.textContent=`${items.length}点 · ${yen(raceTotal)}　⌄`;
    raceHead.append(raceTitle,raceBadge);raceDetails.append(raceHead);
    const raceContent=document.createElement("div");
    items.forEach(({record:x,index},i)=>{
@@ -411,7 +411,7 @@ function renderStats(){
    });
    raceDetails.append(raceContent);
    const raceActions=document.createElement("div");
-   raceActions.style.cssText="display:flex;justify-content:flex-end;padding:0 0 10px";
+   raceActions.style.cssText="display:flex;justify-content:flex-end;padding:8px 0 10px";
    const deleteRace=document.createElement("button");deleteRace.className="ghost";
    deleteRace.style.cssText="border-color:#8d4b59;color:#e59aa5;padding:6px 9px;font-size:12px;min-height:30px";
    deleteRace.textContent="このレースを一括削除";
@@ -467,9 +467,9 @@ function renderStats(){
    raceActions.append(autoRace);
    raceActions.append(enterRace);
    raceActions.append(deleteRace);
-   raceBox.append(raceDetails,raceActions);venueContent.append(raceBox);
+   raceDetails.append(raceActions);raceBox.append(raceDetails);venueContent.append(raceBox);
   });
-  venueDetails.append(venueContent);venueBox.append(venueDetails);host.append(venueBox);
+  const venueFooter=document.createElement("div");venueFooter.style.cssText="display:flex;justify-content:flex-end;padding:10px 2px 2px";venueFooter.append(venueDelete);venueContent.append(venueFooter);venueDetails.append(venueContent);venueBox.append(venueDetails);host.append(venueBox);
  });
 }
 $("runAnalysis").addEventListener("click",renderAnalysis);
