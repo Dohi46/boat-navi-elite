@@ -27,6 +27,37 @@ async function loadData(){
   else setStatus(false,"データ取得に失敗しました。通信環境を確認して再取得してください。詳細: "+err.message);
  }
 }
+/* Near-deadline preview refresh: read-only; never changes v13 or bn_records. */
+let previewRefreshBusy=false,previewRefreshLast=0;
+function selectedRaceCutoffMs(r){
+ const raw=String(r?.closed_at||'');
+ if(/^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/.test(raw)){const ms=Date.parse(raw.replace(' ','T'));return Number.isFinite(ms)?ms:null;}
+ if(/^\d{2}:\d{2}/.test(raw)){const [h,m]=raw.slice(0,5).split(':').map(Number);const d=new Date();d.setHours(h,m,0,0);return d.getTime();}
+ return null;
+}
+async function refreshNearDeadlinePreview(){
+ if(document.hidden||previewRefreshBusy||Date.now()-previewRefreshLast<120000)return;
+ if(!document.getElementById('races')?.classList.contains('active'))return;
+ const venue=$('venueSelect')?.value,race=$('raceSelect')?.value;
+ const before=selectedRace('venueSelect','raceSelect'),cutoff=selectedRaceCutoffMs(before);
+ if(!before||cutoff===null)return;
+ const remaining=cutoff-Date.now();
+ if(remaining<0||remaining>10*60*1000)return;
+ previewRefreshBusy=true;previewRefreshLast=Date.now();
+ try{
+  const res=await fetch(API_TODAY,{cache:'no-store'});
+  if(!res.ok)throw Error('HTTP '+res.status);
+  const fresh=await res.json();
+  if(!fresh?.programs?.stadiums)return;
+  data=fresh;
+  sessionStorage.setItem('bn_today',JSON.stringify({at:Date.now(),data}));
+  if($('venueSelect')?.value===venue&&$('raceSelect')?.value===race&&document.getElementById('races')?.classList.contains('active'))renderRace();
+  $('dataUpdated').textContent='取得 '+new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
+ }catch(e){console.warn('Preview refresh unavailable:',e.message);}
+ finally{previewRefreshBusy=false;}
+}
+setInterval(refreshNearDeadlinePreview,60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshNearDeadlinePreview();});
 function renderVenues(){
  const entries=stadiumEntries();$("venueCount").textContent=entries.length;$("raceCount").textContent=entries.reduce((n,[,s])=>n+Object.keys(getRaces(s)).length,0);
  const host=$("venueList");host.innerHTML="";
