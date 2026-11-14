@@ -553,13 +553,24 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
    if(!response.ok)throw new Error('HTTP '+response.status);
    const obj=await response.json();
    if(!obj||typeof obj!=='object')throw new Error('データ形式を確認できません');
-   // Unknown schemas must not be interpreted as percentages.
-   const pre=document.createElement('pre');
-   pre.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;background:#0b1018;border:1px solid #293648;padding:12px;border-radius:10px;font-size:11px';
-   pre.textContent=JSON.stringify(obj,null,2).slice(0,12000);
-   const note=document.createElement('div');note.className='status';
-   note.textContent='取得成功：APIの元データを表示中（数値の意味・集計期間は未検証）。予想には未使用です。';
-   result.append(note,pre);
+   const courses=Array.isArray(obj.courses)?obj.courses:[];
+   const valid=courses.length>0&&courses.every(c=>Number.isInteger(Number(c.course))&&Number(c.course)>=1&&Number(c.course)<=6&&Number.isFinite(Number(c.win_rate)));
+   if(!valid)throw new Error('コース統計の形式が想定と異なります');
+   const period=document.createElement('div');period.className='status';
+   period.textContent='集計期間：'+(obj.period?.from||'不明')+' 〜 '+(obj.period?.to||'不明')+' ／ 進入コース別の統計';
+   const wrap=document.createElement('div');wrap.style.cssText='overflow-x:auto;margin-top:12px';
+   const table=document.createElement('table');table.style.cssText='width:100%;border-collapse:collapse;font-size:13px;min-width:310px';
+   const head=document.createElement('thead');const hr=document.createElement('tr');
+   ['コース','出走数','1着率','2連対率','3連対率'].forEach(t=>{const th=document.createElement('th');th.textContent=t;th.style.cssText='padding:10px 5px;border-bottom:1px solid #435064;text-align:center;white-space:nowrap';hr.appendChild(th);});head.appendChild(hr);table.appendChild(head);
+   const body=document.createElement('tbody');
+   const fmt=v=>Number.isFinite(Number(v))&&v!==null&&v!==undefined?Number(v).toFixed(1)+'%':'—';
+   courses.slice().sort((a,b)=>Number(a.course)-Number(b.course)).forEach(c=>{
+    const tr=document.createElement('tr');
+    [String(c.course),String(c.starts??'—'),fmt(c.win_rate),fmt(c.place2_rate),fmt(c.place3_rate)].forEach((v,i)=>{const td=document.createElement('td');td.textContent=v;td.style.cssText='padding:11px 5px;border-bottom:1px solid #293648;text-align:center;white-space:nowrap'+(i===2?';color:#dfbd75;font-weight:bold':'');tr.appendChild(td);});
+    body.appendChild(tr);
+   });table.appendChild(body);wrap.appendChild(table);
+   const note=document.createElement('div');note.className='status';note.style.marginTop='12px';note.textContent='※1着率＝そのコースから出走した艇が1着になる割合。2連対率・3連対率はそれぞれ2着以内・3着以内の割合。予想ロジックには未反映です。';
+   result.append(period,wrap,note);
    status.textContent=STADIUMS[Number(id)]+'のコース統計データを取得できました。';
   }catch(e){
    status.textContent='データを取得できませんでした（'+e.message+'）。公式サイトの場別データを確認してください。';
