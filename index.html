@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b1018">
-<meta name="description" content="BOAT NAVI ELITE - 競艇データ分析・予想プラットフォーム">
+<meta name="description" content="BOAT NEXUS - 競艇データ分析・予想プラットフォーム">
 <link rel="manifest" href="manifest.webmanifest">
-<title>BOAT NAVI ELITE</title>
+<title>BOAT NEXUS</title>
 <style>
 :root{--bg:#0b1018;--panel:#121a26;--panel2:#182333;--line:#293648;--gold:#d4b06c;--gold2:#a98548;--text:#f3f4f6;--muted:#9ba8b8;--green:#7ac7a0;--red:#e58c8c}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#263449 0%,var(--bg) 48%);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;min-height:100vh}
@@ -32,10 +32,10 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 </head>
 <body>
 <div class="wrap">
-<header><div><div class="brand">BOAT NAVI <span>ELITE</span></div><div class="sub">RACE INTELLIGENCE · DATA · ANALYSIS</div></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button id="refreshApp" class="ghost" style="padding:9px 12px;font-size:13px;white-space:nowrap">↻ 更新</button><div class="pill">EARLY ACCESS</div></div></header>
+<header><div><div class="brand">BOAT <span>NEXUS</span></div><div class="sub">DATA · RACE INTELLIGENCE · ANALYSIS</div></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button id="refreshApp" class="ghost" style="padding:9px 12px;font-size:13px;white-space:nowrap">↻ 更新</button><div class="pill">EARLY ACCESS</div></div></header>
 <section class="hero">
  <div class="eyebrow">PREMIUM BOAT RACE INTELLIGENCE</div>
- <h1>競艇を、データで読む。</h1>
+ <h1>データをつなぎ、勝利への可能性を探る。</h1>
  <p>全国24場の出走情報を確認し、選手・モーター・展示データを整理。予想と結果を記録して、検証できるプラットフォーム。</p>
  <div class="stats"><div class="stat"><small>本日の開催場</small><b id="venueCount">--</b></div><div class="stat"><small>出走レース</small><b id="raceCount">--</b></div><div class="stat"><small>保存した予想</small><b id="savedCount">0</b></div></div>
 </section>
@@ -75,7 +75,7 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
  <div class="card"><h3>保存した予想</h3><div class="status">各予想の「結果入力」から、実際の3連単結果とその予想の払戻額を入力できます。</div><div id="history" class="status" style="margin-top:10px">まだ記録がありません。</div></div>
  <div class="notice">回収率は入力した払戻額の合計 ÷ 購入予定額の合計で計算します。未入力のレースは成績集計の対象外です。実際の購入・払戻を自動照合する機能ではありません。</div>
 </section>
-<footer>BOAT NAVI ELITE · INDEPENDENT PROJECT<br>データ提供：Boatrace Open API（非公式） · BOAT RACE公式とは無関係です</footer>
+<footer>BOAT NEXUS · INDEPENDENT PROJECT<br>データ提供：Boatrace Open API（非公式） · BOAT RACE公式とは無関係です</footer>
 </div>
 <div class="bottom" id="bottomNav"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">▤ RACES</button><button data-page="analysis">✦ AI LAB</button><button data-page="courseStats">▤ COURSE</button><button data-page="manual">✎ PICKS</button><button data-page="records">◎ RECORD</button></div>
 <script src="./app.js?v=course-table-20261114"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
