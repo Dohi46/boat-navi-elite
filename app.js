@@ -229,7 +229,7 @@ async function settleAllPending(){
  const groups=new Map();
  for(const x of pending){
   const date=recordJstDate(x),venue=String(x.venue??''),race=String(x.race??'');
-  if(!date||!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)||!venue||!race)continue;
+  if(!date||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!venue||!race)continue;
   const key=date+'|'+venue+'|'+race;
   if(!groups.has(key))groups.set(key,{date,venue,race,items:[]});
   groups.get(key).items.push(x);
