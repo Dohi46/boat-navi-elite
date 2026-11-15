@@ -195,9 +195,15 @@ function renderAnalysis(){oddsHeader("ai");
 function exhibitionPhase(r){
  const p=r?.preview?.racers||{};
  const count=[1,2,3,4,5,6].filter(n=>metric(p[n],'exhibition_time')!==null).length;
- return {phase:count===6?'after':count===0?'before':'partial',count};
+ const cutoff=selectedRaceCutoffMs(r);
+ const raceDate=r?.date;
+ const today=jstDay();
+ // A prediction created after closing cannot be used as pre-race evidence.
+ // Unknown cutoff is also kept separate rather than assumed pre-race.
+ const phase=raceDate&&raceDate!==today?'post':cutoff===null?'unknown':Date.now()>=cutoff?'post':count===6?'after':count===0?'before':'partial';
+ return {phase,count};
 }
-function phaseName(p){return p==='after'?'展示後':p==='before'?'展示前':p==='partial'?'展示一部取得':'未分類';}
+function phaseName(p){return p==='after'?'展示後':p==='before'?'展示前':p==='partial'?'展示一部取得':p==='post'?'締切後（検証対象外）':p==='unknown'?'締切不明（要確認）':'未分類';}
 let generatedTickets=[];
 function permutations3(items){const out=[];for(const a of items)for(const b of items)if(b.n!==a.n)for(const c of items)if(c.n!==a.n&&c.n!==b.n)out.push([a,b,c]);return out;}
 function generateTickets(){
@@ -386,7 +392,7 @@ function renderStats(){
  if(phaseHost){
   phaseHost.replaceChildren();
   const summary=document.createElement('div');summary.className='tiny muted';summary.textContent='結果入力済みの予想のみ集計。古い記録は未分類。展示一部取得は別集計。';phaseHost.append(summary);
-  ['before','after','partial',null].forEach(phase=>{
+  ['before','after','partial','post','unknown',null].forEach(phase=>{
    const all=shown.filter(x=>(x.predictionPhase||null)===phase);
    const done=all.filter(x=>x.resultEntered===true),hits=done.filter(x=>x.hit===true).length;
    const stake=done.reduce((n,x)=>n+(Number(x.stake)||0),0),payout=done.reduce((n,x)=>n+(Number(x.payout)||0),0);
