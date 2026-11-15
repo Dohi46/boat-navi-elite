@@ -208,10 +208,19 @@ function generateTickets(){
  }).sort((a,b)=>b.priority-a.priority);
  const count=Math.max(1,Math.min(120,Number($('ticketCount').value)||10)),unit=Number($('ticketUnit').value);
  generatedTickets=rankedCombos.slice(0,count).map((x,i)=>({...x,rank:i+1,category:i===0?'本命':i<4?'対抗':'押さえ・穴',stake:unit}));
+ const comparisonTen=rankedCombos.slice(0,10);
  const total=unit*generatedTickets.length,venueName=STADIUMS[Number(venueId)]||'競艇場';
  $('ticketResult').innerHTML='<div class="row" style="margin:12px 0"><b>'+venueName+' '+raceId+'R · v13参考予想</b><span class="badge">'+count+'点 / '+yen(total)+'</span></div>'+
  generatedTickets.map(x=>'<div class="ticket"><div><span class="ticket-rank">'+x.category+' · '+x.rank+'番目</span><b>'+x.pick+'</b><div class="tiny muted">モデル内の相対比率 '+(x.probability*100).toFixed(2)+'%（未検証）</div><div class="tiny muted" data-ticket-odds="'+x.pick+'">オッズ未取得</div>'+(x.ev!==null?'<div class="tiny muted">参考期待倍率 '+x.ev.toFixed(2)+'（未検証）</div>':'')+'</div><span class="muted">'+yen(x.stake)+'</span></div>').join('')+
  '<div class="notice">v13試験版：能力・当地・モーター・ST・展示・枠を組み合わせています。相対比率は過去データで校正した的中確率ではありません。'+(hasOdds?'取得できた非公式オッズを控えめに反映しています。':'オッズ未取得のため配当妙味は評価していません。')+' 利益や的中は保証しません。</div><button id="saveAutoTickets" class="btn" style="margin-top:12px">この'+count+'点を予想記録に保存</button><div id="autoSaveMessage" class="status"></div>';
+ // Comparison is display-only; only the selected main picks are saved.
+ const compare=document.createElement('details');compare.style.cssText='margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:12px';
+ const summary=document.createElement('summary');summary.style.cssText='cursor:pointer;font-weight:700;color:#e7bd68';summary.textContent='比較用：10点予想を見る（保存対象外）';
+ compare.append(summary);
+ const caption=document.createElement('div');caption.className='tiny muted';caption.style.margin='10px 0';caption.textContent='同じv13順位で上位10点を表示。100円ずつなら1,000円／レース。保存ボタンはメインの'+count+'点だけを保存します。';
+ compare.append(caption);
+ comparisonTen.forEach((x,i)=>{const row=document.createElement('div');row.className='row';row.style.cssText='padding:7px 0;border-bottom:1px solid var(--line);font-size:13px';const name=document.createElement('b');name.textContent=(i+1)+'位 '+x.pick+(i<count?' · メイン':' · 比較のみ');const amount=document.createElement('span');amount.className='tiny muted';amount.textContent=yen(unit);row.append(name,amount);compare.append(row);});
+ $('ticketResult').append(compare);
  renderTicketOdds();
  $('saveAutoTickets').addEventListener('click',()=>{
   const stamp=new Date().toISOString();
