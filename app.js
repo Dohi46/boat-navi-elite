@@ -505,7 +505,7 @@ async function refreshEvolution(){
   const m=$('evoMetrics');
   if(d.state==='evaluated_not_deployed'){
    const pct=n=>typeof n==='number'?(n*100).toFixed(1)+'%':'—';
-   m.textContent='学習 '+(d.trainingRaces??'—')+'レース ／ 検証 '+(d.testRaces??'—')+'レース ／ 1着予測的中率 '+pct(d.top1Accuracy)+' ／ 6艇対数損失 '+(d.sixWayLogLoss??'—')+'（単純な艇番基準 '+(d.simpleLaneBaselineLogLoss??'—')+'）。本番予想には未採用。';
+   m.textContent='学習 '+(d.trainingRaces??'—')+'レース ／ 検証 '+(d.testRaces??'—')+'レース ／ LightGBM 1着的中率 '+pct(d.top1Accuracy)+' ／ v13 1着的中率 '+pct(d.v13Top1Accuracy)+' ／ 6艇対数損失 '+(d.sixWayLogLoss??'—')+'（単純な艇番基準 '+(d.simpleLaneBaselineLogLoss??'—')+'）。本番予想には未採用。';
   }else m.textContent='必要条件：300レース・10日分。現在 '+(d.settledFeatureRaces??0)+'レース・'+(d.distinctDates??0)+'日分。';
  }catch(e){state.textContent='学習状況を取得できませんでした。通信状態を確認して更新してね。';$('evoMetrics').textContent='';}
 }
