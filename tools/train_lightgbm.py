@@ -8,6 +8,25 @@ FEATURES = ["lane", "venue", "national_win_rate", "local_win_rate",
             "exhibition_time"]
 OUT = Path("data/models/lightgbm-status.json")
 
+def v13_top_lane(rows):
+    """Reproduce the frozen v13 lane scoring rule from pre-race snapshots."""
+    bases = [.17, .09, .04, 0, -.04, -.08]
+    # rows: lane, venue, national, local, motor, start, local top3, exhibition
+    weights = [(2, .24, lambda v: max(0, min(1, v/9))),
+               (3, .18, lambda v: max(0, min(1, v/9))),
+               (4, .20, lambda v: max(0, min(1, v/70))),
+               (5, .14, lambda v: max(0, min(1, (.30-v)/.25))),
+               (7, .14, lambda v: max(0, min(1, (7.4-v)/1))),
+               (6, .10, lambda v: max(0, min(1, v/85)))]
+    scores = []
+    for i, row in enumerate(rows):
+        valid = [(w, fn(row[idx])) for idx, w, fn in weights
+                 if row[idx] is not None and not __import__('math').isnan(row[idx]) and row[idx] > 0]
+        total = sum(w for w, _ in valid)
+        score = (sum(w*v for w, v in valid)/total if total else .5) + bases[i]
+        scores.append(score)
+    return int(max(range(6), key=lambda i: scores[i])) + 1
+
 def main():
     import numpy as np
     import lightgbm as lgb
@@ -58,15 +77,17 @@ def main():
             p /= p.sum(axis=1, keepdims=True)
             labels = np.array([r[4]-1 for r in test])
             accuracy = float(np.mean(np.argmax(p, axis=1) == labels))
+            v13_predictions = [v13_top_lane(r[3]) for r in test]
+            v13_accuracy = float(np.mean([pred == r[4] for pred, r in zip(v13_predictions, test)]))
             loss = float(-np.mean(np.log(p[np.arange(len(labels)), labels])))
             baseline = np.tile(np.array([.5, .17, .12, .09, .07, .05]), (len(test), 1))
             baseline_loss = float(-np.mean(np.log(baseline[np.arange(len(labels)), labels])))
             status.update(state="evaluated_not_deployed", trainingRaces=len(train), testRaces=len(test),
                           trainingThrough=max(train_dates), testingFrom=min(r[0] for r in test),
-                          top1Accuracy=round(accuracy, 4), sixWayLogLoss=round(loss, 5),
+                          top1Accuracy=round(accuracy, 4), v13Top1Accuracy=round(v13_accuracy, 4),\n                          v13Comparison='same chronological held-out races; top-1 only', sixWayLogLoss=round(loss, 5),
                           simpleLaneBaselineLogLoss=round(baseline_loss, 5),
                           betterThanLaneBaseline=loss < baseline_loss,
-                          note="Baseline is a simple lane prior, NOT v13. No automatic model promotion.")
+                          note="v13 top-1 accuracy comparison uses same held-out races. Model is not deployed. Trifecta ROI is not compared.")
             # Keep experimental model separate. Never overwrite v13 or live predictions.
             Path("data/models").mkdir(parents=True, exist_ok=True)
             model.booster_.save_model("data/models/lightgbm-experimental.txt")
