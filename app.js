@@ -491,6 +491,25 @@ function insightsTable(host,columns,rows){
  rows.forEach(cells=>{const row=document.createElement('tr');cells.forEach((v,i)=>{const td=document.createElement('td');td.textContent=String(v);td.style.cssText='padding:10px 5px;text-align:'+(i?'right':'left')+';border-bottom:1px solid var(--line)';row.append(td);});table.append(row);});
  scroller.append(table);host.append(scroller);
 }
+async function refreshHistorical(){
+ const state=$('histState');if(!state)return;
+ state.textContent='過去データの学習結果を取得中…';
+ try{
+  const res=await fetch('./data/models/historical-status.json?ts='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(12000)});
+  if(!res.ok)throw Error('HTTP '+res.status);
+  const d=await res.json();
+  $('histDays').textContent=typeof d.archivedDays==='number'?d.archivedDays+' / 365':'—';
+  $('histRaces').textContent=typeof d.raceCount==='number'?d.raceCount.toLocaleString('ja-JP'):'—';
+  const labels={collecting_data:'📥 収集・学習準備中',evaluated_not_deployed:'🧪 学習・評価済み（本番未採用）'};
+  state.textContent=(labels[d.state]||'状態：'+String(d.state||'不明'))+' ／ 最終更新：'+(d.updatedAt?new Date(d.updatedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}):'不明');
+  const pct=n=>typeof n==='number'?(100*n).toFixed(1)+'%':'—';
+  $('histMetrics').textContent=d.state==='evaluated_not_deployed'?
+   '学習 '+(d.trainingRaces??'—')+'レース ／ 検証 '+(d.testRaces??'—')+'レース ／ LightGBM 1着的中率 '+pct(d.top1Accuracy)+' ／ 1号艇基準 '+pct(d.lane1BaselineAccuracy)+' ／ 6艇対数損失 '+(d.sixWayLogLoss??'—')+'。選手情報なしの競艇場・艇番モデルであり、v13との直接比較ではありません。':
+   '現在の取得分を蓄積中。学習条件は30日以上・1,000レース以上。';
+ }catch(e){state.textContent='取得できませんでした。通信状態を確認して更新してね。';$('histMetrics').textContent='';}
+}
+$('histRefresh')?.addEventListener('click',refreshHistorical);
+refreshHistorical();
 async function refreshEvolution(){
  const state=$('evoState');if(!state)return;
  state.textContent='GitHubの学習結果を取得中…';
