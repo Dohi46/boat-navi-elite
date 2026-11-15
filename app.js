@@ -530,6 +530,42 @@ async function refreshEvolution(){
 }
 $('evoRefresh')?.addEventListener('click',refreshEvolution);
 refreshEvolution();
+function renderAiRoiChart(items){
+ const host=$('insightsRoiChart');if(!host)return;
+ host.replaceChildren();
+ const daily=new Map();
+ items.filter(x=>x.type==='auto'&&x.resultEntered===true).forEach(x=>{
+  const date=recordJstDate(x),stake=Number(x.stake)||0,payout=Number(x.payout)||0;
+  if(!date||stake<=0)return;
+  const v=daily.get(date)||{stake:0,payout:0};v.stake+=stake;v.payout+=payout;daily.set(date,v);
+ });
+ const dates=[...daily.keys()].sort();
+ if(!dates.length){host.textContent='この期間に確定済みのAI予想がありません。';return;}
+ let stake=0,payout=0;
+ const points=dates.map(date=>{const v=daily.get(date);stake+=v.stake;payout+=v.payout;return {date,roi:100*payout/stake};});
+ const W=350,H=205,left=42,right=12,top=18,bottom=39;
+ const values=points.map(p=>p.roi).concat([100]);
+ const lo=Math.max(0,Math.floor((Math.min(...values)-10)/20)*20),hi=Math.ceil((Math.max(...values)+10)/20)*20;
+ const x=i=>left+(W-left-right)*(points.length===1?.5:i/(points.length-1));
+ const y=v=>top+(H-top-bottom)*(hi-v)/(hi-lo||1);
+ const ns='http://www.w3.org/2000/svg';
+ const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.setAttribute('role','img');
+ svg.setAttribute('aria-label','AI予想の累積回収率。'+points.length+'日分。最終 '+points.at(-1).roi.toFixed(1)+'%。');
+ svg.style.cssText='display:block;width:100%;max-width:700px;height:auto';
+ const add=(tag,attrs,content)=>{const el=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));if(content!==undefined)el.textContent=content;svg.append(el);return el;};
+ for(const value of [lo,100,hi]){
+  add('line',{x1:left,y1:y(value),x2:W-right,y2:y(value),stroke:value===100?'#d4b06c':'#344457','stroke-width':value===100?1.6:1,'stroke-dasharray':value===100?'5 4':'2 5'});
+  add('text',{x:4,y:y(value)+4,fill:'#9ba8b8','font-size':11},value+'%');
+ }
+ const coords=points.map((p,i)=>x(i)+','+y(p.roi)).join(' ');
+ add('polyline',{points:coords,fill:'none',stroke:'#7ac7a0','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'});
+ points.forEach((p,i)=>{if(points.length<=14||i===points.length-1)add('circle',{cx:x(i),cy:y(p.roi),r:3,fill:'#7ac7a0'});});
+ add('text',{x:left,y:H-13,fill:'#9ba8b8','font-size':11},dates[0].slice(5));
+ add('text',{x:W-right,y:H-13,fill:'#9ba8b8','font-size':11,'text-anchor':'end'},dates.at(-1).slice(5));
+ host.append(svg);
+ const note=document.createElement('div');note.className='status';note.textContent='累積回収率 '+points.at(-1).roi.toFixed(1)+'% ／ '+points.length+'日分 ／ 確定済みAI買い目のみ（仮想購入）。点数が多い日ほど集計への影響が大きくなります。';
+ host.append(note);
+}
 function renderInsights(){
  const status=$('insightsStatus');if(!status)return;
  const period=$('insightsPeriod').value,source=$('insightsSource').value;
@@ -549,6 +585,7 @@ function renderInsights(){
  const hit=g=>g.hitRate===null?'—':g.hitRate.toFixed(1)+'%';
  const venues=group(x=>STADIUMS[Number(x.venue)]||x.venueName||'不明').filter(g=>g.count>=10).sort((a,b)=>(b.returnRate??-1)-(a.returnRate??-1));
  insightsTable($('insightsVenues'),['競艇場','確定/全件','的中率','回収率','仮想収支'],venues.map(g=>[g.name,g.count+'/'+g.all,hit(g),rate(g),yen(g.profit)]));
+ renderAiRoiChart(subset);
  const days=group(recordJstDate).filter(g=>g.count>0).sort((a,b)=>b.name.localeCompare(a.name));
  insightsTable($('insightsDays'),['開催日','確定/全件','的中率','回収率','仮想収支'],days.map(g=>[g.name,g.count+'/'+g.all,hit(g),rate(g),yen(g.profit)]));
  const phaseLabels={before:'展示前',after:'展示後',partial:'展示一部取得',post:'締切後（検証対象外）',unknown:'締切不明','':'未分類'};
