@@ -5074,5 +5074,16 @@
       "reason": "already_closed"
     }
   ],
-  "lastRunAt": "2026-11-15T01:59:43.081Z"
+  "lastRunAt": "2026-11-15T01:59:43.081Z",
+  "settlement": {
+    "checkedAt": "2026-11-15T02:03:41.375Z",
+    "settledRaces": 0,
+    "pendingRaces": 134,
+    "settledPicks": 0,
+    "hitPicks": 0,
+    "hitRatePercent": null,
+    "stake": 0,
+    "payout": 0,
+    "returnRatePercent": null
+  }
 }
