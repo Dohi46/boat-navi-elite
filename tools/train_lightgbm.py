@@ -84,7 +84,8 @@ def main():
             baseline_loss = float(-np.mean(np.log(baseline[np.arange(len(labels)), labels])))
             status.update(state="evaluated_not_deployed", trainingRaces=len(train), testRaces=len(test),
                           trainingThrough=max(train_dates), testingFrom=min(r[0] for r in test),
-                          top1Accuracy=round(accuracy, 4), v13Top1Accuracy=round(v13_accuracy, 4),\n                          v13Comparison='same chronological held-out races; top-1 only', sixWayLogLoss=round(loss, 5),
+                          top1Accuracy=round(accuracy, 4), v13Top1Accuracy=round(v13_accuracy, 4),
+                          v13Comparison='same chronological held-out races; top-1 only', sixWayLogLoss=round(loss, 5),
                           simpleLaneBaselineLogLoss=round(baseline_loss, 5),
                           betterThanLaneBaseline=loss < baseline_loss,
                           note="v13 top-1 accuracy comparison uses same held-out races. Model is not deployed. Trifecta ROI is not compared.")
