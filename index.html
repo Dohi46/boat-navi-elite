@@ -110,13 +110,6 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
  <div class="card"><h3>🌊 展示・締切タイミング別</h3><div id="insightsPhases"></div></div>
  <div class="notice">この画面はiPhone内のRECORDを読み取り専用で分析します。GitHubの毎朝の自動収集とは別集計です。過去成績は将来の的中・利益を保証しません。分析結果を使った選別ルールは、必ず別の日のデータで検証しましょう。</div>
 </section>
-<section id="versus" class="page">
- <div class="section-head"><div><div class="eyebrow">HEAD TO HEAD · READ ONLY</div><h2>🏆 自動AI VS 自分の予想</h2></div></div>
- <div class="card"><label for="versusDate">比較する開催日</label><input id="versusDate" type="date" class="field"><button id="versusRefresh" class="btn" style="margin-top:12px">比較データを読み込む</button><div id="versusStatus" class="status" style="margin-top:10px" aria-live="polite">日付を選んで読み込んでね。</div></div>
- <div class="card"><h3>同じレース・5点ずつの対決</h3><div class="status">GitHubの自動AI予想と、このiPhoneで「自分の予想」として保存した手動記録を比較。結果確定済みで、両者の買い目があるレースのみ集計します。AI LABで保存した自動案は「自分」には含めません。</div><div id="versusSummary" style="margin-top:12px"></div></div>
- <div class="card"><h3>レース別の勝負結果</h3><div id="versusRaces" class="status">まだ比較データを読み込んでいません。</div></div>
- <div class="notice">検証用の仮想成績です。両者とも最大5点・各100円に換算して比較。手動予想が5点未満なら不足分は補いません。保存時刻が締切前か確認できない古い記録もあるため、厳密な事前予想対決ではありません。既存のRECORDは変更しません。</div>
-</section>
 <section id="records" class="page">
  <div class="section-head"><div><div class="eyebrow">PERFORMANCE TRACKER</div><h2>予想成績・検証</h2></div></div>
  <div class="card"><label for="recordSource">予想の種類</label><select id="recordSource" class="field" style="margin-top:8px"><option value="all">すべての予想</option><option value="auto">🤖 AI予想（AI LAB保存）</option><option value="manual">👤 自分の予想（PICKS保存）</option></select><div class="status" style="margin-top:8px">種類ごとに表示と成績を切り替えます。記録そのものは移動・削除しません。GitHubの毎朝の自動予想は別管理で、🏆 VSから比較できます。</div></div>
@@ -130,6 +123,6 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 </section>
 <footer>BOAT NEXUS · INDEPENDENT PROJECT<br>データ提供：Boatrace Open API（非公式） · BOAT RACE公式とは無関係です</footer>
 </div>
-<div class="bottom" id="bottomNav"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">▤ RACES</button><button data-page="analysis">✦ AI LAB</button><button data-page="courseStats">▤ COURSE</button><button data-page="playerStats">♙ PLAYER</button><button data-page="manual">✎ PICKS</button><button data-page="records">◎ RECORD</button><button data-page="versus">🏆 VS</button><button data-page="insights">📊 分析</button></div>
-<script src="./app.js?v=evolution-v13-20261115"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+<div class="bottom" id="bottomNav"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">▤ RACES</button><button data-page="analysis">✦ AI LAB</button><button data-page="courseStats">▤ COURSE</button><button data-page="playerStats">♙ PLAYER</button><button data-page="manual">✎ PICKS</button><button data-page="records">◎ RECORD</button><button data-page="insights">📊 分析</button></div>
+<script src="./app.js?v=remove-vs-20261115"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
 </body></html>
