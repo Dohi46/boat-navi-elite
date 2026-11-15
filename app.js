@@ -341,6 +341,61 @@ function jstDay(offset=0){
  const d=new Date(day+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+offset);
  return d.toISOString().slice(0,10);
 }
+// Read-only comparison: remote GitHub snapshot vs manual local records.
+function versusPick(x){return String(x||'').trim();}
+function versusDateRecords(date,venue,race){
+ const selected=records.filter(x=>x.type==='manual'&&recordJstDate(x)===date&&Number(x.venue)===Number(venue)&&Number(x.race)===Number(race)&&/^[1-6]-[1-6]-[1-6]$/.test(versusPick(x.pick)));
+ // Earliest unique manual selections; avoid counting repeat saves as extra tickets.
+ selected.sort((a,b)=>String(a.createdAt||'').localeCompare(String(b.createdAt||'')));
+ const seen=new Set(),out=[];
+ for(const x of selected){if(seen.has(x.pick))continue;seen.add(x.pick);out.push(x.pick);if(out.length===5)break;}
+ return out;
+}
+function versusMoney(n){return yen(n);}
+async function renderVersus(){
+ const date=$('versusDate')?.value,status=$('versusStatus'),summary=$('versusSummary'),host=$('versusRaces');
+ if(!date||!/^\d{4}-\d{2}-\d{2}$/.test(date)){status.textContent='開催日を選んでね。';return;}
+ status.textContent='GitHubの自動予想データを取得中…';summary.replaceChildren();host.replaceChildren();
+ let doc;
+ try{
+  const res=await fetch('./data/auto/'+date+'.json?ts='+Date.now(),{cache:'no-store'});
+  if(!res.ok)throw Error(res.status===404?'この日の自動予想ファイルはまだありません':'HTTP '+res.status);
+  doc=await res.json();if(!Array.isArray(doc.races))throw Error('予想データ形式が不正です');
+ }catch(e){status.textContent='取得できませんでした：'+e.message;host.textContent='日付を変えるか、GitHub側の保存状況を確認してね。';return;}
+ const comparable=[],pending=doc.races.filter(x=>!x.result).length;
+ let manualRaces=0;
+ for(const r of doc.races){
+  const mine=versusDateRecords(date,r.venue,r.race);
+  if(!mine.length)continue;
+  manualRaces++;
+  if(!r.result||!Array.isArray(r.result.winningCombinations))continue;
+  const winning=new Map(r.result.winningCombinations.map(p=>[p.combination,Number(p.amount)]));
+  const ai=(r.picks||[]).slice(0,5).map(p=>versusPick(p.pick));
+  const calc=picks=>({hits:picks.filter(p=>winning.has(p)).length,payout:picks.reduce((n,p)=>n+(winning.get(p)||0),0),stake:picks.length*100});
+  comparable.push({r,mine,ai,m:calc(mine),a:calc(ai)});
+ }
+ const total=(key,field)=>comparable.reduce((n,x)=>n+x[key][field],0);
+ const won=key=>comparable.filter(x=>x[key].hits>0).length;
+ const matches=comparable.length,aiWins=won('a'),meWins=won('m'),aiStake=total('a','stake'),meStake=total('m','stake');
+ const head=document.createElement('div');head.className='status';head.textContent='保存済み '+doc.races.length+'R ／ 結果待ち '+pending+'R ／ 手動予想がある '+manualRaces+'R ／ 比較成立 '+matches+'R';
+ status.textContent=date+' の比較データを読み込みました。';
+ summary.append(head);
+ const table=document.createElement('div');table.style.cssText='overflow-x:auto;margin-top:12px';
+ const t=document.createElement('table');t.style.cssText='width:100%;border-collapse:collapse;font-size:12px;text-align:right';
+ const rows=[['項目','🤖 自動AI','👤 自分'],['的中レース',aiWins+' / '+matches,meWins+' / '+matches],['5点以内的中率',matches?(100*aiWins/matches).toFixed(1)+'%':'—',matches?(100*meWins/matches).toFixed(1)+'%':'—'],['仮想回収率',aiStake?(100*total('a','payout')/aiStake).toFixed(1)+'%':'—',meStake?(100*total('m','payout')/meStake).toFixed(1)+'%':'—'],['仮想収支',versusMoney(total('a','payout')-aiStake),versusMoney(total('m','payout')-meStake)]];
+ rows.forEach((cells,i)=>{const tr=document.createElement('tr');cells.forEach((value,j)=>{const td=document.createElement(i?'td':'th');td.textContent=value;td.style.cssText='padding:10px 6px;border-bottom:1px solid var(--line);white-space:nowrap;'+(!j?'text-align:left':'');tr.append(td);});t.append(tr);});table.append(t);summary.append(table);
+ if(!matches){host.textContent='まだ比較できる確定済みレースがありません。手動で保存した予想と、自動AIの結果確定を待ってね。';return;}
+ comparable.sort((a,b)=>Number(a.r.venue)-Number(b.r.venue)||Number(a.r.race)-Number(b.r.race));
+ comparable.forEach(x=>{
+  const box=document.createElement('div');box.className='race-card';
+  const title=document.createElement('b');title.textContent=(STADIUMS[x.r.venue]||'場'+x.r.venue)+' '+x.r.race+'R　'+(x.a.hits&&x.m.hits?'両方的中 🎯':x.a.hits?'AI的中 🤖':x.m.hits?'自分的中 🎯':'両方不的中');
+  const details=document.createElement('div');details.className='status';details.style.marginTop='7px';
+  details.textContent='AI：'+x.ai.join(' / ')+'　払戻 '+versusMoney(x.a.payout)+'\n自分：'+x.mine.join(' / ')+'　払戻 '+versusMoney(x.m.payout);
+  details.style.whiteSpace='pre-line';box.append(title,details);host.append(box);
+ });
+}
+document.getElementById('versusRefresh')?.addEventListener('click',renderVersus);
+if(document.getElementById('versusDate'))document.getElementById('versusDate').value=jstDay();
 function visibleRecords(){
  if(recordDateFilter==='all')return records;
  const day=recordDateFilter==='today'?jstDay():jstDay(-1);
