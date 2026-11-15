@@ -1,0 +1,30 @@
+name: Settle BOAT NEXUS predictions
+on:
+  schedule:
+    - cron: '30 14 * * *' # 23:30 JST
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: boat-nexus-daily
+  cancel-in-progress: false
+jobs:
+  settle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Match predictions with published trifecta payouts
+        run: node tools/settle_daily_predictions.cjs
+      - name: Commit settled results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/auto/
+          if ! git diff --cached --quiet; then
+            git commit -m "data: settle v13 predictions"
+            git push
+          fi
