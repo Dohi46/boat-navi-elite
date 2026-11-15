@@ -100,6 +100,13 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
  <div class="section-head"><div><div class="eyebrow">PERSONAL PICKS</div><h2>自分の予想を記録</h2></div></div>
  <div class="card"><div class="grid2"><div><label>競艇場</label><select id="manualVenue" class="field"></select></div><div><label>レース</label><select id="manualRace" class="field"></select></div></div><label style="display:block;margin-top:13px">買い目（3連単・1着→2着→3着）</label><div class="grid2" id="boatChoices" style="margin-top:8px"></div><p id="selectedText" class="status">1着・2着・3着の順に3艇選択してください。</p><label>購入予定額（円）</label><input id="stake" class="field" type="number" min="100" step="100" value="1000"><button class="btn" id="saveManual" style="margin-top:13px">予想を保存</button><p id="manualMessage" class="status"></p></div>
 </section>
+<section id="versus" class="page">
+ <div class="section-head"><div><div class="eyebrow">HEAD TO HEAD · READ ONLY</div><h2>🏆 自動AI VS 自分の予想</h2></div></div>
+ <div class="card"><label for="versusDate">比較する開催日</label><input id="versusDate" type="date" class="field"><button id="versusRefresh" class="btn" style="margin-top:12px">比較データを読み込む</button><div id="versusStatus" class="status" style="margin-top:10px" aria-live="polite">日付を選んで読み込んでね。</div></div>
+ <div class="card"><h3>同じレース・5点ずつの対決</h3><div class="status">GitHubの自動AI予想と、このiPhoneで「自分の予想」として保存した手動記録を比較。結果確定済みで、両者の買い目があるレースのみ集計します。AI LABで保存した自動案は「自分」には含めません。</div><div id="versusSummary" style="margin-top:12px"></div></div>
+ <div class="card"><h3>レース別の勝負結果</h3><div id="versusRaces" class="status">まだ比較データを読み込んでいません。</div></div>
+ <div class="notice">検証用の仮想成績です。両者とも最大5点・各100円に換算して比較。手動予想が5点未満なら不足分は補いません。保存時刻が締切前か確認できない古い記録もあるため、厳密な事前予想対決ではありません。既存のRECORDは変更しません。</div>
+</section>
 <section id="records" class="page">
  <div class="section-head"><div><div class="eyebrow">PERFORMANCE TRACKER</div><h2>予想成績・検証</h2></div></div>
  <div class="card"><label for="recordPeriod">成績・保存予想の表示期間</label><select id="recordPeriod" class="field" style="margin-top:8px"><option value="today">今日</option><option value="yesterday">昨日</option><option value="all">全期間</option></select><div id="recordPeriodLabel" class="status" style="margin-top:8px"></div><div class="status">日付は日本時間で判定。的中率・回収率は結果入力済みの予想だけを集計します。保存済みの予想は変更しません。</div></div>
@@ -112,6 +119,6 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 </section>
 <footer>BOAT NEXUS · INDEPENDENT PROJECT<br>データ提供：Boatrace Open API（非公式） · BOAT RACE公式とは無関係です</footer>
 </div>
-<div class="bottom" id="bottomNav"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">▤ RACES</button><button data-page="analysis">✦ AI LAB</button><button data-page="courseStats">▤ COURSE</button><button data-page="playerStats">♙ PLAYER</button><button data-page="manual">✎ PICKS</button><button data-page="records">◎ RECORD</button></div>
-<script src="./app.js?v=phase-cutoff-20261115"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+<div class="bottom" id="bottomNav"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">▤ RACES</button><button data-page="analysis">✦ AI LAB</button><button data-page="courseStats">▤ COURSE</button><button data-page="playerStats">♙ PLAYER</button><button data-page="manual">✎ PICKS</button><button data-page="records">◎ RECORD</button><button data-page="versus">🏆 VS</button></div>
+<script src="./app.js?v=versus-20261115"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
 </body></html>
