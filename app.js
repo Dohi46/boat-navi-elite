@@ -491,6 +491,26 @@ function insightsTable(host,columns,rows){
  rows.forEach(cells=>{const row=document.createElement('tr');cells.forEach((v,i)=>{const td=document.createElement('td');td.textContent=String(v);td.style.cssText='padding:10px 5px;text-align:'+(i?'right':'left')+';border-bottom:1px solid var(--line)';row.append(td);});table.append(row);});
  scroller.append(table);host.append(scroller);
 }
+async function refreshEvolution(){
+ const state=$('evoState');if(!state)return;
+ state.textContent='GitHubの学習結果を取得中…';
+ try{
+  const res=await fetch('./data/models/lightgbm-status.json?ts='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(12000)});
+  if(!res.ok)throw Error('HTTP '+res.status);
+  const d=await res.json();
+  $('evoRaces').textContent=Number.isFinite(Number(d.settledFeatureRaces))?String(d.settledFeatureRaces):'—';
+  $('evoDays').textContent=Number.isFinite(Number(d.distinctDates))?String(d.distinctDates):'—';
+  const labels={collecting_data:'📥 データ蓄積中',evaluated_not_deployed:'🧪 学習・評価完了（実験モデル）'};
+  state.textContent=(labels[d.state]||'状況：'+String(d.state||'不明'))+' ／ 最終更新：'+(d.updatedAt?new Date(d.updatedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}):'不明');
+  const m=$('evoMetrics');
+  if(d.state==='evaluated_not_deployed'){
+   const pct=n=>typeof n==='number'?(n*100).toFixed(1)+'%':'—';
+   m.textContent='学習 '+(d.trainingRaces??'—')+'レース ／ 検証 '+(d.testRaces??'—')+'レース ／ 1着予測的中率 '+pct(d.top1Accuracy)+' ／ 6艇対数損失 '+(d.sixWayLogLoss??'—')+'（単純な艇番基準 '+(d.simpleLaneBaselineLogLoss??'—')+'）。本番予想には未採用。';
+  }else m.textContent='必要条件：300レース・10日分。現在 '+(d.settledFeatureRaces??0)+'レース・'+(d.distinctDates??0)+'日分。';
+ }catch(e){state.textContent='学習状況を取得できませんでした。通信状態を確認して更新してね。';$('evoMetrics').textContent='';}
+}
+$('evoRefresh')?.addEventListener('click',refreshEvolution);
+refreshEvolution();
 function renderInsights(){
  const status=$('insightsStatus');if(!status)return;
  const period=$('insightsPeriod').value,source=$('insightsSource').value;
