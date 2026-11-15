@@ -450,6 +450,12 @@ function renderStats(){
    raceHead.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none;padding:10px 2px;min-height:42px;font-weight:700";
    const raceNumber=race.split('|')[0],raceDate=race.split('|')[1];
    const raceTitle=document.createElement("b");raceTitle.textContent=`${raceNumber}R${raceDate&&raceDate!=="undefined"&&raceDate!=="null"?" · "+raceDate:""}`;
+   const raceHits=items.filter(o=>o.record.resultEntered===true&&o.record.hit===true);
+   if(raceHits.length){
+    raceTitle.textContent='🎯 '+raceTitle.textContent;
+    raceTitle.style.color='#e7bd68';
+    raceBox.style.borderColor='rgba(231,189,104,.55)';
+   }
    const raceTotal=items.reduce((n,o)=>n+Number(o.record.stake||0),0);
    const raceBadge=document.createElement("span");raceBadge.className="tiny muted";
    raceBadge.textContent=`${items.length}点 · ${yen(raceTotal)}　⌄`;
@@ -469,11 +475,13 @@ function renderStats(){
      if(pickCheck.checked)selectedForDelete.add(x);else selectedForDelete.delete(x);
      updateSelectionUI();
     });
-    const pick=document.createElement("b");pick.style.cssText="font-size:16px;letter-spacing:.04em";pick.textContent=x.pick;
+    const pick=document.createElement("b");pick.style.cssText="font-size:16px;letter-spacing:.04em";pick.textContent=(x.resultEntered===true&&x.hit===true?'🎯 ':'')+x.pick;
+    if(x.resultEntered===true&&x.hit===true)pick.style.color='#e7bd68';
     const amount=document.createElement("span");amount.className="tiny muted";amount.textContent=yen(x.stake);
     pickLine.append(pickCheck,pick,amount);
     const status=document.createElement("div");status.className="tiny muted";
     status.textContent=x.resultEntered?`3連単・結果 ${x.actualResult}・${x.hit?"的中":"不的中"}・払戻 ${yen(x.payout)}`:`3連単・${x.kind||"予想"}・結果未入力`;
+    if(x.resultEntered===true&&x.hit===true){status.style.color='#e7bd68';status.style.fontWeight='700';}
     info.append(pickLine,status);wrap.append(info);
     const actions=document.createElement("div");actions.style.cssText="display:flex;gap:5px;align-items:center;flex-shrink:0";
     const btn=document.createElement("button");btn.className="ghost";btn.style.cssText="white-space:nowrap;padding:7px 9px;font-size:12px;min-height:34px";btn.textContent=x.resultEntered?"結果修正":"結果入力";
