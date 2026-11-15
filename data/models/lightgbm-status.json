@@ -1,0 +1,10 @@
+{
+  "updatedAt": "2026-11-15T12:52:12.614618+00:00",
+  "model": "LightGBM experimental lane-win",
+  "featureSchema": "lane-v1",
+  "settledFeatureRaces": 0,
+  "distinctDates": 0,
+  "activeForPredictions": false,
+  "state": "collecting_data",
+  "reason": "Requires at least 300 settled feature races over 10 distinct dates"
+}
