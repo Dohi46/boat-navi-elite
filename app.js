@@ -336,6 +336,7 @@ async function settleAllPending(){
 }
 /* v14 read-only venue performance: calculated only from saved prediction records. */
 let recordDateFilter='today';
+let recordSourceFilter='all';
 function jstDay(offset=0){
  const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
  const d=new Date(day+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+offset);
@@ -397,9 +398,8 @@ async function renderVersus(){
 document.getElementById('versusRefresh')?.addEventListener('click',renderVersus);
 if(document.getElementById('versusDate'))document.getElementById('versusDate').value=jstDay();
 function visibleRecords(){
- if(recordDateFilter==='all')return records;
  const day=recordDateFilter==='today'?jstDay():jstDay(-1);
- return records.filter(x=>recordJstDate(x)===day);
+ return records.filter(x=>(recordDateFilter==='all'||recordJstDate(x)===day)&&(recordSourceFilter==='all'||(recordSourceFilter==='manual'?x.type==='manual':x.type==='auto')));
 }
 function renderVenuePerformance(){
  const host=$('venuePerformance');if(!host)return;
@@ -431,7 +431,7 @@ function renderVenuePerformance(){
 function renderStats(){
  const shown=visibleRecords();
  const period=$('recordPeriodLabel');
- if(period)period.textContent='表示期間：'+(recordDateFilter==='today'?'今日 '+jstDay():recordDateFilter==='yesterday'?'昨日 '+jstDay(-1):'全期間')+' ／ 全保存 '+records.length+'件';
+ if(period)period.textContent='表示期間：'+(recordDateFilter==='today'?'今日 '+jstDay():recordDateFilter==='yesterday'?'昨日 '+jstDay(-1):'全期間')+' ／ 表示 '+shown.length+'件（全保存 '+records.length+'件）';
  const total=shown.reduce((a,x)=>a+Number(x.stake||0),0);
  const settled=shown.filter(x=>x.resultEntered===true);
  const hits=settled.filter(x=>x.hit===true).length;
@@ -1017,3 +1017,4 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
 })();
 
 $('recordPeriod')?.addEventListener('change',e=>{recordDateFilter=e.target.value;renderStats();});
+$('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.value;renderStats();});
