@@ -1,0 +1,5078 @@
+{
+  "date": "2026-11-15",
+  "engine": "v13-reference-no-odds",
+  "createdAt": "2026-11-15T01:59:43.059Z",
+  "races": [
+    {
+      "venue": 2,
+      "race": 2,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:12:00",
+      "capturedAt": "2026-11-15T01:59:43.060Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013986125114801677,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013945723233216701,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01365327483731268,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013562430449684313,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013365376622741554,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:39:00",
+      "capturedAt": "2026-11-15T01:59:43.061Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013935567363612301,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013922929731386383,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "probability": 0.01295631558038238,
+          "stake": 100
+        },
+        {
+          "pick": "3-2-1",
+          "probability": 0.012935535101903274,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "probability": 0.012562248306967453,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:06:00",
+      "capturedAt": "2026-11-15T01:59:43.061Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.015176109202779458,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014767886415923394,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014469432486028859,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.014355613577966251,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.013681191970772744,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:33:00",
+      "capturedAt": "2026-11-15T01:59:43.061Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-3",
+          "probability": 0.013753587315983085,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013599213700008765,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.013149475295380483,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013081883942565369,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.012811373008583548,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:00:00",
+      "capturedAt": "2026-11-15T01:59:43.062Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.013090281347999527,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013002422069968694,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012901525853797034,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.012702573601209168,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.012673386053372574,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:27:00",
+      "capturedAt": "2026-11-15T01:59:43.062Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.01527941289997744,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014968648452348392,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014689721264372377,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014319479564174972,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.014166585326491742,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:55:00",
+      "capturedAt": "2026-11-15T01:59:43.062Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-5-4",
+          "probability": 0.012296706959796047,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.01205786050105623,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.011929519398916016,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.011855411223255787,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-6",
+          "probability": 0.011542914779869682,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:23:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.011680613212746587,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.011492756116932562,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.011423753388219193,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.011107933101562235,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.011050520555363057,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:52:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013355205216123283,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012781976634726766,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012528336946844408,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012481414636574298,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.012068908126732902,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:23:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-3",
+          "probability": 0.013865615334479336,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013629736268275641,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013370821719828296,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.013054157065761395,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.0128587742531936,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 2,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:55:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.012901128099693786,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012758395982756222,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012718748443106893,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012633612575321484,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012387999624817606,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 2,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:25:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.014621238706004203,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014234710888778423,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01416145779243673,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013925754950025543,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.013507491341881455,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:51:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "2-3-4",
+          "probability": 0.012634624718301348,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "probability": 0.012363325255893799,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-5",
+          "probability": 0.012333163009447189,
+          "stake": 100
+        },
+        {
+          "pick": "2-4-3",
+          "probability": 0.011932668211652495,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-6",
+          "probability": 0.01183645823909998,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:17:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.014915854894270697,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014728875058762017,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.014222239545401829,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.013814180670399238,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013587142740881849,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:43:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.014970229194505073,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "probability": 0.014327533069132682,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014181236394130815,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "probability": 0.014147486334128278,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013843067951220587,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:09:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "probability": 0.013258310273810496,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.013088987962358934,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012703501283489502,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.012332230787516558,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012191442073744185,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:35:00",
+      "capturedAt": "2026-11-15T01:59:43.064Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.014376253833593207,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01400213179412189,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013955611452653663,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013245620286469622,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013151710343282422,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:02:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.011997793057680988,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.01190577054308552,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.011708581225836122,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.011550568134330867,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.011253890279989395,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:30:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-3",
+          "probability": 0.017307548689360113,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.016682765739049803,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.016680688136894606,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.0164844953955515,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.015768722755847526,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:59:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "probability": 0.014636839822584326,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014310139905787922,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.013909951344028117,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.013903670449993095,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.01370944535120121,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:29:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "probability": 0.013436112905779568,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013416015444476332,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.013223678797181334,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.0131887933976257,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.013126838379004822,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 3,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:00:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "probability": 0.016216267875664103,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.015808575170735407,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.015526821747980823,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.015008752529292365,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014844587360071916,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:15:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "3-2-6",
+          "probability": 0.010933422075669807,
+          "stake": 100
+        },
+        {
+          "pick": "3-2-1",
+          "probability": 0.010840217962554612,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-6",
+          "probability": 0.010741740782825268,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.010650573016403254,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "probability": 0.0106501706947003,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:43:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.01273883350083162,
+          "stake": 100
+        },
+        {
+          "pick": "2-4-1",
+          "probability": 0.012322958217462487,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012188028443064887,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "probability": 0.01210854469787239,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.011876463356860503,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:13:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.011826562933744652,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.011404643285858919,
+          "stake": 100
+        },
+        {
+          "pick": "2-4-1",
+          "probability": 0.011232751549975413,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "probability": 0.011203312034373622,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.01116895130499973,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:45:00",
+      "capturedAt": "2026-11-15T01:59:43.065Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-5-3",
+          "probability": 0.014638732174206227,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.014596669290712298,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.014428432981837104,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014355351125964188,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-4",
+          "probability": 0.014260227848764448,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:18:00",
+      "capturedAt": "2026-11-15T01:59:43.066Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.012423029375962147,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012296810777405435,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.011987223554019726,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.011773134222738142,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.011484105780954535,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:48:00",
+      "capturedAt": "2026-11-15T01:59:43.066Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.01609679465374893,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.015747104470843935,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.015236569963480308,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.015168059492862885,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.014483543797297556,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:17:00",
+      "capturedAt": "2026-11-15T01:59:43.066Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.012865774099816147,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.01268398272547788,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012379811994880594,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.012072790746501307,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.011942334488629067,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:46:00",
+      "capturedAt": "2026-11-15T01:59:43.066Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-6",
+          "probability": 0.014004833356792803,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.01353897514419448,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013452255889899765,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.013122420781047466,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012610541790942646,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:13:00",
+      "capturedAt": "2026-11-15T01:59:43.066Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.013947808570597428,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013701959377761593,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013411179944033246,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012871939320316302,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.012785386829155825,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 8,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:58:00",
+      "capturedAt": "2026-11-15T01:59:43.066Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "probability": 0.015149924081536911,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.014800816753999049,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.014604312161780146,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-3",
+          "probability": 0.013873149469152166,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.013839367510672449,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:23:00",
+      "capturedAt": "2026-11-15T01:59:43.067Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.014631220074031266,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014591620098754428,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013307272731390929,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.013224304408493476,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "probability": 0.012403791367719899,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:52:00",
+      "capturedAt": "2026-11-15T01:59:43.067Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013202231538987174,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012933539241692332,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.012823438522050803,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012641848441328025,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012427751655664602,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:22:00",
+      "capturedAt": "2026-11-15T01:59:43.067Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.016867856776270063,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01651347165401082,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.016487202999036204,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.01586152710993374,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.015698803577190876,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:52:00",
+      "capturedAt": "2026-11-15T01:59:43.067Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-5",
+          "probability": 0.012739386694252897,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.012464938757995321,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.011898625954250052,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.011821567774272113,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.011589236777719333,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:22:00",
+      "capturedAt": "2026-11-15T01:59:43.067Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-6",
+          "probability": 0.01755458866827755,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01752219703332447,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.01641523003172647,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-3",
+          "probability": 0.015552059601236814,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.015501454312996087,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:52:00",
+      "capturedAt": "2026-11-15T01:59:43.067Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "probability": 0.014464836187989506,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.014390198922544024,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01429669061434835,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-4",
+          "probability": 0.014166765820912013,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.014007103388730294,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:22:00",
+      "capturedAt": "2026-11-15T01:59:43.068Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-5",
+          "probability": 0.013246629026056351,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.013235981338703122,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013003201802454751,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.012979094432599144,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012809769477337146,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:55:00",
+      "capturedAt": "2026-11-15T01:59:43.068Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.015721104238713823,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.0152130858202824,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014980575815824956,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.014847998672510705,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.014099657980036892,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:28:00",
+      "capturedAt": "2026-11-15T01:59:43.068Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.018279931365797364,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01744877962630537,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01710144026602509,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.015799757882299054,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01569695821963257,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 9,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:05:00",
+      "capturedAt": "2026-11-15T01:59:43.068Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.017532618126782265,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.016883465064285917,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.0164985887888599,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.015788270683802327,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.015558013285114133,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:28:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.013474299910303276,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.013285660869672684,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013215847140641425,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-3",
+          "probability": 0.01289108967086089,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.012704942221723544,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:58:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.012432574660562098,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.012424809137039193,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.012274342426873143,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012215095244788839,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.012201634313167816,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:28:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.01303899637267583,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012993918105547324,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012914784278398626,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012836096384219375,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.012710043283550998,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:58:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.012615896130261707,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01251064986563381,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012160041518350798,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "probability": 0.012051521888769734,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "probability": 0.011950983833543365,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:28:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013660691476907422,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013212000880875121,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013019336191439154,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01252620028385456,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012137095141702327,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:58:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.01324536421463889,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013189198086706846,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.01271694816659868,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012592849785846927,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.012274862040734982,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:30:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.014438226246612904,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014399408223539967,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014083644696719683,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013996418160957386,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013781229611204494,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:00:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.012829730397356586,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012698570268005577,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.0122487274083841,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.01202861459702986,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.011933536003160798,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:34:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-6",
+          "probability": 0.012624121707337043,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.012491030398268436,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012480849774359896,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012397896819147202,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012241949627992469,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 11,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:10:00",
+      "capturedAt": "2026-11-15T01:59:43.069Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013596249397883094,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013148677695896796,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013099771015666348,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012874140915661917,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012330011171307758,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 2,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:10:00",
+      "capturedAt": "2026-11-15T01:59:43.070Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-5",
+          "probability": 0.0144108277646789,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014102968095874642,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.013561026246821092,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013053964626567022,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013041033146171156,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:35:00",
+      "capturedAt": "2026-11-15T01:59:43.070Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.012743827100127291,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012653348741104777,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012168974526185455,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.011970521627890524,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.0119541349316909,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:05:00",
+      "capturedAt": "2026-11-15T01:59:43.070Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.011603973370216819,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.011576816817391538,
+          "stake": 100
+        },
+        {
+          "pick": "2-4-5",
+          "probability": 0.011087669563017773,
+          "stake": 100
+        },
+        {
+          "pick": "2-5-4",
+          "probability": 0.011067821309661089,
+          "stake": 100
+        },
+        {
+          "pick": "2-4-1",
+          "probability": 0.011038045440849634,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:36:00",
+      "capturedAt": "2026-11-15T01:59:43.070Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.012780330952166715,
+          "stake": 100
+        },
+        {
+          "pick": "3-2-1",
+          "probability": 0.01250486608593634,
+          "stake": 100
+        },
+        {
+          "pick": "3-1-2",
+          "probability": 0.012432195169415093,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.012270624082619816,
+          "stake": 100
+        },
+        {
+          "pick": "3-2-4",
+          "probability": 0.012098002254657514,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:07:00",
+      "capturedAt": "2026-11-15T01:59:43.070Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "probability": 0.016024496322392202,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.015930705596937073,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.015692838448131085,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-4",
+          "probability": 0.015531113916740415,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.015180095735602289,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:42:00",
+      "capturedAt": "2026-11-15T01:59:43.070Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.016177787593544928,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.0159278045676825,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.01517134746005909,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014760092428802376,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.01455619512157603,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:06:00",
+      "capturedAt": "2026-11-15T01:59:43.070Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.01586650982024293,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.015772951858486848,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.015037668125594407,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01483383201373025,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.01434807792604094,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:38:00",
+      "capturedAt": "2026-11-15T01:59:43.070Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.016345274947822393,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.015885222096645762,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.015143406431067423,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.014691215267101182,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.014679791312211242,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:08:00",
+      "capturedAt": "2026-11-15T01:59:43.071Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-5-3",
+          "probability": 0.015837298585409557,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.015612436809157396,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.01538618691851443,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-4",
+          "probability": 0.015003293834700516,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014886729128707053,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:41:00",
+      "capturedAt": "2026-11-15T01:59:43.071Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "probability": 0.015602094985089084,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.015308174734731462,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.014870207822289346,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.014499836444851122,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014379422288175504,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 13,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:07:00",
+      "capturedAt": "2026-11-15T01:59:43.071Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.015844662432823422,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.015637289379663435,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.015074894595726139,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.015050409034562782,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.014623481546023045,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 1,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:20:00",
+      "capturedAt": "2026-11-15T01:59:43.071Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013782204091235718,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013305716142363195,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013238624646859461,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013104800178873263,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01299853590585526,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 2,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:52:00",
+      "capturedAt": "2026-11-15T01:59:43.071Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013906570137870458,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013537849083838581,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013317710068919762,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012542670326739181,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.012516933676819806,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:23:00",
+      "capturedAt": "2026-11-15T01:59:43.071Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.012485706361588713,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012177390693788724,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.011877321531225879,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01168968222908587,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.011364642779410003,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:52:00",
+      "capturedAt": "2026-11-15T01:59:43.071Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "probability": 0.012796531494510424,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012524671829660933,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.012249341975090297,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.012186930166893161,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.012077000266788228,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 17:19:00",
+      "capturedAt": "2026-11-15T01:59:43.072Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "probability": 0.01349745298290807,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.01333814008826436,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012831418531371439,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012509201064366928,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.012484608921179474,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 17:46:00",
+      "capturedAt": "2026-11-15T01:59:43.072Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.012547304110086232,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012469398664854347,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012198779472739714,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012170402667520706,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012065435510544485,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 18:13:00",
+      "capturedAt": "2026-11-15T01:59:43.072Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "probability": 0.013427784633173855,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.013399782987348889,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013317223679193212,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013253223918411869,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013205695642206314,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 18:43:00",
+      "capturedAt": "2026-11-15T01:59:43.072Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.01361470608598171,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.013559730590349952,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.01348577309978657,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.01338982468210563,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.01337953776470593,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 19:14:00",
+      "capturedAt": "2026-11-15T01:59:43.072Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.012912466262097176,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012752843959065181,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01192401071407873,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01189715190295945,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.011586595574093429,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 19:45:00",
+      "capturedAt": "2026-11-15T01:59:43.072Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.013917987995796539,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013740224628425847,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.01338109070637118,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013102200142875437,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012989981549984429,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 20:14:00",
+      "capturedAt": "2026-11-15T01:59:43.073Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.01355033247019599,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013312901898732948,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013046036085423839,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.012524543782259253,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012519495290046345,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 15,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 20:45:00",
+      "capturedAt": "2026-11-15T01:59:43.073Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.014928978044939697,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014753796216304424,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.014036032916263335,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.013898952280112268,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013658860129059156,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 2,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:13:00",
+      "capturedAt": "2026-11-15T01:59:43.073Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-6",
+          "probability": 0.01351057370056075,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-3",
+          "probability": 0.013299208983009684,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013062722178143672,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.012879440829503127,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.012595942188237534,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:49:00",
+      "capturedAt": "2026-11-15T01:59:43.073Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-5",
+          "probability": 0.015073578858083761,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01505045458036817,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.014162614488414889,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.01412429561618933,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.014101656939807626,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:20:00",
+      "capturedAt": "2026-11-15T01:59:43.073Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.01591276227896177,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.015546859835975731,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.015399983031405448,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.014673683757522817,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014595059733408485,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:50:00",
+      "capturedAt": "2026-11-15T01:59:43.073Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.01317285617834036,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012825393956528118,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.012733124316665336,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012655075528791481,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.012079533905240268,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:20:00",
+      "capturedAt": "2026-11-15T01:59:43.073Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-6",
+          "probability": 0.013931754155421253,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013698986734348726,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.013623164843660598,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013224066628649488,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013110986610472348,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:50:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "probability": 0.01560430880820862,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.015303022258798184,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.015234901426815418,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.01517408353797633,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.014669511207025194,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:20:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-5-4",
+          "probability": 0.012451581431486607,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.012407894886031312,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.012295528035867864,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.01219620472023694,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.012169788793705467,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:50:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-6-3",
+          "probability": 0.014773538694737074,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.014564542515602337,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-4",
+          "probability": 0.014420802223665426,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.014334192650808347,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013978281767157335,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:17:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.01631344353312242,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.0161375727328844,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01523787489826649,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.014861447122166237,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014854526606704171,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:49:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.012684949880377914,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012635643484921955,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012503847500513456,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.01249594258539145,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.01249558218549595,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 16,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:21:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.01390020222481804,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013354786885881738,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013159150104243289,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013107771866772215,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012950419672721758,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 18,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:21:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "probability": 0.015166511069087847,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014871034972825412,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01402010125322762,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.013931811485586832,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-5",
+          "probability": 0.01387255708066657,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 18,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:55:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "probability": 0.011699122460452445,
+          "stake": 100
+        },
+        {
+          "pick": "4-2-1",
+          "probability": 0.01169179106789101,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.011622759786895892,
+          "stake": 100
+        },
+        {
+          "pick": "2-4-1",
+          "probability": 0.01155711167028606,
+          "stake": 100
+        },
+        {
+          "pick": "4-2-3",
+          "probability": 0.011336162420541496,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 18,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:26:00",
+      "capturedAt": "2026-11-15T01:59:43.074Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-6-4",
+          "probability": 0.015610595207222064,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.015172119964921628,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.015111681903641724,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-3",
+          "probability": 0.014549429768073318,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.01432689782657692,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 18,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:03:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.014370710600680863,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014279165543634086,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01318924139574236,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.012996158911625682,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "probability": 0.012624730235343431,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 18,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:38:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "2-4-1",
+          "probability": 0.013611799773625406,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "probability": 0.013514498049322761,
+          "stake": 100
+        },
+        {
+          "pick": "2-4-3",
+          "probability": 0.013291467902746863,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013202185053109617,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "probability": 0.013073233749464255,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 18,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:13:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.014374185224477165,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.01432028926635619,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.0137915594814027,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.013766538230956084,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013672517916052482,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 1,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:19:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.01090580579282179,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.010838025838979493,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.010805220505757595,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.010774256486765346,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.010662248104029957,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 2,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:45:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "3-4-5",
+          "probability": 0.01083212157700157,
+          "stake": 100
+        },
+        {
+          "pick": "3-5-4",
+          "probability": 0.0108000373505836,
+          "stake": 100
+        },
+        {
+          "pick": "3-4-1",
+          "probability": 0.010721759153357824,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.010719143568555169,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.010677643805082305,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:09:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-6",
+          "probability": 0.014582508590844036,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014173339377419061,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013828087344473595,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-3",
+          "probability": 0.013466710342946314,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.013123317348275595,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:35:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "probability": 0.013850140593397134,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013840239672968017,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013204665180669291,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.012732874870923493,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012716816500763022,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 17:01:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.015907005496953532,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.015158887476486022,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014597794595441214,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014474918042250795,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "probability": 0.013918239446458057,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 17:28:00",
+      "capturedAt": "2026-11-15T01:59:43.075Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.01458567824623229,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014172567193055353,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013409535712743394,
+          "stake": 100
+        },
+        {
+          "pick": "3-1-2",
+          "probability": 0.013000265929909938,
+          "stake": 100
+        },
+        {
+          "pick": "3-2-1",
+          "probability": 0.012956958359473348,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 17:55:00",
+      "capturedAt": "2026-11-15T01:59:43.076Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-6",
+          "probability": 0.01547384743011261,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.015072992305944456,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.015042268330834567,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-4",
+          "probability": 0.014777257838666373,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-4",
+          "probability": 0.014108416217335546,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 18:23:00",
+      "capturedAt": "2026-11-15T01:59:43.076Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.018687392034200993,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.017320066855889344,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.016249823049202135,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01599002919655237,
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "probability": 0.015847388213379925,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 18:54:00",
+      "capturedAt": "2026-11-15T01:59:43.076Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.016401702149346106,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01600644907449457,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.015522770140399548,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.015381154215383804,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.014733087461651827,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 19:25:00",
+      "capturedAt": "2026-11-15T01:59:43.076Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.014167337968486723,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.01406406244023597,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.01404076522847821,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.013843085011400774,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.01380569130001497,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 19:58:00",
+      "capturedAt": "2026-11-15T01:59:43.076Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "probability": 0.01657040849828976,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.016079951525783707,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01577872135186535,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.015428118788137796,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014749068855123813,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 20,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 20:30:00",
+      "capturedAt": "2026-11-15T01:59:43.076Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.015648222332091708,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.01563860587705739,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.015370247775148211,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.015348458928698383,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.015151698439479933,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 2,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:18:00",
+      "capturedAt": "2026-11-15T01:59:43.077Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.012610808931969635,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.01237389118070752,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.01235350179794206,
+          "stake": 100
+        },
+        {
+          "pick": "2-4-3",
+          "probability": 0.012310982626113371,
+          "stake": 100
+        },
+        {
+          "pick": "2-3-4",
+          "probability": 0.012118431476418627,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:46:00",
+      "capturedAt": "2026-11-15T01:59:43.078Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.013983298870075886,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.013392798913836395,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013112443909306274,
+          "stake": 100
+        },
+        {
+          "pick": "3-1-2",
+          "probability": 0.012685155981364538,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.012661790968860973,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:15:00",
+      "capturedAt": "2026-11-15T01:59:43.078Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "probability": 0.01258903798801803,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.012291803226545437,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01197132289773075,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.011903460397048513,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-4",
+          "probability": 0.011329098409334597,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:48:00",
+      "capturedAt": "2026-11-15T01:59:43.078Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013368172717384011,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013346039100930636,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012347135652051653,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.01230001035236537,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012256810604111924,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:16:00",
+      "capturedAt": "2026-11-15T01:59:43.078Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-5-2",
+          "probability": 0.015174920425723718,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-4",
+          "probability": 0.014618460947460001,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.014522452268075282,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014514269701595247,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.013588240998545718,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:44:00",
+      "capturedAt": "2026-11-15T01:59:43.078Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "probability": 0.017357589142182873,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.017280264960279852,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.01628946441912041,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.016022608490739526,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.016004087263336537,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:10:00",
+      "capturedAt": "2026-11-15T01:59:43.078Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.01657559578721138,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.016373247659217847,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.015903623625438644,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.015594349110703896,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.015459168395423209,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:36:00",
+      "capturedAt": "2026-11-15T01:59:43.078Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.015634008489262788,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01503208082649759,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.014928962482964,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01467884557227679,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014490811297698443,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:06:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.01567514811599949,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.015314586879500953,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.014057875003252446,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.013801655533518567,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013322854698121944,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:47:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.015485009098134,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.014958081734865887,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.014852101839075494,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014778881841224507,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.014248033719506576,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 22,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:30:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013827745694486852,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.01317638178807374,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01303935411364617,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013024161391491821,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012646878990343606,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 23,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:07:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "after",
+      "exhibitionCount": 6,
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "probability": 0.014635169887286085,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.01412070411031339,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.013613739339840456,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.012836847079458584,
+          "stake": 100
+        },
+        {
+          "pick": "4-1-2",
+          "probability": 0.012717464107551028,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 23,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 11:37:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "probability": 0.011414380509327752,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.011274157323727317,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.010744063100976845,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "probability": 0.01071203913223383,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "probability": 0.010593634822826268,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 23,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:08:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-5-3",
+          "probability": 0.013050133610331915,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "probability": 0.013022015112001285,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.01240952256562475,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012362376378491998,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-6",
+          "probability": 0.011952566754377596,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 23,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 12:39:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-6",
+          "probability": 0.01781013802150272,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.01650755412564198,
+          "stake": 100
+        },
+        {
+          "pick": "3-1-6",
+          "probability": 0.016345218169291718,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-3",
+          "probability": 0.01593017393480962,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.015848732875452957,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 23,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:12:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "probability": 0.012467681030065455,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012416763023748825,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.012110756710830272,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.011996922152616593,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.01179635085994132,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 23,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 13:46:00",
+      "capturedAt": "2026-11-15T01:59:43.079Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.015214708917183907,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014798946477941428,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014775912742197979,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014065522713029327,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.01405408480011257,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 23,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 14:24:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.014997976958219462,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014873486252952551,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014545930242962026,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.014268813845393356,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014266467795840706,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 1,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:16:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.01354821288325478,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013271531117440673,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013119158468530982,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.012538842293873347,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.012509120837935251,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 2,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 15:43:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.013314408992611073,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013253375279290299,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012796752212590834,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.012694496297335803,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012138425799370755,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 3,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:17:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.01330252617048017,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013216806324313182,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012903679225138952,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.012712603174151724,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012655235576136412,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 4,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 16:43:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.014842955139902515,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.014616970508205398,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "probability": 0.014029884930653444,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.01391226865324078,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013541848338474721,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 5,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 17:10:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.015396237728163582,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.015394353155862512,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014722861220139983,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.014718702750290833,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.014226125630928073,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 6,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 17:37:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-4-6",
+          "probability": 0.013660895365364486,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013522655557126761,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "probability": 0.01331929525723425,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-4",
+          "probability": 0.012996984942566375,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012765787011573701,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 7,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 18:04:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.014782880697160453,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014631880548668454,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014246366671127712,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.014029616743420913,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013990570580162433,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 8,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 18:33:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "probability": 0.013880599769971956,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013763312070287304,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.013672980000183401,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.013358336072100028,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013201116064571571,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 9,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 19:04:00",
+      "capturedAt": "2026-11-15T01:59:43.080Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "probability": 0.012312477586957488,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "probability": 0.012281693394354278,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "probability": 0.011975002184070454,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.011906021825715216,
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "probability": 0.011693876773687226,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 10,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 19:36:00",
+      "capturedAt": "2026-11-15T01:59:43.081Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.015237523951854647,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.014870548678374536,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.014559154651549677,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "probability": 0.013854078576768798,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "probability": 0.013762701119086552,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 11,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 20:07:00",
+      "capturedAt": "2026-11-15T01:59:43.081Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "probability": 0.013910556806279215,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.013803113164793891,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.013661501331926503,
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "probability": 0.013499195189647557,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.013315739512816614,
+          "stake": 100
+        }
+      ],
+      "result": null
+    },
+    {
+      "venue": 24,
+      "race": 12,
+      "raceDate": "2026-11-15",
+      "cutoff": "2026-11-15 20:38:00",
+      "capturedAt": "2026-11-15T01:59:43.081Z",
+      "predictionPhase": "before",
+      "exhibitionCount": 0,
+      "picks": [
+        {
+          "pick": "1-2-6",
+          "probability": 0.012883280838780023,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "probability": 0.012803274447013291,
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "probability": 0.01268051193301376,
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "probability": 0.012548896548988655,
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "probability": 0.012541876452936244,
+          "stake": 100
+        }
+      ],
+      "result": null
+    }
+  ],
+  "skipped": [
+    {
+      "venue": "2",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "3",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "8",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "8",
+      "race": "2",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "9",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "9",
+      "race": "2",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "11",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "11",
+      "race": "2",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "13",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "16",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "18",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "18",
+      "race": "2",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "18",
+      "race": "3",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "18",
+      "race": "4",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "18",
+      "race": "5",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "18",
+      "race": "6",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "22",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "23",
+      "race": "1",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "23",
+      "race": "2",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "23",
+      "race": "3",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "23",
+      "race": "4",
+      "reason": "already_closed"
+    },
+    {
+      "venue": "23",
+      "race": "5",
+      "reason": "already_closed"
+    }
+  ],
+  "lastRunAt": "2026-11-15T01:59:43.081Z"
+}
