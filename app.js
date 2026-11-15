@@ -244,8 +244,53 @@ function generateTickets(){
   localStorage.setItem('bn_records',JSON.stringify(records));renderStats();$('autoSaveMessage').textContent=generatedTickets.length+'点を記録に保存しました。';
  });
 }
+let manualMode='single';
+const manualGroups=[new Set(),new Set(),new Set()];
+function manualTickets(){
+ if(manualMode==='single')return selected.length===3?[selected.join('-')]:[];
+ const sets=manualMode==='box'?[manualGroups[0],manualGroups[0],manualGroups[0]]:manualGroups;
+ const out=[];
+ for(const a of sets[0])for(const b of sets[1])for(const c of sets[2])if(a!==b&&a!==c&&b!==c)out.push(a+'-'+b+'-'+c);
+ return out.sort((a,b)=>a.localeCompare(b));
+}
+function manualPreview(){
+ const picks=manualTickets(),stake=Number($('stake').value)||0;
+ const preview=$('manualPreview');if(!preview)return;
+ preview.textContent=picks.length+'点 ／ 合計 '+yen(picks.length*stake)+(picks.length?'\n'+picks.join(' / '):'\n艇を選択してね。');
+ preview.style.whiteSpace='pre-wrap';
+}
+function manualModeSet(mode){
+ manualMode=mode;
+ $('singlePickArea').style.display=mode==='single'?'':'none';
+ $('multiPickArea').style.display=mode==='single'?'none':'';
+ for(const [name,id] of [['single','pickSingleMode'],['formation','pickFormationMode'],['box','pickBoxMode']]){
+  const b=$(id);b.setAttribute('aria-pressed',String(name===mode));b.style.borderColor=name===mode?'#cda966':'';
+ }
+ paintManualGroups();manualPreview();
+}
+function paintManualGroups(){
+ const host=$('multiPickRows');host.replaceChildren();
+ const count=manualMode==='box'?1:3;
+ for(let i=0;i<count;i++){
+  const wrap=document.createElement('div');wrap.style.marginBottom='14px';
+  const label=document.createElement('b');label.textContent=manualMode==='box'?'BOXに入れる艇（3艇以上）':(i+1)+'着候補';wrap.append(label);
+  const grid=document.createElement('div');grid.style.cssText='display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:8px';
+  for(let n=1;n<=6;n++){
+   const btn=document.createElement('button');btn.type='button';btn.className='ghost';btn.textContent=n;
+   const active=manualGroups[i].has(n);btn.setAttribute('aria-pressed',String(active));
+   btn.style.cssText='padding:12px 0;min-width:0;'+(active?'border-color:#cda966;background:rgba(205,169,102,.2);':'');
+   btn.addEventListener('click',()=>{if(manualGroups[i].has(n))manualGroups[i].delete(n);else manualGroups[i].add(n);paintManualGroups();manualPreview();});
+   grid.append(btn);
+  }
+  wrap.append(grid);host.append(wrap);
+ }
+}
+$('pickSingleMode')?.addEventListener('click',()=>manualModeSet('single'));
+$('pickFormationMode')?.addEventListener('click',()=>manualModeSet('formation'));
+$('pickBoxMode')?.addEventListener('click',()=>manualModeSet('box'));
+$('stake')?.addEventListener('input',manualPreview);
 function buildBoatChoices(){for(let n=1;n<=6;n++){const b=document.createElement("button");b.className="pick";b.dataset.boat=n;b.innerHTML=lane(n);b.addEventListener("click",()=>{if(selected.includes(n))selected=selected.filter(x=>x!==n);else if(selected.length<3)selected.push(n);else selected=[n];paintChoices();});$("boatChoices").append(b);}}
-function paintChoices(){document.querySelectorAll("[data-boat]").forEach(b=>b.classList.toggle("selected",selected.includes(Number(b.dataset.boat))));$("selectedText").textContent=selected.length?selected.join(" → ")+" ("+selected.length+"/3)":"1着・2着・3着の順に3艇選択してください。";}
+function paintChoices(){manualPreview();document.querySelectorAll("[data-boat]").forEach(b=>b.classList.toggle("selected",selected.includes(Number(b.dataset.boat))));$("selectedText").textContent=selected.length?selected.join(" → ")+" ("+selected.length+"/3)":"1着・2着・3着の順に3艇選択してください。";}
 function saveRecord(record){records.push({...record,createdAt:new Date().toISOString(),hit:false,payout:0});localStorage.setItem("bn_records",JSON.stringify(records));renderStats();page("records");}
 // v11: 日付をJSTで固定し、別日の同一場・同一Rを混同しない。
 function recordJstDate(x){
@@ -660,7 +705,19 @@ function renderStats(){
 }
 $("runAnalysis").addEventListener("click",renderAnalysis);
 $("buildTickets").addEventListener("click",generateTickets);
-$("saveManual").addEventListener("click",()=>{if(selected.length!==3){$("manualMessage").textContent="3艇を順番に選択してください。";return;}const stake=Number($("stake").value);if(!Number.isFinite(stake)||stake<100){$("manualMessage").textContent="金額は100円以上で入力してください。";return;}const venue=$("manualVenue");saveRecord({type:"manual",venue:venue.value,venueName:STADIUMS[Number(venue.value)]||venue.selectedOptions[0]?.textContent,race:$("manualRace").value,kind:"3連単",pick:selected.join("-"),stake});selected=[];paintChoices();$("manualMessage").textContent="予想を保存しました。";});
+$("saveManual").addEventListener("click",()=>{
+ const picks=manualTickets(),stake=Number($("stake").value);
+ if(!picks.length){$("manualMessage").textContent="有効な買い目を選択してね（BOXは3艇以上）。";return;}
+ if(!Number.isFinite(stake)||stake<100||!Number.isInteger(stake)||stake%100!==0){$("manualMessage").textContent="1点あたり100円単位で入力してね。";return;}
+ const venue=$("manualVenue"),race=$("manualRace").value,day=jstDay();
+ const existing=new Set(records.filter(x=>x.type==='manual'&&String(x.venue)===String(venue.value)&&String(x.race)===String(race)&&recordJstDate(x)===day).map(x=>x.pick));
+ const fresh=picks.filter(p=>!existing.has(p));
+ if(!fresh.length){$("manualMessage").textContent="このレースの買い目はすべて保存済みだよ。";return;}
+ if(!confirm(venue.selectedOptions[0]?.textContent+' '+race+'R：'+fresh.length+'点／合計'+yen(fresh.length*stake)+'を保存しますか？'+(fresh.length!==picks.length?'（重複'+(picks.length-fresh.length)+'点は除外）':'')))return;
+ const stamp=new Date().toISOString(),venueName=STADIUMS[Number(venue.value)]||venue.selectedOptions[0]?.textContent;
+ fresh.forEach(pick=>records.push({type:'manual',venue:venue.value,venueName,race,kind:'3連単・'+(manualMode==='box'?'BOX':manualMode==='formation'?'フォーメーション':'通常'),pick,stake,raceDate:day,createdAt:stamp,hit:false,payout:0}));
+ localStorage.setItem('bn_records',JSON.stringify(records));renderStats();$('manualMessage').textContent=fresh.length+'点を保存しました。';page('records');
+});
 $("reload").addEventListener("click",loadData);
 $("venueSelect").addEventListener("change",renderRace);$("raceSelect").addEventListener("change",renderRace);
 
