@@ -310,11 +310,22 @@ async function settleAllPending(){
  }finally{button.disabled=false;}
 }
 /* v14 read-only venue performance: calculated only from saved prediction records. */
+let recordDateFilter='today';
+function jstDay(offset=0){
+ const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ const d=new Date(day+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+offset);
+ return d.toISOString().slice(0,10);
+}
+function visibleRecords(){
+ if(recordDateFilter==='all')return records;
+ const day=recordDateFilter==='today'?jstDay():jstDay(-1);
+ return records.filter(x=>recordJstDate(x)===day);
+}
 function renderVenuePerformance(){
  const host=$('venuePerformance');if(!host)return;
  host.replaceChildren();
  const groups=new Map();
- records.forEach(x=>{
+ visibleRecords().forEach(x=>{
   const id=Number(x.venue),name=STADIUMS[id]||x.venueName||'競艇場不明';
   const key=Number.isInteger(id)&&id>=1&&id<=24?String(id):'name:'+name;
   if(!groups.has(key))groups.set(key,{id,name,total:0,settled:0,hits:0,stake:0,payout:0});
@@ -338,19 +349,22 @@ function renderVenuePerformance(){
  const scroll=document.createElement('div');scroll.style.cssText='overflow-x:auto';scroll.append(table);host.append(scroll);
 }
 function renderStats(){
- const total=records.reduce((a,x)=>a+Number(x.stake||0),0);
- const settled=records.filter(x=>x.resultEntered===true);
+ const shown=visibleRecords();
+ const period=$('recordPeriodLabel');
+ if(period)period.textContent='表示期間：'+(recordDateFilter==='today'?'今日 '+jstDay():recordDateFilter==='yesterday'?'昨日 '+jstDay(-1):'全期間')+' ／ 全保存 '+records.length+'件';
+ const total=shown.reduce((a,x)=>a+Number(x.stake||0),0);
+ const settled=shown.filter(x=>x.resultEntered===true);
  const hits=settled.filter(x=>x.hit===true).length;
  const returned=settled.reduce((a,x)=>a+Number(x.payout||0),0);
  const settledStake=settled.reduce((a,x)=>a+Number(x.stake||0),0);
  const recovery=settledStake?returned/settledStake*100:0;
- $("savedCount").textContent=records.length;$("recordCount").textContent=records.length;$("recordStake").textContent=yen(total);
+ $("savedCount").textContent=records.length;$("recordCount").textContent=shown.length;$("recordStake").textContent=yen(total);
  $("hitCount").textContent=settled.length?`${hits} / ${settled.length}（${(hits/settled.length*100).toFixed(1)}%）`:"未入力";
  $("recovery").textContent=settled.length?`${recovery.toFixed(1)}%`:"未入力";
  $("recordPayout").textContent=yen(returned);
  renderVenuePerformance();
  const host=$("history");host.innerHTML="";
- if(!records.length){host.textContent="まだ記録がありません。";return;}
+ if(!shown.length){host.textContent="この期間の予想記録はありません。";return;}
  // 買い目を選択してまとめて削除（チェック式）
  const selectedForDelete=new Set();
  const toolbar=document.createElement("div");
@@ -377,7 +391,7 @@ function renderStats(){
   deleteSelected.style.opacity=deleteSelected.disabled?".45":"1";
  };
  selectAll.addEventListener("click",()=>{
-  records.forEach(x=>selectedForDelete.add(x));
+  shown.forEach(x=>selectedForDelete.add(x));
   host.querySelectorAll('input[data-delete-pick="1"]').forEach(c=>c.checked=true);
   updateSelectionUI();
  });
@@ -395,7 +409,7 @@ function renderStats(){
  toolbar.append(selectionCount,selectAll,clearSelection,deleteSelected);host.append(toolbar);updateSelectionUI();
  // 競艇場 → レース → 買い目。競艇場・レースごとに折りたたみ可能
  const venues=new Map();
- records.forEach((x,index)=>{
+ shown.forEach((x,index)=>{
   const venueKey=String(x.venue??x.venueName??"unknown");
   if(!venues.has(venueKey))venues.set(venueKey,{id:Number(x.venue)||999,name:x.venueName||"競艇場",races:new Map()});
   const v=venues.get(venueKey),raceKey=String(x.race||"-");
@@ -899,3 +913,5 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
   finally{button.disabled=false;}
  });
 })();
+
+$('recordPeriod')?.addEventListener('change',e=>{recordDateFilter=e.target.value;renderStats();});
