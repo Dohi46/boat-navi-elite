@@ -1198,3 +1198,63 @@ document.getElementById('refreshApp')?.addEventListener('click',refreshAppShell)
 
 $('recordPeriod')?.addEventListener('change',e=>{recordDateFilter=e.target.value;renderStats();});
 $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.value;renderStats();});
+
+
+/* Daily GitHub prediction viewer: read-only, never writes bn_records or changes v13. */
+(function setupDailyAutoViewer(){
+ const dateEl=$('dailyAutoDate'),venueEl=$('dailyAutoVenue'),button=$('dailyAutoLoad'),status=$('dailyAutoStatus'),host=$('dailyAutoRaces');
+ if(!dateEl||!venueEl||!button||!status||!host)return;
+ dateEl.value=jstDay();
+ let snapshot=null;
+ const phaseLabel={before:'締切前',after:'締切後',post:'締切後'};
+ const show=()=>{
+  host.replaceChildren();
+  if(!snapshot)return;
+  const races=snapshot.races.filter(r=>venueEl.value==='all'||String(r.venue)===venueEl.value);
+  const info=document.createElement('div');info.className='status';
+  info.textContent='表示 '+races.length+' / '+snapshot.races.length+'レース ／ エンジン '+(snapshot.engine||'不明')+' ／ 仮想買い目・参考予想';
+  host.append(info);
+  if(!races.length){const empty=document.createElement('div');empty.className='notice';empty.textContent='該当するレースがありません。';host.append(empty);return;}
+  races.forEach(r=>{
+   const card=document.createElement('div');card.className='card';card.style.marginTop='10px';
+   const heading=document.createElement('h3');heading.textContent=(VENUES[Number(r.venue)]||'場'+r.venue)+' '+r.race+'R';
+   card.append(heading);
+   const meta=document.createElement('div');meta.className='status';
+   meta.textContent='締切 '+(r.cutoff||'未取得')+' ／ '+(phaseLabel[r.predictionPhase]||'予想時点不明')+' ／ 展示情報 '+(Number(r.exhibitionCount)||0)+'件';
+   card.append(meta);
+   const picks=Array.isArray(r.picks)?r.picks:[];
+   picks.forEach((p,i)=>{
+    const line=document.createElement('div');line.className='row';line.style.cssText='padding:8px 0;border-bottom:1px solid var(--line);gap:8px';
+    const pick=document.createElement('strong');pick.textContent=(i+1)+'位 '+String(p.pick||'—');
+    const detail=document.createElement('span');detail.className='tiny muted';
+    const probability=Number(p.probability);
+    detail.textContent=(Number.isFinite(probability)?(probability*100).toFixed(2)+'%（参考値）':'確率未取得')+' ／ 仮想 '+yen(p.stake);
+    line.append(pick,detail);card.append(line);
+   });
+   if(r.result){const result=document.createElement('div');result.className='status';result.style.marginTop='8px';result.textContent='結果データ保存済み（払戻照合は別途検証）';card.append(result);}
+   host.append(card);
+  });
+ };
+ const load=async()=>{
+  const date=dateEl.value;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){status.textContent='開催日を選択してね。';return;}
+  button.disabled=true;status.textContent=date+' の保存データを読み込み中…';host.replaceChildren();
+  try{
+   const response=await fetch('./data/auto/'+date+'.json?ts='+Date.now(),{cache:'no-store'});
+   if(!response.ok)throw Error(response.status===404?'この日の保存データはまだありません':'HTTP '+response.status);
+   const doc=await response.json();
+   if(!Array.isArray(doc.races))throw Error('データ形式が不正です');
+   snapshot=doc;
+   const venues=[...new Set(doc.races.map(r=>Number(r.venue)).filter(Number.isFinite))].sort((a,b)=>a-b);
+   venueEl.replaceChildren();
+   const all=document.createElement('option');all.value='all';all.textContent='全競艇場';venueEl.append(all);
+   venues.forEach(v=>{const option=document.createElement('option');option.value=String(v);option.textContent=VENUES[v]||'場'+v;venueEl.append(option);});
+   status.textContent=date+' の自動予想 '+doc.races.length+'レースを読み込みました。GitHub保存データの閲覧専用です。';
+   show();
+  }catch(e){snapshot=null;status.textContent='読み込めませんでした：'+e.message+'。日付を確認してね。';}
+  finally{button.disabled=false;}
+ };
+ button.addEventListener('click',load);
+ venueEl.addEventListener('change',show);
+ load();
+})();
