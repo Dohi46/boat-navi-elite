@@ -473,6 +473,52 @@ function renderVenuePerformance(){
  });table.append(body);
  const scroll=document.createElement('div');scroll.style.cssText='overflow-x:auto';scroll.append(table);host.append(scroll);
 }
+// Read-only, local-record-only dashboard. Never modifies bn_records.
+function insightsStats(items){
+ const done=items.filter(x=>x.resultEntered===true);
+ const stake=done.reduce((n,x)=>n+(Number(x.stake)||0),0);
+ const payout=done.reduce((n,x)=>n+(Number(x.payout)||0),0);
+ const hits=done.filter(x=>x.hit===true).length;
+ return {all:items.length,count:done.length,hits,stake,payout,profit:payout-stake,hitRate:done.length?100*hits/done.length:null,returnRate:stake?100*payout/stake:null};
+}
+function insightsTable(host,columns,rows){
+ host.replaceChildren();
+ if(!rows.length){host.textContent='この条件で集計できる確定済みデータがありません。';return;}
+ const scroller=document.createElement('div');scroller.style.overflowX='auto';
+ const table=document.createElement('table');table.style.cssText='width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap';
+ const tr=document.createElement('tr');
+ columns.forEach((label,i)=>{const th=document.createElement('th');th.textContent=label;th.style.cssText='padding:9px 5px;text-align:'+(i?'right':'left')+';border-bottom:1px solid var(--line)';tr.append(th);});table.append(tr);
+ rows.forEach(cells=>{const row=document.createElement('tr');cells.forEach((v,i)=>{const td=document.createElement('td');td.textContent=String(v);td.style.cssText='padding:10px 5px;text-align:'+(i?'right':'left')+';border-bottom:1px solid var(--line)';row.append(td);});table.append(row);});
+ scroller.append(table);host.append(scroller);
+}
+function renderInsights(){
+ const status=$('insightsStatus');if(!status)return;
+ const period=$('insightsPeriod').value,source=$('insightsSource').value;
+ const today=jstDay(),start=period==='all'?null:jstDay(-(Number(period)-1));
+ const subset=records.filter(x=>{
+  const day=recordJstDate(x);
+  return day&&day<=today&&(!start||day>=start)&&(source==='all'||x.type===source);
+ });
+ const total=insightsStats(subset);
+ $('insightsCount').textContent=total.count+' / '+total.all;
+ $('insightsHit').textContent=total.hitRate===null?'—':total.hits+'件 · '+total.hitRate.toFixed(1)+'%';
+ $('insightsReturn').textContent=total.returnRate===null?'—':total.returnRate.toFixed(1)+'%';
+ $('insightsProfit').textContent=total.count?yen(total.profit):'—';
+ status.textContent='集計対象：'+subset.length+'点 ／ 結果未入力：'+(total.all-total.count)+'点。未入力は的中率・回収率の分母に含めません。';
+ const group=(key)=>{const map=new Map();subset.forEach(x=>{const k=key(x);if(!map.has(k))map.set(k,[]);map.get(k).push(x);});return [...map.entries()].map(([name,items])=>({name,...insightsStats(items)}));};
+ const rate=g=>g.returnRate===null?'—':g.returnRate.toFixed(1)+'%';
+ const hit=g=>g.hitRate===null?'—':g.hitRate.toFixed(1)+'%';
+ const venues=group(x=>STADIUMS[Number(x.venue)]||x.venueName||'不明').filter(g=>g.count>=10).sort((a,b)=>(b.returnRate??-1)-(a.returnRate??-1));
+ insightsTable($('insightsVenues'),['競艇場','確定/全件','的中率','回収率','仮想収支'],venues.map(g=>[g.name,g.count+'/'+g.all,hit(g),rate(g),yen(g.profit)]));
+ const days=group(recordJstDate).filter(g=>g.count>0).sort((a,b)=>b.name.localeCompare(a.name));
+ insightsTable($('insightsDays'),['開催日','確定/全件','的中率','回収率','仮想収支'],days.map(g=>[g.name,g.count+'/'+g.all,hit(g),rate(g),yen(g.profit)]));
+ const phaseLabels={before:'展示前',after:'展示後',partial:'展示一部取得',post:'締切後（検証対象外）',unknown:'締切不明','':'未分類'};
+ const phases=group(x=>x.predictionPhase||'').sort((a,b)=>b.count-a.count);
+ insightsTable($('insightsPhases'),['分類','確定/全件','的中率','回収率'],phases.map(g=>[phaseLabels[g.name]||g.name,g.count+'/'+g.all,hit(g),rate(g)]));
+}
+$('insightsRefresh')?.addEventListener('click',renderInsights);
+$('insightsPeriod')?.addEventListener('change',renderInsights);
+$('insightsSource')?.addEventListener('change',renderInsights);
 function renderStats(){
  const shown=visibleRecords();
  const period=$('recordPeriodLabel');
@@ -488,6 +534,7 @@ function renderStats(){
  $("recovery").textContent=settled.length?`${recovery.toFixed(1)}%`:"未入力";
  $("recordPayout").textContent=yen(returned);
  renderVenuePerformance();
+ renderInsights();
  const phaseHost=$('phasePerformance');
  if(phaseHost){
   phaseHost.replaceChildren();
