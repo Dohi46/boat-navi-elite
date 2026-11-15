@@ -192,11 +192,18 @@ function renderAnalysis(){oddsHeader("ai");
  const scores=scoreRace(r),max=scores[0]?.score||1;
  $("analysisResult").innerHTML=`<div class="eyebrow">V13 REFERENCE SCORE · NOT WIN PROBABILITY</div>`+scores.map((x,i)=>`<div class="boatrow"><div>${lane(x.n)}<b>${x.name}</b><div class="tiny muted">${x.parts}項目で評価</div></div><div style="width:43%;text-align:right"><b class="gold">${x.score.toFixed(2)}</b><div style="height:5px;background:#283547;border-radius:8px;margin-top:5px"><div style="height:5px;width:${Math.max(2,x.score/max*100)}%;background:linear-gradient(90deg,#a98548,#e2c88f);border-radius:8px"></div></div></div></div>`).join("")+`<div class="notice">スコアは出走表・取得できた直前情報を単純加重した参考値です。オッズ、展開、気象の変化、欠損値を十分に補正していません。的中確率や利益を保証するものではありません。</div>`;
 }
+function exhibitionPhase(r){
+ const p=r?.preview?.racers||{};
+ const count=[1,2,3,4,5,6].filter(n=>metric(p[n],'exhibition_time')!==null).length;
+ return {phase:count===6?'after':count===0?'before':'partial',count};
+}
+function phaseName(p){return p==='after'?'展示後':p==='before'?'展示前':p==='partial'?'展示一部取得':'未分類';}
 let generatedTickets=[];
 function permutations3(items){const out=[];for(const a of items)for(const b of items)if(b.n!==a.n)for(const c of items)if(c.n!==a.n&&c.n!==b.n)out.push([a,b,c]);return out;}
 function generateTickets(){
  const r=selectedRace('aiVenue','aiRace');
  if(!r){$('ticketResult').innerHTML='<div class="notice">対象レースのデータがありません。</div>';return;}
+ const phaseInfo=exhibitionPhase(r);
  const ranked=scoreRace(r);
  if(ranked.length!==6||ranked.every(x=>x.parts===0)){$('ticketResult').innerHTML='<div class="notice">選手データが不足しているため、買い目を作成できません。</div>';return;}
  const venueId=$('aiVenue').value,raceId=$('aiRace').value;
@@ -221,10 +228,13 @@ function generateTickets(){
  compare.append(caption);
  comparisonTen.forEach((x,i)=>{const row=document.createElement('div');row.className='row';row.style.cssText='padding:7px 0;border-bottom:1px solid var(--line);font-size:13px';const name=document.createElement('b');name.textContent=(i+1)+'位 '+x.pick+(i<count?' · メイン':' · 比較のみ');const amount=document.createElement('span');amount.className='tiny muted';amount.textContent=yen(unit);row.append(name,amount);compare.append(row);});
  $('ticketResult').append(compare);
+ const phaseNotice=document.createElement('div');phaseNotice.className='notice';phaseNotice.style.marginTop='12px';
+ phaseNotice.textContent='予想作成時の展示情報：'+phaseName(phaseInfo.phase)+'（展示タイム '+phaseInfo.count+'/6艇）。この状態を保存時に記録します。';
+ $('ticketResult').append(phaseNotice);
  renderTicketOdds();
  $('saveAutoTickets').addEventListener('click',()=>{
   const stamp=new Date().toISOString();
-  generatedTickets.forEach(x=>records.push({type:'auto',venue:venueId,venueName,race:raceId,kind:'3連単・v13参考案',pick:x.pick,stake:x.stake,createdAt:stamp,hit:false,payout:0}));
+  generatedTickets.forEach(x=>records.push({type:'auto',venue:venueId,venueName,race:raceId,kind:'3連単・v13参考案',pick:x.pick,stake:x.stake,createdAt:stamp,raceDate:r.date||jstDay(),predictionPhase:phaseInfo.phase,exhibitionCount:phaseInfo.count,hit:false,payout:0}));
   localStorage.setItem('bn_records',JSON.stringify(records));renderStats();$('autoSaveMessage').textContent=generatedTickets.length+'点を記録に保存しました。';
  });
 }
@@ -372,6 +382,20 @@ function renderStats(){
  $("recovery").textContent=settled.length?`${recovery.toFixed(1)}%`:"未入力";
  $("recordPayout").textContent=yen(returned);
  renderVenuePerformance();
+ const phaseHost=$('phasePerformance');
+ if(phaseHost){
+  phaseHost.replaceChildren();
+  const summary=document.createElement('div');summary.className='tiny muted';summary.textContent='結果入力済みの予想のみ集計。古い記録は未分類。展示一部取得は別集計。';phaseHost.append(summary);
+  ['before','after','partial',null].forEach(phase=>{
+   const all=shown.filter(x=>(x.predictionPhase||null)===phase);
+   const done=all.filter(x=>x.resultEntered===true),hits=done.filter(x=>x.hit===true).length;
+   const stake=done.reduce((n,x)=>n+(Number(x.stake)||0),0),payout=done.reduce((n,x)=>n+(Number(x.payout)||0),0);
+   const line=document.createElement('div');line.className='row';line.style.cssText='padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;gap:8px';
+   const title=document.createElement('b');title.textContent=phaseName(phase)+' · '+done.length+'/'+all.length+'点';
+   const rate=document.createElement('span');rate.className='tiny muted';rate.textContent=done.length?'的中 '+(100*hits/done.length).toFixed(1)+'% · 回収 '+(stake?100*payout/stake:0).toFixed(1)+'%':'結果未入力';
+   line.append(title,rate);phaseHost.append(line);
+  });
+ }
  const host=$("history");host.innerHTML="";
  if(!shown.length){host.textContent="この期間の予想記録はありません。";return;}
  // 買い目を選択してまとめて削除（チェック式）
@@ -491,7 +515,7 @@ function renderStats(){
     const status=document.createElement("div");status.className="tiny muted";
     status.textContent=x.resultEntered?`3連単・結果 ${x.actualResult}・${x.hit?"的中":"不的中"}・払戻 ${yen(x.payout)}`:`3連単・${x.kind||"予想"}・結果未入力`;
     if(x.resultEntered===true&&x.hit===true){status.style.color='#e7bd68';status.style.fontWeight='700';}
-    info.append(pickLine,status);wrap.append(info);
+    const phaseTag=document.createElement('div');phaseTag.className='tiny muted';phaseTag.textContent='予想区分：'+phaseName(x.predictionPhase);info.append(pickLine,status,phaseTag);wrap.append(info);
     const actions=document.createElement("div");actions.style.cssText="display:flex;gap:5px;align-items:center;flex-shrink:0";
     const btn=document.createElement("button");btn.className="ghost";btn.style.cssText="white-space:nowrap;padding:7px 9px;font-size:12px;min-height:34px";btn.textContent=x.resultEntered?"結果修正":"結果入力";
     btn.addEventListener("click",()=>{
