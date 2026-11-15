@@ -1217,7 +1217,7 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
   if(!races.length){const empty=document.createElement('div');empty.className='notice';empty.textContent='該当するレースがありません。';host.append(empty);return;}
   races.forEach(r=>{
    const card=document.createElement('div');card.className='card';card.style.marginTop='10px';
-   const heading=document.createElement('h3');heading.textContent=(VENUES[Number(r.venue)]||'場'+r.venue)+' '+r.race+'R';
+   const heading=document.createElement('h3');heading.textContent=(STADIUMS[Number(r.venue)]||'場'+r.venue)+' '+r.race+'R';
    card.append(heading);
    const meta=document.createElement('div');meta.className='status';
    meta.textContent='締切 '+(r.cutoff||'未取得')+' ／ '+(phaseLabel[r.predictionPhase]||'予想時点不明')+' ／ 展示情報 '+(Number(r.exhibitionCount)||0)+'件';
@@ -1248,7 +1248,7 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
    const venues=[...new Set(doc.races.map(r=>Number(r.venue)).filter(Number.isFinite))].sort((a,b)=>a-b);
    venueEl.replaceChildren();
    const all=document.createElement('option');all.value='all';all.textContent='全競艇場';venueEl.append(all);
-   venues.forEach(v=>{const option=document.createElement('option');option.value=String(v);option.textContent=VENUES[v]||'場'+v;venueEl.append(option);});
+   venues.forEach(v=>{const option=document.createElement('option');option.value=String(v);option.textContent=STADIUMS[v]||'場'+v;venueEl.append(option);});
    status.textContent=date+' の自動予想 '+doc.races.length+'レースを読み込みました。GitHub保存データの閲覧専用です。';
    show();
   }catch(e){snapshot=null;status.textContent='読み込めませんでした：'+e.message+'。日付を確認してね。';}
