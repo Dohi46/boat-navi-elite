@@ -1,0 +1,31 @@
+name: Experimental LightGBM daily learning
+on:
+  schedule:
+    - cron: '0 16 * * *' # 01:00 JST, after 23:30 settlement
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: boat-nexus-daily
+  cancel-in-progress: false
+jobs:
+  learn:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check lightgbm==4.6.0 scikit-learn==1.7.2 numpy==2.3.4
+      - name: Train and evaluate on chronological holdout
+        run: python tools/train_lightgbm.py
+      - name: Commit experimental results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/models/
+          if ! git diff --cached --quiet; then
+            git commit -m "data: evaluate experimental LightGBM"
+            git push
+          fi
