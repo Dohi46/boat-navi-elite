@@ -10,6 +10,12 @@ const fields={
 };
 function available(obj,names){const out={};if(!obj||typeof obj!=='object')return out;for(const key of names){const value=obj[key];if(value!==undefined&&value!==null&&value!=='')out[key]=value;}return out;}
 async function main(){
+ // A one-off schema inventory must never re-fetch the same date.
+ const target='data/features/'+date+'.json';
+ if(fs.existsSync(target)){
+  console.log('SKIP: already inventoried '+date+'; no duplicate API request or overwrite.');
+  return;
+ }
  const response=await fetch(endpoint,{signal:AbortSignal.timeout(30000),headers:{'cache-control':'no-cache'}});
  if(!response.ok)throw Error('Source HTTP '+response.status);
  const source=await response.json(),stadiums=source?.programs?.stadiums;
@@ -39,7 +45,6 @@ async function main(){
  output.coverage={raceCount:output.races.length,racerCount:racers,fieldCounts:coverage};
  if(!output.races.length)throw Error('No races returned for '+date);
  fs.mkdirSync('data/features',{recursive:true});
- const target='data/features/'+date+'.json';
  fs.writeFileSync(target,JSON.stringify(output,null,2)+'\n');
  console.log('Saved',target,'races',output.races.length,'racer rows',racers);
  console.log('Available extra field counts:',JSON.stringify(coverage));
