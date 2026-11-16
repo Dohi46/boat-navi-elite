@@ -77,13 +77,18 @@
     {
       "venue": 5,
       "name": "多摩川",
-      "knowledgeStatus": "pending-venue-source-verification",
-      "waterType": null,
-      "tideInfluence": null,
+      "knowledgeStatus": "source-reviewed-not-statistically-validated",
+      "waterType": "fresh",
+      "tideInfluence": "not-listed",
       "windOrientation": null,
       "courseBias": null,
-      "notes": [],
-      "sourceUrls": [],
+      "notes": [
+        "公式研究資料：比較的静かなプール型水面で、風と波の影響が小さいとされる",
+        "公式研究資料：2025年1〜6月の進入1コース1着率53.2%（期間限定・将来値ではない）"
+      ],
+      "sourceUrls": [
+        "https://www.boatrace-tamagawa.com/uploads/cdn/banner/pr_banner/pc/data/20250619_kenkyu.pdf"
+      ],
       "validation": {
         "raceCount": 0,
         "weatherRaceCount": 0,
@@ -237,13 +242,18 @@
     {
       "venue": 15,
       "name": "丸亀",
-      "knowledgeStatus": "pending-venue-source-verification",
-      "waterType": null,
-      "tideInfluence": null,
+      "knowledgeStatus": "source-reviewed-not-statistically-validated",
+      "waterType": "sea",
+      "tideInfluence": "yes",
       "windOrientation": null,
       "courseBias": null,
-      "notes": [],
-      "sourceUrls": [],
+      "notes": [
+        "公式水面特性：2マーク後方から潮が出入りする",
+        "公式水面特性：向かい風と潮がぶつかると2マーク近辺が荒れることがある"
+      ],
+      "sourceUrls": [
+        "https://www.marugameboat.jp/sp/01suimen/01suimen.htm"
+      ],
       "validation": {
         "raceCount": 0,
         "weatherRaceCount": 0,
