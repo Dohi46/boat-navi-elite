@@ -1422,6 +1422,33 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
 })();
 
 
+/* Offline research leaderboard: read-only snapshot, no user data writes. */
+(function setupResearchLeaderboard(){
+ const panel=document.createElement('section');panel.className='card';panel.style.margin='12px 0';
+ const title=document.createElement('h3');title.textContent='🏆 AIランキング研究所（実験）';panel.append(title);
+ const status=document.createElement('p');status.className='status';status.textContent='保存済みの仮想成績を読み込み中…';panel.append(status);
+ const table=document.createElement('div');panel.append(table);
+ const host=document.getElementById('selectiveResults');
+ if(!host||!host.parentElement)return;
+ host.parentElement.insertBefore(panel,host);
+ fetch('./data/research/ai-ranking-latest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('ランキングファイル未生成');return r.json()}).then(d=>{
+  const labels={baseline:'全購入（基準）',favorite:'本命寄り',medium:'中穴候補',long:'大穴候補',selected:'厳選候補'};
+  status.textContent='保存済み '+d.filesAnalyzed+'日分 ／ 評価対象 '+d.quality.eligible+'R ／ 保留 '+d.quality.held+'R ／ 水面情報あり '+d.quality.weatherComplete+'R';
+  const t=document.createElement('table');t.style.cssText='width:100%;font-size:12px;border-collapse:collapse';
+  const head=document.createElement('tr');
+  for(const label of ['分類','対象R','的中点','仮想回収率']){const th=document.createElement('th');th.textContent=label;th.style.padding='6px 3px';head.append(th);}
+  t.append(head);
+  for(const [key,name] of Object.entries(labels)){
+   const x=d.strategies?.[key];if(!x)continue;
+   const tr=document.createElement('tr');
+   for(const value of [name,String(x.races),String(x.hits),x.roiPercent===null?'—':x.roiPercent.toFixed(2)+'%']){const td=document.createElement('td');td.textContent=value;td.style.cssText='padding:7px 3px;border-top:1px solid var(--line)';tr.append(td);}
+   t.append(tr);
+  }
+  table.replaceChildren(t);
+  const note=document.createElement('p');note.className='tiny muted';note.textContent='全て既存v13の同じ買い目による仮想成績。独立した学習済みAI同士の比較ではありません。大穴候補は少数レースで、将来の利益は保証されません。';table.append(note);
+ }).catch(e=>{status.textContent='ランキングを表示できません：'+e.message;});
+})();
+
 /* Experimental pre-race screening. Read-only; never modifies v13 or local records.
    Heuristic thresholds are unvalidated, NOT probability or expected value. */
 (function setupSelectiveLab(){
