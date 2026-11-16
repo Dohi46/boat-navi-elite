@@ -1212,27 +1212,38 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
   if(!snapshot)return;
   const races=snapshot.races.filter(r=>venueEl.value==='all'||String(r.venue)===venueEl.value);
   const info=document.createElement('div');info.className='status';
-  info.textContent='表示 '+races.length+' / '+snapshot.races.length+'レース ／ エンジン '+(snapshot.engine||'不明')+' ／ 仮想買い目・参考予想';
+  info.textContent='表示 '+races.length+' / '+snapshot.races.length+'レース ／ タップで買い目を展開';
   host.append(info);
   if(!races.length){const empty=document.createElement('div');empty.className='notice';empty.textContent='該当するレースがありません。';host.append(empty);return;}
-  races.forEach(r=>{
-   const card=document.createElement('div');card.className='card';card.style.marginTop='10px';
-   const heading=document.createElement('h3');heading.textContent=(STADIUMS[Number(r.venue)]||'場'+r.venue)+' '+r.race+'R';
-   card.append(heading);
-   const meta=document.createElement('div');meta.className='status';
-   meta.textContent='締切 '+(r.cutoff||'未取得')+' ／ '+(phaseLabel[r.predictionPhase]||'予想時点不明')+' ／ 展示情報 '+(Number(r.exhibitionCount)||0)+'件';
-   card.append(meta);
-   const picks=Array.isArray(r.picks)?r.picks:[];
-   picks.forEach((p,i)=>{
-    const line=document.createElement('div');line.className='row';line.style.cssText='padding:8px 0;border-bottom:1px solid var(--line);gap:8px';
-    const pick=document.createElement('strong');pick.textContent=(i+1)+'位 '+String(p.pick||'—');
-    const detail=document.createElement('span');detail.className='tiny muted';
-    const probability=Number(p.probability);
-    detail.textContent=(Number.isFinite(probability)?(probability*100).toFixed(2)+'%（参考値）':'確率未取得')+' ／ 仮想 '+yen(p.stake);
-    line.append(pick,detail);card.append(line);
+  const byVenue=new Map();
+  races.forEach(r=>{const key=Number(r.venue);if(!byVenue.has(key))byVenue.set(key,[]);byVenue.get(key).push(r);});
+  [...byVenue.entries()].sort((a,b)=>a[0]-b[0]).forEach(([venue,items])=>{
+   const group=document.createElement('details');group.className='card';group.style.marginTop='10px';
+   const groupTitle=document.createElement('summary');groupTitle.style.cssText='cursor:pointer;font-weight:700;padding:5px 0';
+   groupTitle.textContent=(STADIUMS[venue]||'場'+venue)+'　'+items.length+'レース　▸';
+   group.append(groupTitle);
+   items.sort((a,b)=>Number(a.race)-Number(b.race)).forEach(r=>{
+    const detail=document.createElement('details');detail.style.cssText='border-top:1px solid var(--line);margin-top:8px;padding:10px 0 2px';
+    const title=document.createElement('summary');title.style.cssText='cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px';
+    const name=document.createElement('strong');name.textContent=r.race+'R';
+    const top=Array.isArray(r.picks)&&r.picks.length?r.picks[0].pick:'—';
+    const hint=document.createElement('span');hint.className='tiny muted';hint.textContent='本命 '+top+'　▸';
+    title.append(name,hint);detail.append(title);
+    const meta=document.createElement('div');meta.className='status';meta.style.marginTop='8px';
+    meta.textContent='締切 '+(r.cutoff||'未取得')+' ／ '+(phaseLabel[r.predictionPhase]||'予想時点不明')+' ／ 展示 '+(Number(r.exhibitionCount)||0)+'件';
+    detail.append(meta);
+    (Array.isArray(r.picks)?r.picks:[]).forEach((p,i)=>{
+     const line=document.createElement('div');line.className='row';line.style.cssText='padding:7px 0;border-bottom:1px solid var(--line);gap:8px';
+     const pick=document.createElement('strong');pick.textContent=(i+1)+'位 '+String(p.pick||'—');
+     const right=document.createElement('span');right.className='tiny muted';
+     const prob=Number(p.probability);
+     right.textContent=(Number.isFinite(prob)?(prob*100).toFixed(2)+'%':'—')+' ／ '+yen(p.stake);
+     line.append(pick,right);detail.append(line);
+    });
+    if(r.result){const result=document.createElement('div');result.className='status';result.textContent='結果照合済み ／ 仮想払戻 '+yen(r.result.payout);detail.append(result);}
+    group.append(detail);
    });
-   if(r.result){const result=document.createElement('div');result.className='status';result.style.marginTop='8px';result.textContent='結果データ保存済み（払戻照合は別途検証）';card.append(result);}
-   host.append(card);
+   host.append(group);
   });
  };
  const load=async()=>{
