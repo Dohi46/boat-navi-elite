@@ -31,5 +31,17 @@ jobs:
           git add data/research/quality-rolling-latest.json
           if ! git diff --cached --quiet; then
             git commit -m "research: refresh quality and rolling report"
-            git push
+            # Another workflow may advance main while this job is running.
+            # Retry fast-forward-only publication of this research commit; never force push.
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main || { git rebase --abort || true; exit 1; }
+              if git push origin HEAD:main; then
+                echo "Research report published on attempt $attempt"
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "Could not publish research report after retries" >&2
+            exit 1
           fi
