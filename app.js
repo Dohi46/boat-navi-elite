@@ -1454,6 +1454,23 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
   const selected=all.filter(x=>filter.value==='all'||(filter.value==='candidate'?x.a.candidate:filter.value==='medium'?x.a.kind==='medium':filter.value==='long'?x.a.kind==='long':!x.a.candidate));
   const count=all.filter(x=>x.a.candidate).length,medium=all.filter(x=>x.a.kind==='medium').length,long=all.filter(x=>x.a.kind==='long').length;
   const info=document.createElement('div');info.className='status';info.textContent='波乱検証候補 '+count+' / '+all.length+'レース（中穴仮説 '+medium+'・大穴仮説 '+long+'）／ 見送り・保留 '+(all.length-count)+' ／ 実オッズ・期待値未取得';host.append(info);
+  // Fair comparison: settled, genuinely pre-cutoff snapshots only. No outcome in selection.
+  const eligible=all.filter(x=>x.r.result&&x.r.predictionPhase==='before'&&x.r.capturedAt&&x.r.cutoff&&Date.parse(x.r.capturedAt)<Date.parse(String(x.r.cutoff).replace(' ','T')+'+09:00'));
+  const tally=items=>items.reduce((v,x)=>{
+   const bets=Array.isArray(x.r.result.picks)?x.r.result.picks:[];
+   const stake=bets.reduce((sum,p)=>sum+(Number(p.stake)||0),0);
+   const payout=bets.reduce((sum,p)=>sum+(Number(p.payout)||0),0);
+   if(stake>0){v.races++;v.stake+=stake;v.payout+=payout;v.hits+=bets.filter(p=>p.hit).length;}
+   return v;
+  },{races:0,stake:0,payout:0,hits:0});
+  const base=tally(eligible),picked=tally(eligible.filter(x=>x.a.candidate));
+  const roi=x=>x.stake?(100*x.payout/x.stake).toFixed(1)+'%':'—';
+  const compare=document.createElement('div');compare.className='card';compare.style.marginTop='10px';
+  const heading=document.createElement('strong');heading.textContent='📊 事後検証｜全購入 vs 波乱候補のみ';compare.append(heading);
+  const lines=document.createElement('div');lines.className='status';lines.style.marginTop='7px';
+  lines.textContent='全購入：'+base.races+'R・的中 '+base.hits+'点・仮想回収率 '+roi(base)+'（'+yen(base.payout)+' / '+yen(base.stake)+'）\n波乱候補：'+picked.races+'R・的中 '+picked.hits+'点・仮想回収率 '+roi(picked)+'（'+yen(picked.payout)+' / '+yen(picked.stake)+'）';
+  lines.style.whiteSpace='pre-line';compare.append(lines);
+  const caution=document.createElement('p');caution.className='tiny muted';caution.textContent='確定済み・締切前保存のレースのみ集計。買い目は両群とも既存v13の各5点。未確定レースは除外。選別閾値は過去データで独立検証されておらず、この比較は実運用成績や将来の収益性を示しません。';compare.append(caution);host.append(compare);
   if(!selected.length){const empty=document.createElement('p');empty.className='status';empty.textContent='該当するレースはありません。';host.append(empty);}
   selected.forEach(({r,a})=>{
    const details=document.createElement('details');details.style.cssText='padding:11px 0;border-bottom:1px solid var(--line)';
