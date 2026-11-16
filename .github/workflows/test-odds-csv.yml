@@ -1,0 +1,32 @@
+name: Test BoatraceCSV odds import
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'JST date YYYY-MM-DD (empty = today)'
+        required: false
+        type: string
+permissions:
+  contents: write
+jobs:
+  test-odds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch and validate one day of odds
+        env:
+          TEST_DATE: ${{ inputs.date }}
+        run: node tools/test_odds_csv.cjs
+      - name: Commit validated test data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/odds/
+          if ! git diff --cached --quiet; then
+            git commit -m "data: validate one-day BoatraceCSV odds snapshot"
+            git push
+          fi
