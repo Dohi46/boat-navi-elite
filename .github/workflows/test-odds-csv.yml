@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Probe published historical odds paths
+        run: node tools/probe_odds_sources.cjs
       - name: Fetch and validate one day of odds
         env:
           TEST_DATE: ${{ inputs.date }}
