@@ -1420,3 +1420,56 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
   finally{button.disabled=false;}
  });
 })();
+
+
+/* Experimental pre-race screening. Read-only; never modifies v13 or local records.
+   Heuristic thresholds are unvalidated, NOT probability or expected value. */
+(function setupSelectiveLab(){
+ const dateEl=$('selectiveDate'),filter=$('selectiveFilter'),button=$('selectiveLoad'),status=$('selectiveStatus'),host=$('selectiveResults');
+ if(!dateEl||!filter||!button||!status||!host)return;
+ dateEl.value=jstDay();
+ let races=[];
+ function assess(r){
+  const f=r.features||{},lanes=[1,2,3,4,5,6].map(n=>f[String(n)]||{});
+  const rates=lanes.map(x=>Number(x.national_win_rate));
+  const valid=rates.every(x=>Number.isFinite(x)&&x>0);
+  const pre=r.predictionPhase==='before'&&r.cutoff&&r.capturedAt&&Date.parse(r.capturedAt)<Date.parse(String(r.cutoff).replace(' ','T')+'+09:00');
+  if(!pre||!valid)return {candidate:false,reason:'締切前データ・選手情報が不足'};
+  const inner=rates[0],challengers=Math.max(...rates.slice(1,4));
+  const motor=lanes.slice(1,4).some(x=>Number(x.motor_top_2_percent)>=40);
+  const competitive=challengers>=inner+0.5;
+  const candidate=competitive||motor;
+  return {candidate,reason:candidate?(competitive?'2〜4号艇の全国勝率が1号艇を上回る':'2〜4号艇にモーター2連率40%以上'):'事前の波乱条件に該当せず'};
+ }
+ function render(){
+  host.replaceChildren();
+  const all=races.map(r=>({r,a:assess(r)}));
+  const selected=all.filter(x=>filter.value==='all'||(filter.value==='candidate'?x.a.candidate:!x.a.candidate));
+  const count=all.filter(x=>x.a.candidate).length;
+  const info=document.createElement('div');info.className='status';info.textContent='波乱検証候補 '+count+' / '+all.length+'レース ／ その他 '+(all.length-count)+'レースは見送り・保留 ／ すべて期待値未判定';host.append(info);
+  if(!selected.length){const empty=document.createElement('p');empty.className='status';empty.textContent='該当するレースはありません。';host.append(empty);}
+  selected.forEach(({r,a})=>{
+   const details=document.createElement('details');details.style.cssText='padding:11px 0;border-bottom:1px solid var(--line)';
+   const summary=document.createElement('summary');summary.style.cssText='cursor:pointer;font-weight:700';
+   summary.textContent=(a.candidate?'🌊 検証候補':'🔴 見送り・保留')+' ｜ '+(STADIUMS[Number(r.venue)]||'場'+r.venue)+' '+r.race+'R';
+   details.append(summary);
+   const reason=document.createElement('div');reason.className='status';reason.style.marginTop='7px';reason.textContent='事前判定理由：'+a.reason+'。実オッズなし／期待値不明／仮想購入推奨なし。';details.append(reason);
+   const picks=document.createElement('div');picks.className='tiny muted';picks.style.marginTop='5px';picks.textContent='保存済みv13買い目（参考）：'+(r.picks||[]).map(p=>p.pick).join('、');details.append(picks);
+   if(r.result){const result=document.createElement('div');result.className='status';result.textContent='事後検証用：仮想払戻 '+yen(r.result.payout)+'（この結果は事前判定に使用していません）';details.append(result);}
+   host.append(details);
+  });
+ }
+ async function load(){
+  const date=dateEl.value;if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){status.textContent='開催日を指定してね。';return;}
+  button.disabled=true;host.replaceChildren();status.textContent='事前特徴量を確認中…';
+  try{
+   const res=await fetch('./data/auto/'+date+'.json?ts='+Date.now(),{cache:'no-store'});
+   if(!res.ok)throw Error(res.status===404?'保存済み予想なし':'HTTP '+res.status);
+   const doc=await res.json();if(!Array.isArray(doc.races))throw Error('データ形式が不正');
+   races=doc.races;status.textContent=date+' ｜ 暫定ルールによる試験判定。閾値の精度・回収率は未検証。';
+   render();
+  }catch(e){races=[];status.textContent='取得できません：'+e.message;}
+  finally{button.disabled=false;}
+ }
+ button.addEventListener('click',load);filter.addEventListener('change',render);load();
+})();
