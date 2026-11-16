@@ -1258,3 +1258,61 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
  venueEl.addEventListener('change',show);
  load();
 })();
+
+
+/* GitHub daily snapshots: read-only, settled and pre-cutoff only. */
+(function setupCloudRoi(){
+ const button=$('cloudRoiRefresh'),status=$('cloudRoiStatus'),summary=$('cloudRoiSummary'),chart=$('cloudRoiChart'),daysHost=$('cloudRoiDays');
+ if(!button||!status||!summary||!chart||!daysHost)return;
+ const draw=async()=>{
+  button.disabled=true;status.textContent='GitHubの直近30日分を確認中…';summary.replaceChildren();chart.replaceChildren();daysHost.replaceChildren();
+  try{
+   const dates=Array.from({length:30},(_,i)=>jstDay(-i));
+   const responses=await Promise.all(dates.map(async date=>{
+    try{
+     const res=await fetch('./data/auto/'+date+'.json?ts='+Date.now(),{cache:'no-store'});
+     if(!res.ok)return null;
+     const doc=await res.json();
+     return Array.isArray(doc.races)?{date,races:doc.races}:null;
+    }catch{return null;}
+   }));
+   const snapshots=responses.filter(Boolean).sort((a,b)=>a.date.localeCompare(b.date));
+   const daily=snapshots.map(doc=>{
+    const eligible=doc.races.filter(r=>r.predictionPhase==='before');
+    const settled=eligible.filter(r=>r.result&&Array.isArray(r.result.picks));
+    const stake=settled.reduce((a,r)=>a+(Number(r.result.stake)||0),0);
+    const payout=settled.reduce((a,r)=>a+(Number(r.result.payout)||0),0);
+    const hitRaces=settled.filter(r=>Number(r.result.hits)>0).length;
+    return {date:doc.date,all:doc.races.length,eligible:eligible.length,settled:settled.length,stake,payout,hitRaces};
+   });
+   const valid=daily.filter(d=>d.settled>0&&d.stake>0);
+   const total=valid.reduce((a,d)=>({races:a.races+d.settled,stake:a.stake+d.stake,payout:a.payout+d.payout,hits:a.hits+d.hitRaces}),{races:0,stake:0,payout:0,hits:0});
+   status.textContent='直近30日 ／ 保存データ '+snapshots.length+'日 ／ 結果照合済み '+valid.length+'日。締切後予想・未確定レースは集計対象外。';
+   const metrics=[['照合済みレース',total.races+'R'],['レース的中率',total.races?(100*total.hits/total.races).toFixed(1)+'%':'—'],['累積回収率',total.stake?(100*total.payout/total.stake).toFixed(1)+'%':'—'],['仮想収支',total.stake?yen(total.payout-total.stake):'—']];
+   metrics.forEach(([label,value])=>{const card=document.createElement('div');card.className='card';const l=document.createElement('div');l.className='tiny muted';l.textContent=label;const v=document.createElement('strong');v.textContent=value;card.append(l,v);summary.append(card);});
+   if(!valid.length){chart.textContent='まだ確定済みの自動予想がありません。23:30の結果照合後に「成績を更新」を押してね。';return;}
+   let stake=0,payout=0;
+   const points=valid.map(d=>{stake+=d.stake;payout+=d.payout;return {date:d.date,roi:100*payout/stake};});
+   const W=350,H=205,left=42,right=12,top=18,bottom=39;
+   const vals=points.map(p=>p.roi).concat([100]),lo=Math.max(0,Math.floor((Math.min(...vals)-10)/20)*20),hi=Math.ceil((Math.max(...vals)+10)/20)*20;
+   const x=i=>left+(W-left-right)*(points.length===1?.5:i/(points.length-1)),y=v=>top+(H-top-bottom)*(hi-v)/(hi-lo||1);
+   const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+   svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.setAttribute('role','img');svg.setAttribute('aria-label','GitHub自動予想の累積回収率 '+points.at(-1).roi.toFixed(1)+'%');svg.style.cssText='display:block;width:100%;max-width:700px;height:auto';
+   const add=(tag,attrs,value)=>{const el=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));if(value!==undefined)el.textContent=value;svg.append(el);};
+   [...new Set([lo,100,hi])].forEach(v=>{add('line',{x1:left,x2:W-right,y1:y(v),y2:y(v),stroke:v===100?'#d4b06c':'#344457','stroke-width':v===100?1.6:1,'stroke-dasharray':v===100?'5 4':'2 5'});add('text',{x:4,y:y(v)+4,fill:'#9ba8b8','font-size':11},v+'%');});
+   add('polyline',{points:points.map((p,i)=>x(i)+','+y(p.roi)).join(' '),fill:'none',stroke:'#7ac7a0','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'});
+   points.forEach((p,i)=>add('circle',{cx:x(i),cy:y(p.roi),r:3,fill:'#7ac7a0'}));
+   add('text',{x:left,y:H-13,fill:'#9ba8b8','font-size':11},points[0].date.slice(5));
+   add('text',{x:W-right,y:H-13,fill:'#9ba8b8','font-size':11,'text-anchor':'end'},points.at(-1).date.slice(5));
+   chart.append(svg);
+   const note=document.createElement('div');note.className='status';note.textContent='累積回収率 '+points.at(-1).roi.toFixed(1)+'% ／ 100%が収支均衡ライン。照合済み分だけを累積集計。';chart.append(note);
+   const table=document.createElement('div');table.style.overflowX='auto';
+   const t=document.createElement('table');t.style.cssText='width:100%;font-size:12px;border-collapse:collapse';
+   [['開催日','確定/締切前','的中R','回収率','仮想収支'],...daily.slice().reverse().map(d=>[d.date,d.settled+'/'+d.eligible,d.settled?String(d.hitRaces):'—',d.stake?(100*d.payout/d.stake).toFixed(1)+'%':'—',d.stake?yen(d.payout-d.stake):'—'])].forEach((cells,i)=>{const tr=document.createElement('tr');cells.forEach(c=>{const el=document.createElement(i===0?'th':'td');el.textContent=c;el.style.cssText='padding:8px 5px;border-bottom:1px solid var(--line);white-space:nowrap;text-align:left';tr.append(el);});t.append(tr);});
+   table.append(t);daysHost.append(table);
+  }catch(e){status.textContent='自動予想成績を取得できませんでした：'+e.message;}
+  finally{button.disabled=false;}
+ };
+ button.addEventListener('click',draw);
+ draw();
+})();
