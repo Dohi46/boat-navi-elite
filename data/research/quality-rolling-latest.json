@@ -1,0 +1,88 @@
+{
+  "schema": "boat-nexus-quality-rolling-v1",
+  "generatedAt": "2026-11-16T17:24:01.645Z",
+  "source": "existing data/auto files only",
+  "files": 2,
+  "checks": {
+    "errors": 0,
+    "warnings": 1
+  },
+  "errors": [],
+  "warnings": [
+    {
+      "id": "2026-11-15/23/6",
+      "reason": "prediction not proven pre-cutoff"
+    }
+  ],
+  "windows": {
+    "7d": {
+      "races": 254,
+      "settled": 254,
+      "eligible": 253,
+      "stake": 126500,
+      "payout": 106240,
+      "hits": 86,
+      "excluded": 1,
+      "days": 2,
+      "roiPercent": 83.98,
+      "profit": -20260,
+      "periodStart": "2026-11-15",
+      "periodEnd": "2026-11-16"
+    },
+    "30d": {
+      "races": 254,
+      "settled": 254,
+      "eligible": 253,
+      "stake": 126500,
+      "payout": 106240,
+      "hits": 86,
+      "excluded": 1,
+      "days": 2,
+      "roiPercent": 83.98,
+      "profit": -20260,
+      "periodStart": "2026-11-15",
+      "periodEnd": "2026-11-16"
+    },
+    "90d": {
+      "races": 254,
+      "settled": 254,
+      "eligible": 253,
+      "stake": 126500,
+      "payout": 106240,
+      "hits": 86,
+      "excluded": 1,
+      "days": 2,
+      "roiPercent": 83.98,
+      "profit": -20260,
+      "periodStart": "2026-11-15",
+      "periodEnd": "2026-11-16"
+    }
+  },
+  "days": [
+    {
+      "date": "2026-11-15",
+      "races": 134,
+      "settled": 134,
+      "eligible": 133,
+      "stake": 66500,
+      "payout": 57090,
+      "hits": 48,
+      "excluded": 1,
+      "roiPercent": 85.85,
+      "profit": -9410
+    },
+    {
+      "date": "2026-11-16",
+      "races": 120,
+      "settled": 120,
+      "eligible": 120,
+      "stake": 60000,
+      "payout": 49150,
+      "hits": 38,
+      "excluded": 0,
+      "roiPercent": 81.92,
+      "profit": -10850
+    }
+  ],
+  "note": "Virtual v13 picks, not real bets. Windows are latest available dated files, not necessarily consecutive calendar days. No profitability guarantee."
+}
