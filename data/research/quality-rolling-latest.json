@@ -1,6 +1,6 @@
 {
   "schema": "boat-nexus-quality-rolling-v1",
-  "generatedAt": "2026-11-16T17:26:52.904Z",
+  "generatedAt": "2026-11-16T17:37:27.328Z",
   "source": "existing data/auto files only",
   "files": 2,
   "checks": {
