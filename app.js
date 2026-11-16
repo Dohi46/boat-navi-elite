@@ -1439,21 +1439,28 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
   const motor=lanes.slice(1,4).some(x=>Number(x.motor_top_2_percent)>=40);
   const competitive=challengers>=inner+0.5;
   const candidate=competitive||motor;
-  return {candidate,reason:candidate?(competitive?'2〜4号艇の全国勝率が1号艇を上回る':'2〜4号艇にモーター2連率40%以上'):'事前の波乱条件に該当せず'};
+  // 穴の分類は配当倍率ではなく事前特徴量の仮説。実オッズがないので中穴・大穴を確定できない。
+  const outerStrong=lanes.slice(3).some((x,i)=>rates[i+3]>=Math.max(4.5,inner-0.5)&&Number(x.motor_top_2_percent)>=35);
+  const innerWeak=inner<5.0;
+  const long=outerStrong&&innerWeak;
+  const medium=!long&&(competitive||motor);
+  const kind=long?'long':medium?'medium':'none';
+  const reason=long?'4〜6号艇に勝率・モーターが一定水準以上の選手がおり、1号艇の勝率が低め':medium?(competitive?'2〜4号艇の全国勝率が1号艇を上回る':'2〜4号艇にモーター2連率40%以上'):'事前の波乱条件に該当せず';
+  return {candidate:candidate||long,kind,reason};
  }
  function render(){
   host.replaceChildren();
   const all=races.map(r=>({r,a:assess(r)}));
-  const selected=all.filter(x=>filter.value==='all'||(filter.value==='candidate'?x.a.candidate:!x.a.candidate));
-  const count=all.filter(x=>x.a.candidate).length;
-  const info=document.createElement('div');info.className='status';info.textContent='波乱検証候補 '+count+' / '+all.length+'レース ／ その他 '+(all.length-count)+'レースは見送り・保留 ／ すべて期待値未判定';host.append(info);
+  const selected=all.filter(x=>filter.value==='all'||(filter.value==='candidate'?x.a.candidate:filter.value==='medium'?x.a.kind==='medium':filter.value==='long'?x.a.kind==='long':!x.a.candidate));
+  const count=all.filter(x=>x.a.candidate).length,medium=all.filter(x=>x.a.kind==='medium').length,long=all.filter(x=>x.a.kind==='long').length;
+  const info=document.createElement('div');info.className='status';info.textContent='波乱検証候補 '+count+' / '+all.length+'レース（中穴仮説 '+medium+'・大穴仮説 '+long+'）／ 見送り・保留 '+(all.length-count)+' ／ 実オッズ・期待値未取得';host.append(info);
   if(!selected.length){const empty=document.createElement('p');empty.className='status';empty.textContent='該当するレースはありません。';host.append(empty);}
   selected.forEach(({r,a})=>{
    const details=document.createElement('details');details.style.cssText='padding:11px 0;border-bottom:1px solid var(--line)';
    const summary=document.createElement('summary');summary.style.cssText='cursor:pointer;font-weight:700';
-   summary.textContent=(a.candidate?'🌊 検証候補':'🔴 見送り・保留')+' ｜ '+(STADIUMS[Number(r.venue)]||'場'+r.venue)+' '+r.race+'R';
+   summary.textContent=(a.kind==='long'?'💎 大穴仮説':a.kind==='medium'?'🎯 中穴仮説':a.candidate?'🌊 検証候補':'🔴 見送り・保留')+' ｜ '+(STADIUMS[Number(r.venue)]||'場'+r.venue)+' '+r.race+'R';
    details.append(summary);
-   const reason=document.createElement('div');reason.className='status';reason.style.marginTop='7px';reason.textContent='事前判定理由：'+a.reason+'。実オッズなし／期待値不明／仮想購入推奨なし。';details.append(reason);
+   const reason=document.createElement('div');reason.className='status';reason.style.marginTop='7px';reason.textContent='事前判定理由：'+a.reason+'。穴の種類は払戻倍率ではなく特徴量による仮分類。実オッズなし／期待値不明／購入推奨なし。';details.append(reason);
    const picks=document.createElement('div');picks.className='tiny muted';picks.style.marginTop='5px';picks.textContent='保存済みv13買い目（参考）：'+(r.picks||[]).map(p=>p.pick).join('、');details.append(picks);
    if(r.result){const result=document.createElement('div');result.className='status';result.textContent='事後検証用：仮想払戻 '+yen(r.result.payout)+'（この結果は事前判定に使用していません）';details.append(result);}
    host.append(details);
