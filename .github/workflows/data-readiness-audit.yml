@@ -1,0 +1,27 @@
+name: BOAT NEXUS data readiness audit (offline)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/audit_data_readiness.cjs'
+      - '.github/workflows/data-readiness-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit already stored snapshots (no network)
+        run: node tools/audit_data_readiness.cjs > data-readiness.json
+      - name: Show priority missing fields
+        run: node -e "const r=require('./data-readiness.json');console.log(JSON.stringify({sources:r.sources,missing:r.missingPriorities},null,2))"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boat-nexus-data-readiness
+          path: data-readiness.json
+          retention-days: 14
