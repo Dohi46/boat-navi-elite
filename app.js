@@ -1422,6 +1422,27 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
 })();
 
 
+/* Read-only data integrity and rolling performance report. */
+(function setupQualityRolling(){
+ const host=document.getElementById('selectiveResults');if(!host?.parentElement)return;
+ const panel=document.createElement('section');panel.className='card';panel.style.margin='12px 0';
+ const h=document.createElement('h3');h.textContent='🛡️ データ品質・長期成績（実験）';panel.append(h);
+ const status=document.createElement('p');status.className='status';status.textContent='品質レポートを読み込み中…';panel.append(status);
+ host.parentElement.insertBefore(panel,host);
+ fetch('./data/research/quality-rolling-latest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('品質レポート未生成');return r.json()}).then(d=>{
+  status.textContent='保存済み '+d.files+'日分 ／ エラー '+d.checks.errors+'件 ／ 注意 '+d.checks.warnings+'件';
+  const table=document.createElement('table');table.style.cssText='width:100%;font-size:12px;border-collapse:collapse';
+  const head=document.createElement('tr');
+  for(const v of ['集計枠','実データ日数','対象R','仮想回収率']){const th=document.createElement('th');th.textContent=v;th.style.padding='6px 3px';head.append(th);}table.append(head);
+  for(const key of ['7d','30d','90d']){
+   const x=d.windows?.[key];if(!x)continue;const tr=document.createElement('tr');
+   for(const v of [key.replace('d','日'),String(x.days),String(x.eligible),x.roiPercent===null?'—':x.roiPercent.toFixed(2)+'%']){const td=document.createElement('td');td.textContent=v;td.style.cssText='padding:7px 3px;border-top:1px solid var(--line)';tr.append(td);}table.append(tr);
+  }
+  panel.append(table);
+  const note=document.createElement('p');note.className='tiny muted';note.textContent='直近の保存済み7・30・90日付ファイルを集計。暦日で連続した期間とは限りません。締切前に保存され結果照合済みの仮想購入のみ対象。実購入成績ではありません。';panel.append(note);
+ }).catch(e=>{status.textContent='品質レポートはまだ表示できません：'+e.message;});
+})();
+
 /* Offline research leaderboard: read-only snapshot, no user data writes. */
 (function setupResearchLeaderboard(){
  const panel=document.createElement('section');panel.className='card';panel.style.margin='12px 0';
