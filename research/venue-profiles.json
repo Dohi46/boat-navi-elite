@@ -1,0 +1,398 @@
+{
+  "schema": "boat-nexus-venue-research-v1",
+  "updated": "2026-11-17",
+  "status": "research-only",
+  "description": "24 venue IDs and names; physical traits intentionally unset until venue-specific source verification. No prediction weights.",
+  "rules": [
+    "Never infer headwind from wind_direction_number without verified local orientation and code mapping",
+    "Do not assign venue bias without source and independent race validation",
+    "Missing wind, wave or exhibition features must remain missing, never zero",
+    "No API calls in this file; reuse collected race snapshots"
+  ],
+  "profiles": [
+    {
+      "venue": 1,
+      "name": "桐生",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 2,
+      "name": "戸田",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 3,
+      "name": "江戸川",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 4,
+      "name": "平和島",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 5,
+      "name": "多摩川",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 6,
+      "name": "浜名湖",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 7,
+      "name": "蒲郡",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 8,
+      "name": "常滑",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 9,
+      "name": "津",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 10,
+      "name": "三国",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 11,
+      "name": "びわこ",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 12,
+      "name": "住之江",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 13,
+      "name": "尼崎",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 14,
+      "name": "鳴門",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 15,
+      "name": "丸亀",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 16,
+      "name": "児島",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 17,
+      "name": "宮島",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 18,
+      "name": "徳山",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 19,
+      "name": "下関",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 20,
+      "name": "若松",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 21,
+      "name": "芦屋",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 22,
+      "name": "福岡",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 23,
+      "name": "唐津",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    },
+    {
+      "venue": 24,
+      "name": "大村",
+      "knowledgeStatus": "pending-venue-source-verification",
+      "waterType": null,
+      "tideInfluence": null,
+      "windOrientation": null,
+      "courseBias": null,
+      "notes": [],
+      "sourceUrls": [],
+      "validation": {
+        "raceCount": 0,
+        "weatherRaceCount": 0,
+        "verified": false
+      }
+    }
+  ]
+}
