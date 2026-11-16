@@ -1,0 +1,35 @@
+name: BOAT NEXUS AI ranking research (offline)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/ai_safety_ranking.cjs'
+      - '.github/workflows/ai-ranking-research.yml'
+permissions:
+  contents: write
+concurrency:
+  group: boat-nexus-ai-ranking
+  cancel-in-progress: false
+jobs:
+  ranking:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Calculate leaderboard from existing stored snapshots
+        run: |
+          mkdir -p data/research
+          node tools/ai_safety_ranking.cjs data/auto > data/research/ai-ranking-latest.json
+          node -e "const d=require('./data/research/ai-ranking-latest.json');if(!d.filesAnalyzed)process.exit(1);console.log('Files',d.filesAnalyzed,'Eligible',d.quality.eligible,'Ranking',d.strategies)"
+      - name: Save research report only when changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/research/ai-ranking-latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "research: refresh offline AI strategy ranking"
+            git push
+          fi
