@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'tools/quality_rolling_report.cjs'
+      - 'tools/check_quality_alerts.cjs'
       - '.github/workflows/quality-rolling-report.yml'
 permissions:
   contents: write
@@ -24,6 +25,8 @@ jobs:
           mkdir -p data/research
           node tools/quality_rolling_report.cjs data/auto > data/research/quality-rolling-latest.json
           node -e "const r=require('./data/research/quality-rolling-latest.json');console.log(JSON.stringify({files:r.files,checks:r.checks,windows:r.windows},null,2))"
+      - name: Check data integrity and surface GitHub Actions alerts
+        run: node tools/check_quality_alerts.cjs data/research/quality-rolling-latest.json
       - name: Commit only changed research report
         run: |
           git config user.name "github-actions[bot]"
