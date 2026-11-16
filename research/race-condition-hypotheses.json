@@ -1,0 +1,93 @@
+{
+  "schema": "boat-nexus-hypotheses-v1",
+  "status": "research-only-not-deployed",
+  "principles": [
+    "Sources supply hypotheses, not universal prediction rules",
+    "Never train on post-race data for pre-race forecasts",
+    "Check venue-specific direction, wind speed, tide, season and field strength",
+    "Compare out-of-sample baseline before deploying",
+    "No new API calls or duplicated race snapshots"
+  ],
+  "hypotheses": [
+    {
+      "id": "wind_head_makuri",
+      "claim": "向かい風はまくりが効きやすい場合がある",
+      "sources": [
+        "https://www.boatrace.jp/owsp/sp/extra/enjoy/guide/level2/l2_01_05_01.html"
+      ],
+      "requiredFeatures": [
+        "wind_direction_number",
+        "wind_speed",
+        "venue",
+        "raceDate",
+        "entry_course"
+      ],
+      "validation": "Compare 1st-place course and winning method by venue, direction and wind-speed bins",
+      "status": "unverified-for-boat-nexus"
+    },
+    {
+      "id": "wind_tail_sashi",
+      "claim": "追い風は差しが決まりやすい場合がある",
+      "sources": [
+        "https://www.boatrace.jp/owsp/sp/extra/enjoy/guide/level2/l2_01_05_01.html"
+      ],
+      "requiredFeatures": [
+        "wind_direction_number",
+        "wind_speed",
+        "venue",
+        "entry_course"
+      ],
+      "validation": "Venue-stratified comparison of winning methods",
+      "status": "unverified-for-boat-nexus"
+    },
+    {
+      "id": "tide_venue",
+      "claim": "潮汐の影響は海水・汽水の水面で場ごとに異なる",
+      "sources": [
+        "https://www.boatrace.jp/owsp/sp/extra/enjoy/guide/level2/l2_01_05_03.html",
+        "https://www.kojimaboat.jp/pdf/125.pdf"
+      ],
+      "requiredFeatures": [
+        "venue",
+        "tide_level",
+        "tide_phase",
+        "wind_direction_number",
+        "wind_speed"
+      ],
+      "validation": "Only on applicable venues; separate wind and tide effects",
+      "status": "unverified-for-boat-nexus"
+    },
+    {
+      "id": "strong_wind_wave",
+      "claim": "強風・波・潮流の組合せで技量や当地適性の影響が変化する可能性",
+      "sources": [
+        "https://www.boatrace-edogawa.com/uploads/kouryaku/kouryaku.pdf"
+      ],
+      "requiredFeatures": [
+        "venue",
+        "wind_speed",
+        "wave_height",
+        "tide_flow",
+        "local_win_rate"
+      ],
+      "validation": "Compare pre-registered interaction groups against venue baseline",
+      "status": "unverified-for-boat-nexus"
+    },
+    {
+      "id": "venue_exception",
+      "claim": "一般的な風のセオリーには場別の例外がある",
+      "sources": [
+        "https://sp.macour.jp/s/kyotei-info/karatsu/br23book2025/pc/pdf/br23book.pdf",
+        "https://www.boatrace.jp/owpc/pc/extra/race/13_20261027/monthly/monthly_pc.pdf"
+      ],
+      "requiredFeatures": [
+        "venue",
+        "wind_direction_number",
+        "wind_speed",
+        "grade_number"
+      ],
+      "validation": "Require minimum sample counts per venue; avoid global fixed multipliers",
+      "status": "unverified-for-boat-nexus"
+    }
+  ]
+}
