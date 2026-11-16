@@ -1316,3 +1316,50 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
  button.addEventListener('click',draw);
  draw();
 })();
+
+
+/* Experimental wave detector: ranking only; probabilities are NOT calibrated. */
+(function setupWaveTrial(){
+ const button=$('runWaveTrial'),host=$('waveTrialResult');
+ if(!button||!host)return;
+ button.addEventListener('click',async()=>{
+  host.replaceChildren();
+  const venue=$('aiVenue')?.value,race=$('aiRace')?.value,r=selectedRace('aiVenue','aiRace');
+  if(!r){host.textContent='分析するレースを選んでね。';return;}
+  button.disabled=true;
+  try{
+   await loadSeparateOdds().catch(()=>{});
+   const combos=v13Combinations(r,venue,race);
+   const known=combos.filter(x=>Number.isFinite(x.odds)&&x.odds>0);
+   const ranked=scoreRace(r),first=combos.filter(x=>x.boats[0]===1).reduce((a,x)=>a+x.probability,0);
+   const coverage=known.length;
+   const risk=Math.round(Math.max(0,Math.min(100,(1-first)*75+Math.max(0,ranked[0].score-ranked[5].score<.2?15:0))));
+   const header=document.createElement('div');header.className='status';
+   header.textContent='波乱参考指数 '+risk+'/100 ／ 1号艇1着の参考確率 '+(first*100).toFixed(1)+'% ／ 取得オッズ '+coverage+'/120通り。指数は実際の波乱確率ではありません。';
+   host.append(header);
+   if(coverage<120){const warn=document.createElement('div');warn.className='notice';warn.style.marginTop='10px';warn.textContent='判定：見送り（全120通りのオッズが揃っていません）。取得済みの穴候補だけ参考表示します。';host.append(warn);}
+   const groups=[{label:'🎯 中穴候補（20〜50倍未満）',min:20,max:50},{label:'🔥 大穴候補（50倍以上）',min:50,max:Infinity}];
+   let shown=0;
+   groups.forEach(g=>{
+    const list=known.filter(x=>x.odds>=g.min&&x.odds<g.max).map(x=>({...x,proxy:x.probability*x.odds})).sort((a,b)=>b.proxy-a.proxy).slice(0,5);
+    const section=document.createElement('div');section.className='card';section.style.marginTop='10px';
+    const title=document.createElement('h3');title.textContent=g.label;section.append(title);
+    if(!list.length){const empty=document.createElement('div');empty.className='status';empty.textContent='該当する取得済みオッズがありません。';section.append(empty);}
+    list.forEach((x,i)=>{
+     shown++;
+     const row=document.createElement('div');row.className='row';row.style.cssText='gap:8px;padding:8px 0;border-bottom:1px solid var(--line)';
+     const pick=document.createElement('b');pick.textContent=(i+1)+'位 '+x.pick;
+     const details=document.createElement('span');details.className='tiny muted';
+     details.textContent=x.odds.toFixed(1)+'倍 ／ 仮EV指数 '+x.proxy.toFixed(2);
+     row.append(pick,details);section.append(row);
+    });
+    host.append(section);
+   });
+   const note=document.createElement('div');note.className='notice';note.style.marginTop='10px';
+   note.textContent='判定：検証待ち・購入推奨なし。仮EV指数＝未校正v13参考確率×オッズ。1.0超でも期待利益を意味しません。風・波・展示・オッズ更新時刻の信頼性や過去成績を検証してから厳選判定を導入します。';
+   host.append(note);
+   if(!shown){const empty=document.createElement('div');empty.className='status';empty.textContent='穴候補がないため見送り。';host.append(empty);}
+  }catch(e){host.textContent='試験分析できませんでした：'+e.message;}
+  finally{button.disabled=false;}
+ });
+})();
