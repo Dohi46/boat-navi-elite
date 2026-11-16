@@ -107,12 +107,28 @@ async function loadSeparateOdds(force=false){
  if(!force&&separateOdds&&separateOddsDate===date)return;
  if(oddsLoading)return oddsLoading;
  oddsLoading=(async()=>{
-  const d=date.replaceAll('-',''),url=ODDS_ENDPOINT+d.slice(0,4)+'/'+d+'.json';
-  const response=await fetch(url,{cache:'no-store'});
-  if(!response.ok)throw new Error('HTTP '+response.status);
-  const result=await response.json();
-  if(!Array.isArray(result?.odds))throw new Error('データ形式が違います');
-  separateOdds=result;separateOddsDate=date;separateOddsFetchedAt=new Date();oddsError='';
+  const d=date.replaceAll('-','');
+  const urls=[ODDS_ENDPOINT+d.slice(0,4)+'/'+d+'.json',ODDS_ENDPOINT+'today.json'];
+  const errors=[];
+  for(const [i,url] of urls.entries()){
+   try{
+    const response=await fetch(url,{cache:'no-store'});
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    const result=await response.json();
+    if(!Array.isArray(result?.odds))throw new Error('オッズ配列がありません');
+    // today.json may be stale or roll over; never display another day's odds.
+    const rows=result.odds.filter(x=>x&&typeof x==='object');
+    if(!rows.length)throw new Error('オッズが空です');
+    const dates=new Set(rows.map(x=>String(x.date||'')));
+    if(dates.size!==1||!dates.has(date))throw new Error('開催日が一致しません');
+    separateOdds=result;separateOddsDate=date;separateOddsFetchedAt=new Date();
+    oddsError='';
+    return;
+   }catch(e){errors.push((i===0?'日付指定':'today.json')+': '+e.message);}
+  }
+  // Do not retain old odds as if they were fresh after a failed refresh.
+  separateOdds=null;separateOddsDate='';separateOddsFetchedAt=null;
+  throw new Error(errors.join(' ／ '));
  })();
  try{await oddsLoading;}catch(e){oddsError=e.message;throw e;}finally{oddsLoading=null;}
 }
