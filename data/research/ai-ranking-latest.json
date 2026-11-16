@@ -1,0 +1,49 @@
+{
+  "schema": "experimental-ai-ranking-v1",
+  "disclaimer": "Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.",
+  "quality": {
+    "total": 254,
+    "eligible": 115,
+    "held": 139,
+    "weatherComplete": 0,
+    "unsettled": 0
+  },
+  "strategies": {
+    "baseline": {
+      "races": 115,
+      "stake": 57500,
+      "payout": 47230,
+      "hits": 34,
+      "roiPercent": 82.14
+    },
+    "favorite": {
+      "races": 115,
+      "stake": 57500,
+      "payout": 47230,
+      "hits": 34,
+      "roiPercent": 82.14
+    },
+    "medium": {
+      "races": 67,
+      "stake": 33500,
+      "payout": 25500,
+      "hits": 21,
+      "roiPercent": 76.12
+    },
+    "long": {
+      "races": 15,
+      "stake": 7500,
+      "payout": 13040,
+      "hits": 7,
+      "roiPercent": 173.87
+    },
+    "selected": {
+      "races": 82,
+      "stake": 41000,
+      "payout": 38540,
+      "hits": 28,
+      "roiPercent": 94
+    }
+  },
+  "filesAnalyzed": 2
+}
