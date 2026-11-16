@@ -1,0 +1,28 @@
+name: Collect BOAT NEXUS extra features (experimental)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: boat-nexus-daily
+  cancel-in-progress: false
+jobs:
+  features:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Collect and inventory available fields
+        run: node tools/collect_extra_features.cjs
+      - name: Commit experimental snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/features/
+          if ! git diff --cached --quiet; then
+            git commit -m "data: inventory experimental race features"
+            git push
+          fi
