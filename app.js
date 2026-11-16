@@ -102,33 +102,63 @@ function trifectaOdds(venue,race){
  const found=separateOdds.odds.find(x=>Number(x.stadium_number)===Number(venue)&&Number(x.number)===Number(race)&&x.date===separateOddsDate);
  return found?.trifecta_odds||null;
 }
+// Parse the public BoatraceCSV od3 snapshot (not final odds).
+function parseOddsCsv(text,date){
+ const lines=String(text).replace(/^\uFEFF/,'').split(/\r?\n/).filter(Boolean);
+ const parse=line=>{const out=[];let cell='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cell+='"';i++;}else quoted=!quoted;}else if(ch===','&&!quoted){out.push(cell);cell='';}else cell+=ch;}out.push(cell);return out;};
+ if(lines.length<2)throw Error('CSVデータが空です');
+ const headers=parse(lines[0]),idx=name=>headers.indexOf(name);
+ const di=idx('レース日'),vi=idx('レース場'),ri=idx('レース回'),ti=idx('取得日時');
+ if([di,vi,ri,ti].some(i=>i<0))throw Error('CSV共通列がありません');
+ const cols=[];for(let a=1;a<=6;a++)for(let b=1;b<=6;b++)for(let c=1;c<=6;c++)if(a!==b&&a!==c&&b!==c){const key=a+'-'+b+'-'+c;cols.push([key,idx('3連単_'+key)]);}
+ if(cols.some(([,i])=>i<0))throw Error('3連単120列が不足しています');
+ const odds=[],times=[];
+ for(const line of lines.slice(1)){
+  const row=parse(line);if(row[di]!==date)continue;
+  const venue=Number(row[vi]),race=Number(String(row[ri]).replace(/R$/i,''));
+  if(!Number.isInteger(venue)||venue<1||venue>24||!Number.isInteger(race)||race<1||race>12)continue;
+  const table={},stamp=Date.parse(row[ti]);
+  if(!Number.isFinite(stamp))continue;
+  let count=0;
+  for(const [key,i] of cols){
+   const raw=row[i],value=Number(raw);
+   if(raw===''||!Number.isFinite(value)||value<=0)continue;
+   const [x,y,z]=key.split('-');((table[x]??={})[y]??={})[z]=value;count++;
+  }
+  if(!count)continue;
+  odds.push({date,stadium_number:venue,number:race,trifecta_odds:table});
+  times.push(stamp);
+ }
+ if(!odds.length)throw Error('当日の有効なオッズ行がありません');
+ return {odds,latestAt:new Date(Math.max(...times)),source:'BoatraceCSV・締切直前の集計中オッズ'};
+}
 async function loadSeparateOdds(force=false){
  const date=jstOddsDate();
  if(!force&&separateOdds&&separateOddsDate===date)return;
  if(oddsLoading)return oddsLoading;
  oddsLoading=(async()=>{
-  const d=date.replaceAll('-','');
+  const d=date.replaceAll('-',''),errors=[];
   const urls=[ODDS_ENDPOINT+d.slice(0,4)+'/'+d+'.json',ODDS_ENDPOINT+'today.json'];
-  const errors=[];
   for(const [i,url] of urls.entries()){
    try{
     const response=await fetch(url,{cache:'no-store'});
-    if(!response.ok)throw new Error('HTTP '+response.status);
+    if(!response.ok)throw Error('HTTP '+response.status);
     const result=await response.json();
-    if(!Array.isArray(result?.odds))throw new Error('オッズ配列がありません');
-    // today.json may be stale or roll over; never display another day's odds.
-    const rows=result.odds.filter(x=>x&&typeof x==='object');
-    if(!rows.length)throw new Error('オッズが空です');
-    const dates=new Set(rows.map(x=>String(x.date||'')));
-    if(dates.size!==1||!dates.has(date))throw new Error('開催日が一致しません');
-    separateOdds=result;separateOddsDate=date;separateOddsFetchedAt=new Date();
-    oddsError='';
-    return;
+    if(!Array.isArray(result?.odds)||!result.odds.length)throw Error('オッズ配列がありません');
+    const dates=new Set(result.odds.map(x=>String(x?.date||'')));
+    if(dates.size!==1||!dates.has(date))throw Error('開催日が一致しません');
+    separateOdds=result;separateOddsDate=date;separateOddsFetchedAt=new Date();oddsError='';return;
    }catch(e){errors.push((i===0?'日付指定':'today.json')+': '+e.message);}
   }
-  // Do not retain old odds as if they were fresh after a failed refresh.
+  try{
+   const url='https://boatracecsv.github.io/data/previews/od3/'+date.replaceAll('-','/')+'.csv';
+   const response=await fetch(url,{cache:'no-store'});
+   if(!response.ok)throw Error('HTTP '+response.status);
+   const parsed=parseOddsCsv(await response.text(),date);
+   separateOdds=parsed;separateOddsDate=date;separateOddsFetchedAt=parsed.latestAt;oddsError='';return;
+  }catch(e){errors.push('BoatraceCSV: '+e.message);}
   separateOdds=null;separateOddsDate='';separateOddsFetchedAt=null;
-  throw new Error(errors.join(' ／ '));
+  throw Error(errors.join(' ／ '));
  })();
  try{await oddsLoading;}catch(e){oddsError=e.message;throw e;}finally{oddsLoading=null;}
 }
