@@ -37,3 +37,13 @@ jobs:
                   assert abs(result['baseline']['payout']-settlement['payout']) < 0.01, path
               print(path, result['baseline']['races'], result['baseline']['return_rate_percent'])
           PY
+
+      - name: Build research aggregates without publishing picks
+        run: |
+          python scripts/premium_dashboard_report.py data/auto/*.json --output /tmp/premium-research-summary.json
+      - name: Upload research aggregate for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-research-aggregate
+          path: /tmp/premium-research-summary.json
+          retention-days: 14
