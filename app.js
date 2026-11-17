@@ -90,7 +90,7 @@ function populateSelectors(){
  const entries=stadiumEntries().map(([id])=>[id,STADIUMS[Number(id)]||("競艇場 "+id)]);
  ["venueSelect","aiVenue","manualVenue"].forEach(id=>fillSelect($(id),entries));
  updateRaceOptions("venueSelect","raceSelect");updateRaceOptions("aiVenue","aiRace");updateRaceOptions("manualVenue","manualRace");
- ["venueSelect","aiVenue","manualVenue"].forEach(id=>$(id).addEventListener("change",()=>updateRaceOptions(id,id==="venueSelect"?"raceSelect":id==="aiVenue"?"aiRace":"manualRace")));
+ ["venueSelect","aiVenue","manualVenue"].forEach(id=>{const el=$(id);if(el.dataset.raceChangeBound==="true")return;el.addEventListener("change",()=>updateRaceOptions(id,id==="venueSelect"?"raceSelect":id==="aiVenue"?"aiRace":"manualRace"));el.dataset.raceChangeBound="true";});
 }
 function updateRaceOptions(venueId,raceId){const s=getStadiums()[$(venueId).value];fillSelect($(raceId),Object.keys(getRaces(s)).map(x=>[x,x+"R"]));if(venueId==="venueSelect")renderRace();if(venueId==="aiVenue")oddsHeader("ai");}
 function setSelectors(venue,race){$("venueSelect").value=venue;updateRaceOptions("venueSelect","raceSelect");$("raceSelect").value=race;}
