@@ -22,7 +22,7 @@ async function run(){
  const days=Number($('days').value),now=new Date(),dates=[];
  const jstToday=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
  const start=Date.parse(jstToday+'T00:00:00+09:00');
- for(let i=0;i<days;i++)dates.push(new Date(start-i*86400000).toISOString().slice(0,10));
+ for(let i=0;i<days;i++)dates.push(new Date(start-i*86400000+9*3600000).toISOString().slice(0,10));
  const all=await Promise.all(dates.map(async d=>{const [base,shadow]=await Promise.all([json('./data/auto/'+d+'.json'),json('./data/shadow/'+d+'.json')]);return {d,base,shadow};}));
  const baseline=stats(),pairedBase=stats(),pairedShadow=stats();let settled=0,paired=0,missing=0,invalid=0;
  for(const {base,shadow} of all){for(const r of base?.races||[]){
