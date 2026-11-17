@@ -17,13 +17,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Match predictions with published trifecta payouts
+      - name: Capture available pre-cutoff odds observations (read only)\n        run: node tools/collect_odds_snapshots.cjs\n      - name: Match predictions with published trifecta payouts
         run: node tools/settle_daily_predictions.cjs
       - name: Commit settled results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/auto/
+          git add data/auto/\n          if [ -d data/odds ]; then git add data/odds/; fi
           if ! git diff --cached --quiet; then
             git commit -m "data: settle v13 predictions"
             # Retry if another workflow advances main. Never force push.
