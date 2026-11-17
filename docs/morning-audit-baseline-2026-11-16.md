@@ -37,3 +37,11 @@ Period: 2026-11-15 to 2026-11-16 (JST). Settled stored predictions only; 254 rac
 - Read-only audit script: `node tools/audit_morning_predictions.cjs`. GitHub Actions uploads its JSON output as an artifact; it does not modify live predictions.
 
 This is a baseline report, **not** a validated profitable strategy.
+
+## Non-negotiable selection policy (2026-11-17)
+- Do not impose a quota, minimum share, or artificial preference for heads 2–6. No forced longshots or diversity balancing.
+- Preserve head 1 as a valid and often strong favorite whenever evidence supports it. Do not penalize head 1 simply for popularity.
+- Consider a non-1 winner only when pre-race data support its probability and the available odds offer adequate value after uncertainty and risk checks.
+- A low-priced favorite can still be a valid selection if its estimated edge is credible; otherwise skip instead of forcing a non-1 pick.
+- All probability and value thresholds must be calibrated and tested out-of-sample before production use. Until then, do not change the existing live v13 prediction logic.
+- Record the actual head distribution as an evaluation metric, never as an optimization target.
