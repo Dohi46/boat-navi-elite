@@ -28,8 +28,8 @@ for(const file of files){
   // A missing shadow record is NOT a skip: do not distort comparison by treating it as zero stake.
   if(!candidate)continue;
   const stamp=Date.parse(candidate.lockedAt);
-  const cutoff=typeof race.cutoff==='string'?Date.parse(race.cutoff.replace(' ','T')+'+09:00'):NaN;
-  if(!Number.isFinite(stamp)||!Number.isFinite(cutoff)||stamp>=cutoff||candidate.strategy!=='feature-shadow'||!Array.isArray(candidate.picks)||!candidate.picks.every(validPick)){warnings.push('Unverifiable shadow decision '+file+' '+key);continue;}
+  const sourceTime=Date.parse(candidate.sourceCapturedAt);\n  const cutoff=typeof race.cutoff==='string'?Date.parse(race.cutoff.replace(' ','T')+'+09:00'):NaN;
+  if(!Number.isFinite(stamp)||!Number.isFinite(sourceTime)||sourceTime>stamp||!Number.isFinite(cutoff)||stamp>=cutoff||candidate.strategy!=='feature-shadow'||!Array.isArray(candidate.picks)||!candidate.picks.every(validPick)){warnings.push('Unverifiable shadow decision '+file+' '+key);continue;}
   pairedRaces++;\n  evaluate(pairedBaseline,race.picks||[],winners);\n  evaluate(byStrategy['feature-shadow'],candidate.picks,winners);
  }
 }
