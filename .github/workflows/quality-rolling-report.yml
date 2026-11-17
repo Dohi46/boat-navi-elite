@@ -1,5 +1,7 @@
 name: BOAT NEXUS quality and rolling report (offline)
 on:
+  schedule:
+    - cron: '15 15 * * *' # 00:15 JST
   workflow_dispatch:
   push:
     paths:
