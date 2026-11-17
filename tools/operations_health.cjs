@@ -58,6 +58,16 @@ async function main(){
  const report={schema:'boat-nexus-operations-health-v1',checkedAt:new Date().toISOString(),todayJst:today,yesterdayJst:yesterday,status:all.every(c=>c.status==='ok')?'ok':all.some(c=>c.status==='alert')?'alert':'pending',checks:all,note:'Checks scheduled/manual runs by JST creation date, not completion date. Push runs are excluded from scheduled-run status, but latest successful push execution is reported separately. Missing same-day research, quality and daily monitor runs are pending before 03:00 JST, then alert; completed failures alert immediately. Shadow pre-registration is monitored separately from production baseline health. No automatic repair.'};
  fs.mkdirSync('data/research',{recursive:true});
  fs.writeFileSync('data/research/operations-health-latest.json',JSON.stringify(report,null,2)+'\n');
+ if(process.env.GITHUB_STEP_SUMMARY){
+  const counts={ok:all.filter(x=>x.status==='ok').length,pending:all.filter(x=>x.status==='pending').length,alert:all.filter(x=>x.status==='alert').length};
+  const lines=['## BOAT NEXUS operations health','**Overall: '+report.status.toUpperCase()+'** ('+today+' JST)','OK '+counts.ok+' / PENDING '+counts.pending+' / ALERT '+counts.alert,'','| Check | Date (JST) | Status | Details |','| --- | --- | --- | --- |'];
+  for(const x of all){
+   const detail=x.id==='snapshot'?x.races+' races, '+x.unsettled+' unsettled':x.id==='shadowSelection'?x.locks+' locks, '+x.preRegistered+' registered, '+x.legacy+' legacy, '+x.invalid+' invalid':x.runCount+' scheduled/manual runs'+(x.lastPushSuccessAt?', last push success '+x.lastPushSuccessAt:'');
+   lines.push('| '+x.id+' | '+x.date+' | '+x.status.toUpperCase()+' | '+detail+' |');
+  }
+  lines.push('','A green workflow run means the monitor completed without critical alerts; PENDING checks may still remain.');
+  fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,lines.join('\n')+'\n');
+ }
  console.log(JSON.stringify(report,null,2));
  for(const c of all)if(c.status!=='ok')console.log('::warning::'+c.id+' '+c.status+' ('+c.date+')');
  if(report.status==='alert')process.exitCode=1;
