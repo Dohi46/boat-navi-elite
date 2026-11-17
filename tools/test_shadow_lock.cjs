@@ -21,9 +21,12 @@ try{
  const file=path.join(shadow,date+'.json'),saved=JSON.parse(fs.readFileSync(file,'utf8'));
  const s=saved.races['1-1'];
  assert.equal(s.oddsUsed,false);assert.equal(s.selection.schema,'odds-free-selection-v1');
- assert.ok(['select','skip'].includes(s.selection.decision));assert.ok(Date.parse(s.lockedAt)<Date.parse(rows[0].cutoff.replace(' ','T')+'+09:00'));
+ assert.ok(['select','skip'].includes(s.selection.decision));
+ assert.equal(typeof s.selection.margin,'number');
+ assert.equal(s.selection.decision,s.selection.margin>=0.75?'select':'skip','Decision must match the persisted rounded margin');
+ assert.equal(s.selection.rule,'lane-adjusted-strength-margin-gte-0.75');assert.ok(Date.parse(s.lockedAt)<Date.parse(rows[0].cutoff.replace(' ','T')+'+09:00'));
  assert.equal(Object.keys(saved.races).length,1);
  const original=fs.readFileSync(file,'utf8');const second=run();
  assert.equal(second.stored,0);assert.equal(fs.readFileSync(file,'utf8'),original,'Existing locks must never be overwritten');
- console.log('PASS: pre-cutoff lock, expired race excluded, missing feature excluded, odds-free decision, immutable rerun');
+ console.log('PASS: pre-cutoff lock, expired race excluded, missing feature excluded, odds-free persisted-margin consistency, immutable rerun');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
