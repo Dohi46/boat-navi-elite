@@ -25,6 +25,10 @@ class WalkForwardTests(unittest.TestCase):
         self.assertEqual(report["fold_count"],0)
         self.assertFalse(report["ready_for_premium"])
 
+    def test_invalid_date_rejected(self):
+        with self.assertRaisesRegex(ValueError,"invalid snapshot date"):
+            walkforward([snapshot("2026-11-31",0)],1)
+
     def test_duplicate_dates_rejected(self):
         with self.assertRaises(ValueError):
             walkforward([snapshot("2026-11-17",0),snapshot("2026-11-17",0)],1)
