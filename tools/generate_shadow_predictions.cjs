@@ -42,8 +42,9 @@ for(const r of doc.races||[]){
  // Pre-register the odds-free selection decision before cutoff. Fixed research threshold.
  const adjusted=s.map((v,i)=>v+lane[i]).sort((a,b)=>b-a);
  const strengthMargin=adjusted[0]-adjusted[1];
- const selectRace=strengthMargin>=0.75;
- prior.races[key]={strategy:'feature-shadow',model:prior.model,lockedAt:now,sourceCapturedAt:r.capturedAt,picks,decision:'rank-only-test',oddsUsed:false,calibrated:false,selection:{schema:'odds-free-selection-v1',rule:'lane-adjusted-strength-margin-gte-0.75',margin:Number(strengthMargin.toFixed(6)),decision:selectRace?'select':'skip',lockedAt:now,oddsUsed:false}};
+ const registeredMargin=Number(strengthMargin.toFixed(6));
+ const selectRace=registeredMargin>=0.75;
+ prior.races[key]={strategy:'feature-shadow',model:prior.model,lockedAt:now,sourceCapturedAt:r.capturedAt,picks,decision:'rank-only-test',oddsUsed:false,calibrated:false,selection:{schema:'odds-free-selection-v1',rule:'lane-adjusted-strength-margin-gte-0.75',margin:registeredMargin,decision:selectRace?'select':'skip',lockedAt:now,oddsUsed:false}};
  stored++;
 }
 if(stored){fs.mkdirSync(path.dirname(dest),{recursive:true});const temp=dest+'.tmp';fs.writeFileSync(temp,JSON.stringify(prior,null,2)+'\n');fs.renameSync(temp,dest);}
