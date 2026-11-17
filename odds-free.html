@@ -23,7 +23,7 @@ function collect(base,shadow,d){
   s.eligible++;if(sel.decision==='skip')s.skipped++;else s.selected++;
   const winners=r.result?.winningCombinations;
   if(!Array.isArray(winners)||!winners.length){if(sel.decision==='skip')skips.unsettled++;else s.unsettled++;continue;}
-  const map=new Map(winners.filter(x=>valid({pick:x.combination,stake:100})&&Number(x.amount)>0).map(x=>[x.combination,Number(x.amount)]));
+  const map=new Map(winners.filter(x=>valid({pick:x.combination,stake:100})&&Number.isInteger(Number(x.amount))&&Number(x.amount)>0).map(x=>[x.combination,Number(x.amount)]));
   if(!map.size){if(sel.decision==='skip')skips.unsettled++;else s.unsettled++;continue;}
   if(sel.decision==='skip'){
    skips.settled++;
