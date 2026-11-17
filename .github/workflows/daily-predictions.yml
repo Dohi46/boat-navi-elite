@@ -23,6 +23,17 @@ jobs:
         run: node tools/test_prediction_cutoff.cjs
       - name: Collect predictions
         run: node tools/collect_daily_predictions.cjs
+      - name: Verify today's baseline snapshot was created
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+          const file='data/auto/'+date+'.json';
+          if(!fs.existsSync(file))throw Error('Daily baseline snapshot missing: '+file);
+          const data=JSON.parse(fs.readFileSync(file,'utf8'));
+          if(data.date!==date||!Array.isArray(data.races)||data.races.length===0)throw Error('Daily baseline snapshot empty or invalid: '+file);
+          console.log('Verified baseline snapshot: '+date+' / '+data.races.length+' races');
+          NODE
       - name: Test pre-cutoff shadow locking (offline)
         run: node tools/test_shadow_lock.cjs
       - name: Validate experimental shadow generator
