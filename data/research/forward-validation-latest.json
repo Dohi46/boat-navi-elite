@@ -1,0 +1,49 @@
+{
+  "schema": "boat-nexus-forward-validation-v1",
+  "policy": {
+    "schema": "boat-nexus-forward-policy-v1",
+    "policyId": "selected-v1-2026-11-18",
+    "effectiveDate": "2026-11-18",
+    "frozenAt": "2026-11-17",
+    "selectionRule": "category(r) !== 'none' as implemented in tools/ai_safety_ranking.cjs at commit 251757eae220a28ad9ad31f5fb201652a656d4d7",
+    "ruleCommit": "251757eae220a28ad9ad31f5fb201652a656d4d7",
+    "note": "Prospective evaluation cohort starts 2026-11-18 JST. Rule is frozen by pinned commit; do not retroactively adjust. Classification uses saved pre-cutoff features; daily report is computed after settlement."
+  },
+  "filesAnalyzed": 0,
+  "daysWithEligibleRaces": 0,
+  "quality": {
+    "total": 0,
+    "eligible": 0,
+    "held": 0,
+    "weatherComplete": 0,
+    "unsettled": 0
+  },
+  "selected": {
+    "races": 0,
+    "stake": 0,
+    "payout": 0,
+    "hits": 0,
+    "roiPercent": null
+  },
+  "skipped": {
+    "races": 0,
+    "stake": 0,
+    "payout": 0,
+    "hits": 0,
+    "roiPercent": null
+  },
+  "baseline": {
+    "races": 0,
+    "stake": 0,
+    "payout": 0,
+    "hits": 0,
+    "roiPercent": null
+  },
+  "daily": [],
+  "readiness": {
+    "minimumCalendarDays": 30,
+    "observedCalendarDays": 0,
+    "readyForReview": false
+  },
+  "note": "Virtual picks, not actual wagers. Future dates only; historical exploratory data excluded. Rules must remain pinned for prospective validity. Do not infer profitability from small samples."
+}
