@@ -28,5 +28,16 @@ jobs:
           git add data/auto/
           if ! git diff --cached --quiet; then
             git commit -m "data: collect daily v13 predictions"
-            git push
+            # Retry if another workflow advances main. Never force push.
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main || { git rebase --abort || true; exit 1; }
+              if git push origin HEAD:main; then
+                echo "Daily snapshot published on attempt $attempt"
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "Could not publish daily snapshot after retries" >&2
+            exit 1
           fi
