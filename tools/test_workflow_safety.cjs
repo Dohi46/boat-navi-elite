@@ -16,6 +16,8 @@ assert(daily.indexOf('      - name: Publish verified production baseline')<daily
 assert.match(baseline,/git add -- "data\/auto\/\$today\.json"/);
 assert.match(shadow,/if: steps\.shadow_validation\.outcome == 'success'/);
 assert.match(shadow,/git add -- "data\/shadow\/\$today\.json"/);
+assert.match(shadow,/Immutable published shadow lock differs/,'Daily shadow publishing must preserve remote locks');
+assert.match(shadow,/git rebase origin\/main[\s\S]*?verify_immutable[\s\S]*?git push origin/,'Daily shadow retry must recheck locks');
 const settled=step(settle,'Commit settled results');
 const intraday=step(settle,'Publish validated pre-cutoff shadow locks');
 assert(settle.indexOf('      - name: Match predictions')<settle.indexOf('      - name: Commit settled results'));
