@@ -6,6 +6,9 @@ on:
   push:
     paths:
       - 'tools/ai_safety_ranking.cjs'
+      - 'tools/forward_validation.cjs'
+      - 'tools/frozen_ai_safety_ranking_v1.cjs'
+      - 'data/research/forward-policy-v1.json'
       - '.github/workflows/ai-ranking-research.yml'
 permissions:
   contents: write
@@ -25,12 +28,14 @@ jobs:
         run: |
           mkdir -p data/research
           node tools/ai_safety_ranking.cjs data/auto > data/research/ai-ranking-latest.json
+          node tools/forward_validation.cjs data/auto > data/research/forward-validation-latest.json
+          node -e "const d=require('./data/research/forward-validation-latest.json');if(d.selected.races+d.skipped.races!==d.baseline.races)process.exit(1);console.log('Forward cohort',d.filesAnalyzed,'days',d.baseline.races,'races')"
           node -e "const d=require('./data/research/ai-ranking-latest.json');if(!d.filesAnalyzed)process.exit(1);console.log('Files',d.filesAnalyzed,'Eligible',d.quality.eligible,'Ranking',d.strategies)"
       - name: Save research report only when changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/research/ai-ranking-latest.json
+          git add data/research/ai-ranking-latest.json data/research/forward-validation-latest.json
           if ! git diff --cached --quiet; then
             git commit -m "research: refresh offline AI strategy ranking"
             for attempt in 1 2 3 4 5; do
