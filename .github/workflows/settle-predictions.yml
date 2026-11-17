@@ -27,6 +27,25 @@ jobs:
         run: node tools/collect_odds_snapshots.cjs
       - name: Match predictions with published trifecta payouts
         run: node tools/settle_daily_predictions.cjs
+      - name: Report actual saved data
+        if: always()
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+          const summary=['### Prediction data status ('+date+' JST)'];
+          for(const [label,dir] of [['Baseline','auto'],['Experimental','shadow'],['Odds','odds']]){
+            const file='data/'+dir+'/'+date+'.json';
+            if(!fs.existsSync(file)){summary.push('- '+label+': no file');continue;}
+            try{
+              const doc=JSON.parse(fs.readFileSync(file,'utf8'));
+              const n=Array.isArray(doc.races)?doc.races.length:Object.keys(doc.races||{}).length;
+              summary.push('- '+label+': '+n+' races saved');
+            }catch(e){summary.push('- '+label+': INVALID JSON '+e.message);process.exitCode=1;}
+          }
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary.join('\n')+'\n');
+          console.log(summary.join('\n'));
+          NODE
       - name: Commit settled results
         run: |
           git config user.name "github-actions[bot]"
