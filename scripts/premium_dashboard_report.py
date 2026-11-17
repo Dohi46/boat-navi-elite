@@ -20,6 +20,7 @@ def summarize(docs, min_days=14):
         dates[day] = extract(doc)
     rows = [r for d in sorted(dates) for r in dates[d]]
     base = metrics(rows)
+    daily = [{"date": d, **metrics(dates[d])} for d in sorted(dates)]
     conditions = []
     for name, predicate in CONDITIONS.items():
         selected = [r for r in rows if predicate(r)]
@@ -32,7 +33,7 @@ def summarize(docs, min_days=14):
             "date_end": max(dates) if dates else None,
             "snapshot_days": len(dates), "minimum_days": min_days,
             "ready_for_premium": False, "enough_days_for_research": len(dates) >= min_days,
-            "baseline": base, "conditions": conditions,
+            "baseline": base, "conditions": conditions, "daily": daily,
             "notice": "Hypothetical historical metrics only. No verified pre-cutoff odds or calibrated probabilities."}
 
 def main():
