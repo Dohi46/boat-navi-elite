@@ -5,6 +5,7 @@ Does not publish or modify prediction snapshots. No ticket-level data.
 """
 import argparse
 import json
+from datetime import date
 from pathlib import Path
 try:
     from scripts.premium_selection_study import extract, metrics, CONDITIONS
@@ -17,6 +18,11 @@ def summarize(docs, min_days=14):
         day = doc.get("date")
         if not isinstance(day, str) or day in dates:
             raise ValueError("missing or duplicate snapshot date")
+        try:
+            if date.fromisoformat(day).isoformat() != day:
+                raise ValueError("noncanonical date")
+        except ValueError as exc:
+            raise ValueError("invalid snapshot date: " + day) from exc
         dates[day] = extract(doc)
     rows = [r for d in sorted(dates) for r in dates[d]]
     base = metrics(rows)
