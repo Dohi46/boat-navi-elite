@@ -1,12 +1,20 @@
 {
   "schema": "experimental-ai-ranking-v1",
+  "comparisonNote": "allEligibleBaseline uses all valid pre-cutoff settled races; baseline and candidate strategies share a narrower six-racer-feature eligible cohort. Do not directly compare candidate ROI to allEligibleBaseline ROI.",
+  "allEligibleBaseline": {
+    "races": 253,
+    "stake": 126500,
+    "payout": 106240,
+    "hits": 86,
+    "roiPercent": 83.98
+  },
   "disclaimer": "Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.",
   "quality": {
-    "total": 254,
+    "total": 386,
     "eligible": 115,
-    "held": 139,
+    "held": 148,
     "weatherComplete": 0,
-    "unsettled": 0
+    "unsettled": 123
   },
   "strategies": {
     "baseline": {
@@ -45,5 +53,5 @@
       "roiPercent": 94
     }
   },
-  "filesAnalyzed": 2
+  "filesAnalyzed": 3
 }
