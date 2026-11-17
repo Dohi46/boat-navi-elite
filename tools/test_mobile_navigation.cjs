@@ -21,6 +21,7 @@ const oddsFree=fs.readFileSync(path.join(root,'odds-free.html'),'utf8');
 assert.match(oddsFree,/r\.s\.selected===0\?'—':r\.s\.settled\?r\.s\.hits:'結果待ち'/,'Daily odds-free results distinguish skip-only, pending and settled');
 assert.match(oddsFree,/if\(c&&!sel\)s\.legacy\+\+/,'Legacy shadows are excluded from selection stats');
 assert.match(oddsFree,/sel\.decision!==\(sel\.margin>=0\.75\?'select':'skip'\)/,'Inconsistent shadow selection is excluded from public performance metrics');
+assert.match(oddsFree,/Number\.isInteger\(Number\(x\.amount\)\)/,'Invalid payout amounts cannot enter the public results');
 assert.match(oddsFree,/hits\.push\(\{d,venue:r\.venue,race:r\.race,pick:p\.pick,odds:pay\/100,amount,payout\}\)/,'Only paid winning picks enter the hit list');
 assert.match(oddsFree,/if\(!Array\.isArray\(winners\)\|\|!winners\.length\)/,'Unsettled races excluded from win-rate denominator');
 console.log('PASS: mobile homepage shortcut, AI LAB structure, preserved controls, selector guard and cache key');
