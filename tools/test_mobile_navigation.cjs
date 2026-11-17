@@ -17,4 +17,7 @@ for(const id of ['goDailyPredictions','dailyAutoPanel','dailyAutoLoad','aiVenue'
 assert.match(js,/getElementById\("goDailyPredictions"\)\?\.addEventListener\("click"/,'Homepage shortcut wired');
 assert.match(js,/dataset\.raceChangeBound==="true"/,'Selector event deduplication present');
 assert.match(html,/app\.js\?v=mobile-lab-stability-20261117b/,'Updated JS cache key present');
+const oddsFree=fs.readFileSync(path.join(root,'odds-free.html'),'utf8');
+assert.match(oddsFree,/r\.s\.selected===0\?'—':r\.s\.settled\?r\.s\.hits:'結果待ち'/,'Daily odds-free results distinguish skip-only, pending and settled');
+assert.match(oddsFree,/if\(c&&!sel\)s\.legacy\+\+/,'Legacy shadows are excluded from selection stats');
 console.log('PASS: mobile homepage shortcut, AI LAB structure, preserved controls, selector guard and cache key');
