@@ -1,0 +1,26 @@
+import unittest
+from scripts.premium_walkforward import walkforward
+from tests.test_premium_selection_study import snapshot
+
+class WalkForwardTests(unittest.TestCase):
+    def test_training_never_contains_evaluation_day(self):
+        report=walkforward([snapshot("2026-11-17",2100),
+                            snapshot("2026-11-18",0),
+                            snapshot("2026-11-19",2100)],min_train_days=2)
+        self.assertEqual(report["fold_count"],1)
+        fold=report["folds"][0]
+        self.assertEqual(fold["evaluation_date"],"2026-11-19")
+        self.assertEqual(fold["train_dates"],["2026-11-17","2026-11-18"])
+        self.assertEqual(fold["conditions"]["all"]["evaluation"]["settled_races"],1)
+
+    def test_insufficient_history_is_not_success(self):
+        report=walkforward([snapshot("2026-11-17",2100)],min_train_days=14)
+        self.assertEqual(report["fold_count"],0)
+        self.assertFalse(report["ready_for_premium"])
+
+    def test_duplicate_dates_rejected(self):
+        with self.assertRaises(ValueError):
+            walkforward([snapshot("2026-11-17",0),snapshot("2026-11-17",0)],1)
+
+if __name__=="__main__":
+    unittest.main()
