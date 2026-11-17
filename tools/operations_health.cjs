@@ -35,8 +35,17 @@ async function main(){
  const races=Array.isArray(data?.races)?data.races:[];
  const unsettled=races.filter(r=>!r.result).length;
  const snapshotCheck={id:'snapshot',date:yesterday,status:data?.date===yesterday&&races.length&&unsettled===0?'ok':'alert',races:races.length,unsettled};
- const all=[...checksOut,snapshotCheck];
- const report={schema:'boat-nexus-operations-health-v1',checkedAt:new Date().toISOString(),todayJst:today,yesterdayJst:yesterday,status:all.every(c=>c.status==='ok')?'ok':all.some(c=>c.status==='alert')?'alert':'pending',checks:all,note:'Checks scheduled/manual runs by JST creation date, not completion date. Push runs are excluded. New monitor has a one-day bootstrap grace on 2026-11-17 JST; missing or delayed schedules thereafter trigger review. No automatic repair.'};
+ const shadowPath='data/shadow/'+yesterday+'.json';
+ let shadow=null;
+ if(fs.existsSync(shadowPath)){try{shadow=JSON.parse(fs.readFileSync(shadowPath,'utf8'));}catch(e){shadow=null;}}
+ const shadowRows=shadow?.races&&!Array.isArray(shadow.races)&&typeof shadow.races==='object'?Object.values(shadow.races):[];
+ const valid=shadowRows.filter(s=>{
+  const x=s.selection;
+  return x?.schema==='odds-free-selection-v1'&&x.rule==='lane-adjusted-strength-margin-gte-0.75'&&x.oddsUsed===false&&s.oddsUsed===false&&x.lockedAt===s.lockedAt&&typeof x.margin==='number'&&Number.isFinite(x.margin)&&x.decision===(x.margin>=0.75?'select':'skip');
+ });
+ const shadowCheck={id:'shadowSelection',date:yesterday,status:shadow?.date===yesterday&&valid.length>0?'ok':'alert',locks:shadowRows.length,preRegistered:valid.length,legacy:shadowRows.filter(s=>!s.selection).length,invalid:shadowRows.filter(s=>s.selection).length-valid.length};
+ const all=[...checksOut,snapshotCheck,shadowCheck];
+ const report={schema:'boat-nexus-operations-health-v1',checkedAt:new Date().toISOString(),todayJst:today,yesterdayJst:yesterday,status:all.every(c=>c.status==='ok')?'ok':all.some(c=>c.status==='alert')?'alert':'pending',checks:all,note:'Checks scheduled/manual runs by JST creation date, not completion date. Push runs are excluded. New monitor has a one-day bootstrap grace on 2026-11-17 JST; missing or delayed schedules thereafter trigger review. Shadow pre-registration is monitored separately from production baseline health. No automatic repair.'};
  fs.mkdirSync('data/research',{recursive:true});
  fs.writeFileSync('data/research/operations-health-latest.json',JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify(report,null,2));
