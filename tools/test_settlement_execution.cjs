@@ -31,5 +31,14 @@ try{
  result=run();assert.equal(result.status,0,result.stderr);
  assert.equal(fs.readFileSync(file,'utf8'),pending,'No new result must not rewrite a pending snapshot');
  assert.match(result.stdout,/no new results; snapshot unchanged/);
- console.log('PASS: real settlement payout, repeat idempotence, and pending snapshot immutability');
+ // A confirmed losing pick is not a hit, and the pending race stays pending.
+ const losingDoc={date,races:[{venue:1,race:1,raceDate:date,picks:[{pick:'2-1-3',stake:100}]},{venue:1,race:2,raceDate:date,picks:[{pick:'1-2-3',stake:100}]}]};
+ fs.writeFileSync(file,JSON.stringify(losingDoc,null,2)+'\\n');
+ result=run();assert.equal(result.status,0,result.stderr);
+ saved=JSON.parse(fs.readFileSync(file,'utf8'));
+ assert.equal(saved.races[0].result.hits,0,'A losing race cannot be counted as a hit');
+ assert.equal(saved.races[0].result.payout,0,'A losing race has zero payout');
+ assert.equal(saved.races[1].result,undefined,'Unavailable race results remain pending');
+ assert.equal(saved.settlement.pendingRaces,1);
+ console.log('PASS: real settlement payout, repeat idempotence, and pending snapshot immutability, and confirmed losses');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
