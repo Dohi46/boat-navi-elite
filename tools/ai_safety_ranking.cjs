@@ -28,7 +28,8 @@ const strategies={
  favorite:r=>Array.isArray(r.picks)&&r.picks.some(p=>String(p.pick).startsWith('1-')),
  medium:r=>category(r)==='medium',
  long:r=>category(r)==='long',
- selected:r=>category(r)!=='none'
+ selected:r=>category(r)!=='none',
+ skipped:r=>category(r)==='none'
 };
 function evaluate(docs){
  const totals=Object.fromEntries(Object.keys(strategies).map(k=>[k,{races:0,stake:0,payout:0,hits:0}]));
@@ -54,7 +55,7 @@ function evaluate(docs){
    const t=totals[name];t.races++;t.stake+=stake;t.payout+=payout;t.hits+=bets.filter(p=>p.hit===true).length;
   }
  }
- return {schema:'experimental-ai-ranking-v1',comparisonNote:'allEligibleBaseline uses all valid pre-cutoff settled races; baseline and candidate strategies share a narrower six-racer-feature eligible cohort. Do not directly compare candidate ROI to allEligibleBaseline ROI.',allEligibleBaseline:{...allEligible,roiPercent:allEligible.stake?Number((100*allEligible.payout/allEligible.stake).toFixed(2)):null},disclaimer:'Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.',quality,strategies:Object.fromEntries(Object.entries(totals).map(([k,v])=>[k,{...v,roiPercent:v.stake?Number((100*v.payout/v.stake).toFixed(2)):null}]))};
+ return {schema:'experimental-ai-ranking-v1',comparisonNote:'allEligibleBaseline uses all valid pre-cutoff settled races; baseline and candidate strategies share a narrower six-racer-feature eligible cohort. Do not directly compare candidate ROI to allEligibleBaseline ROI.',allEligibleBaseline:{...allEligible,roiPercent:allEligible.stake?Number((100*allEligible.payout/allEligible.stake).toFixed(2)):null},disclaimer:'Selected and skipped are complementary groups within the same feature-complete eligible cohort. Selection was defined on these same historical data, so comparisons are descriptive, not out-of-sample evidence. Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.',quality,strategies:Object.fromEntries(Object.entries(totals).map(([k,v])=>[k,{...v,roiPercent:v.stake?Number((100*v.payout/v.stake).toFixed(2)):null}]))};
 }
 if(require.main===module){
  const folder=process.argv[2]||'data/auto';
