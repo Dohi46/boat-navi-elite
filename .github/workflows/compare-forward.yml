@@ -1,0 +1,26 @@
+name: Compare forward prediction strategies
+on:
+  schedule:
+    - cron: '45 16 * * *' # 01:45 JST
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check script syntax
+        run: node --check tools/compare_forward_strategies.cjs
+      - name: Build forward-only comparison report
+        run: node tools/compare_forward_strategies.cjs > forward-comparison.json
+      - name: Upload comparison report
+        uses: actions/upload-artifact@v4
+        with:
+          name: forward-comparison
+          path: forward-comparison.json
+          retention-days: 30
