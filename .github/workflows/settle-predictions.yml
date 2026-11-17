@@ -19,6 +19,8 @@ jobs:
           node-version: '22'
       - name: Validate collector syntax
         run: node --check tools/collect_odds_snapshots.cjs
+      - name: Test pre-cutoff shadow locking (offline)
+        run: node tools/test_shadow_lock.cjs
       - name: Validate experimental shadow generator
         run: node --check tools/generate_shadow_predictions.cjs
       - name: Validate prediction health audit syntax
