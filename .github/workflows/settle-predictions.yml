@@ -23,10 +23,14 @@ jobs:
         run: node --check tools/generate_shadow_predictions.cjs
       - name: Validate prediction health audit syntax
         run: node --check tools/audit_prediction_health.cjs
+      - name: Validate BoatraceCSV collector syntax
+        run: node --check tools/collect_boatracecsv_observations.cjs
       - name: Lock experimental shadow predictions before cutoff
         run: node tools/generate_shadow_predictions.cjs
       - name: Capture available pre-cutoff odds observations (read only)
         run: node tools/collect_odds_snapshots.cjs
+      - name: Collect experimental BoatraceCSV weather and odds snapshots
+        run: node tools/collect_boatracecsv_observations.cjs
       - name: Match predictions with published trifecta payouts
         run: node tools/settle_daily_predictions.cjs
       - name: Report actual saved data
@@ -55,6 +59,7 @@ jobs:
           git add data/auto/
           if [ -d data/odds ]; then git add data/odds/; fi
           if [ -d data/shadow ]; then git add data/shadow/; fi
+          if [ -d data/external/boatracecsv ]; then git add data/external/boatracecsv/; fi
           if ! git diff --cached --quiet; then
             git commit -m "data: settle v13 predictions"
             # Retry if another workflow advances main. Never force push.
