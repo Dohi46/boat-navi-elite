@@ -53,5 +53,182 @@
       "roiPercent": 94
     }
   },
-  "filesAnalyzed": 3
+  "filesAnalyzed": 3,
+  "rolling": {
+    "7d": {
+      "periodStart": "2026-11-11",
+      "periodEnd": "2026-11-17",
+      "calendarDays": 7,
+      "filesAnalyzed": 3,
+      "missingDays": 4,
+      "quality": {
+        "total": 386,
+        "eligible": 115,
+        "held": 148,
+        "weatherComplete": 0,
+        "unsettled": 123
+      },
+      "allEligibleBaseline": {
+        "races": 253,
+        "stake": 126500,
+        "payout": 106240,
+        "hits": 86,
+        "roiPercent": 83.98
+      },
+      "strategies": {
+        "baseline": {
+          "races": 115,
+          "stake": 57500,
+          "payout": 47230,
+          "hits": 34,
+          "roiPercent": 82.14
+        },
+        "favorite": {
+          "races": 115,
+          "stake": 57500,
+          "payout": 47230,
+          "hits": 34,
+          "roiPercent": 82.14
+        },
+        "medium": {
+          "races": 67,
+          "stake": 33500,
+          "payout": 25500,
+          "hits": 21,
+          "roiPercent": 76.12
+        },
+        "long": {
+          "races": 15,
+          "stake": 7500,
+          "payout": 13040,
+          "hits": 7,
+          "roiPercent": 173.87
+        },
+        "selected": {
+          "races": 82,
+          "stake": 41000,
+          "payout": 38540,
+          "hits": 28,
+          "roiPercent": 94
+        }
+      }
+    },
+    "30d": {
+      "periodStart": "2026-10-19",
+      "periodEnd": "2026-11-17",
+      "calendarDays": 30,
+      "filesAnalyzed": 3,
+      "missingDays": 27,
+      "quality": {
+        "total": 386,
+        "eligible": 115,
+        "held": 148,
+        "weatherComplete": 0,
+        "unsettled": 123
+      },
+      "allEligibleBaseline": {
+        "races": 253,
+        "stake": 126500,
+        "payout": 106240,
+        "hits": 86,
+        "roiPercent": 83.98
+      },
+      "strategies": {
+        "baseline": {
+          "races": 115,
+          "stake": 57500,
+          "payout": 47230,
+          "hits": 34,
+          "roiPercent": 82.14
+        },
+        "favorite": {
+          "races": 115,
+          "stake": 57500,
+          "payout": 47230,
+          "hits": 34,
+          "roiPercent": 82.14
+        },
+        "medium": {
+          "races": 67,
+          "stake": 33500,
+          "payout": 25500,
+          "hits": 21,
+          "roiPercent": 76.12
+        },
+        "long": {
+          "races": 15,
+          "stake": 7500,
+          "payout": 13040,
+          "hits": 7,
+          "roiPercent": 173.87
+        },
+        "selected": {
+          "races": 82,
+          "stake": 41000,
+          "payout": 38540,
+          "hits": 28,
+          "roiPercent": 94
+        }
+      }
+    },
+    "90d": {
+      "periodStart": "2026-08-20",
+      "periodEnd": "2026-11-17",
+      "calendarDays": 90,
+      "filesAnalyzed": 3,
+      "missingDays": 87,
+      "quality": {
+        "total": 386,
+        "eligible": 115,
+        "held": 148,
+        "weatherComplete": 0,
+        "unsettled": 123
+      },
+      "allEligibleBaseline": {
+        "races": 253,
+        "stake": 126500,
+        "payout": 106240,
+        "hits": 86,
+        "roiPercent": 83.98
+      },
+      "strategies": {
+        "baseline": {
+          "races": 115,
+          "stake": 57500,
+          "payout": 47230,
+          "hits": 34,
+          "roiPercent": 82.14
+        },
+        "favorite": {
+          "races": 115,
+          "stake": 57500,
+          "payout": 47230,
+          "hits": 34,
+          "roiPercent": 82.14
+        },
+        "medium": {
+          "races": 67,
+          "stake": 33500,
+          "payout": 25500,
+          "hits": 21,
+          "roiPercent": 76.12
+        },
+        "long": {
+          "races": 15,
+          "stake": 7500,
+          "payout": 13040,
+          "hits": 7,
+          "roiPercent": 173.87
+        },
+        "selected": {
+          "races": 82,
+          "stake": 41000,
+          "payout": 38540,
+          "hits": 28,
+          "roiPercent": 94
+        }
+      }
+    }
+  },
+  "rollingNote": "Windows end at the latest stored snapshot date. Unsettled races are excluded from ROI. Compare strategies against the same-window eligible baseline; small samples are exploratory."
 }
