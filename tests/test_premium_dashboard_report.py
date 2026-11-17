@@ -13,11 +13,19 @@ class DashboardTests(unittest.TestCase):
     def test_aggregates_only_and_not_ready(self):
         r=summarize([doc("2026-11-17",2100)],14)
         self.assertEqual(r["baseline"]["payout"],2100)
+        self.assertEqual(r["daily"][0]["date"],"2026-11-17")
+        self.assertEqual(r["daily"][0]["payout"],2100)
         self.assertEqual(r["conditions"][0]["skip_races"],0)
         self.assertFalse(r["ready_for_premium"])
         self.assertFalse(r["enough_days_for_research"])
         self.assertNotIn("picks",str(r))
         self.assertNotIn("1-2-3",str(r))
+    def test_daily_totals_match_baseline(self):
+        r=summarize([doc("2026-11-17",2100),doc("2026-11-18",0)])
+        self.assertEqual(sum(d["stake"] for d in r["daily"]),r["baseline"]["stake"])
+        self.assertEqual(sum(d["payout"] for d in r["daily"]),r["baseline"]["payout"])
+        self.assertEqual(r["snapshot_days"],2)
+
     def test_duplicate_rejected(self):
         with self.assertRaises(ValueError):
             summarize([doc("2026-11-17",0),doc("2026-11-17",0)])
