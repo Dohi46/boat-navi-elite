@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Regression test cutoff and exhibition phase (offline)
+        run: node tools/test_prediction_cutoff.cjs
       - name: Collect predictions
         run: node tools/collect_daily_predictions.cjs
       - name: Commit snapshots
