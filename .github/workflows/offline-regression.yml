@@ -11,6 +11,8 @@ on:
       - 'tools/generate_shadow_predictions.cjs'
       - 'tools/audit_prediction_health.cjs'
       - 'tools/operations_health.cjs'
+      - 'tools/operations_health_policy.cjs'
+      - 'tools/test_operations_health.cjs'
       - '.github/workflows/operations-health.yml'
       - '.github/workflows/offline-regression.yml'
   workflow_dispatch:
@@ -33,6 +35,10 @@ jobs:
           node --check tools/test_mobile_navigation.cjs
           node --check tools/audit_prediction_health.cjs
           node --check tools/operations_health.cjs
+          node --check tools/operations_health_policy.cjs
+          node --check tools/test_operations_health.cjs
+      - name: Test operations monitoring classifications
+        run: node tools/test_operations_health.cjs
       - name: Test pre-cutoff locks without live data
         run: node tools/test_shadow_lock.cjs
       - name: Check mobile navigation and AI LAB controls
