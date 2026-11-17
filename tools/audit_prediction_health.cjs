@@ -52,7 +52,7 @@ else{
    if(!r||!Number.isFinite(limit)||!Number.isFinite(locked)||!Number.isFinite(source)||source>locked||locked>=limit||!Array.isArray(s.picks)||s.picks.some(p=>!validPick(p))||new Set((s.picks||[]).map(p=>p.pick)).size!==s.picks.length)note('ERROR','Invalid shadow prediction '+key);
    if(s.selection){
     const sel=s.selection,decision=sel.decision;
-    if(sel.schema!=='odds-free-selection-v1'||!['select','skip'].includes(decision)||sel.oddsUsed!==false||s.oddsUsed!==false||sel.lockedAt!==s.lockedAt||!Number.isFinite(Number(sel.margin))||!Number.isFinite(Date.parse(sel.lockedAt))||Date.parse(sel.lockedAt)>=limit)note('ERROR','Invalid pre-registered selection '+key);
+    if(sel.schema!=='odds-free-selection-v1'||!['select','skip'].includes(decision)||sel.oddsUsed!==false||s.oddsUsed!==false||sel.lockedAt!==s.lockedAt||sel.rule!=='lane-adjusted-strength-margin-gte-0.75'||typeof sel.margin!=='number'||!Number.isFinite(sel.margin)||(sel.decision!==(sel.margin>=0.75?'select':'skip'))||!Number.isFinite(Date.parse(sel.lockedAt))||Date.parse(sel.lockedAt)>=limit)note('ERROR','Invalid pre-registered selection '+key);
     else{counts.preRegistered++;if(decision==='select')counts.selected++;else counts.skipped++;}
    }else counts.legacy++;
 
