@@ -6,7 +6,7 @@ const root=fs.mkdtempSync(path.join(os.tmpdir(),'boat-settlement-test-'));
 try{
  // Settlement runner must not churn tracked snapshots without new results.
  const settlementSource=fs.readFileSync(path.join(__dirname,'settle_daily_predictions.cjs'),'utf8');
- assert.match(settlementSource,/if\\(settled===0&&doc\\.settlement\\)\\{/,'Unchanged settlement snapshots are not rewritten');
+ assert.ok(settlementSource.includes('if(settled===0&&doc.settlement){'),'Unchanged settlement snapshots are not rewritten');
  const tools=path.join(root,'tools'),auto=path.join(root,'data','auto');fs.mkdirSync(tools,{recursive:true});fs.mkdirSync(auto,{recursive:true});
  fs.copyFileSync(path.join(__dirname,'audit_prediction_health.cjs'),path.join(tools,'audit_prediction_health.cjs'));
  const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
