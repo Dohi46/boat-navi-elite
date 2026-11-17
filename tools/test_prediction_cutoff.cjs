@@ -19,7 +19,7 @@ try {
   const preview={racers:Object.fromEntries(Array.from({length:6},(_,i)=>[i+1,{exhibition_time:6.8}]))};
   const fixture={programs:{stadiums:{'1':{races:{'1':{date,closed_at:isoJst(f),racers,preview},'2':{date,closed_at:isoJst(p),racers,preview}}}}}};
   const preload=path.join(temp,'mock-fetch.cjs');
-  const mockSource = 'const RealDate=Date;const fixed='+fixedNow.getTime()+';global.Date=class extends RealDate{constructor(...args){super(...(args.length?args:[fixed]));}static now(){return fixed;}};global.fetch=async()=>({ok:true,json:async()=>'+JSON.stringify(fixture)+'});\\n';
+  const mockSource = 'const RealDate=Date;const fixed='+fixedNow.getTime()+';global.Date=class extends RealDate{constructor(...args){super(...(args.length?args:[fixed]));}static now(){return fixed;}};global.fetch=async()=>({ok:true,json:async()=>'+JSON.stringify(fixture)+'});\n';
   fs.writeFileSync(preload,mockSource);
   const run=spawnSync(process.execPath,['--require',preload,path.join(root,'tools/collect_daily_predictions.cjs')],{cwd:temp,encoding:'utf8'});
   assert.equal(run.status,0,run.stderr||run.stdout);
