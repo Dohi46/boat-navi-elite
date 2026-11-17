@@ -1,0 +1,22 @@
+name: BOAT NEXUS cutoff regression (offline)
+on:
+  push:
+    paths:
+      - 'tools/test_prediction_cutoff.cjs'
+      - 'tools/collect_daily_predictions.cjs'
+      - 'tools/quality_rolling_report.cjs'
+      - '.github/workflows/prediction-cutoff-test.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run offline cutoff regression tests
+        run: node tools/test_prediction_cutoff.cjs
