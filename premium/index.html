@@ -26,6 +26,43 @@ button:focus-visible{outline:3px solid #e7c783}ul{line-height:1.9}
 <section class="card"><h2>現在の選別判断</h2><p class="tag">SKIP / 購入推奨なし</p>
 <ul><li>校正済みの的中確率：未取得</li><li>締切前オッズ：未取得</li><li>風向・風速・波高の時刻付き履歴：未接続</li><li>独立した長期評価：未完了</li></ul>
 <p class="muted">結果確定後の情報を予想の根拠に混ぜない設計で検証中です。</p></section>
+<section class="card" aria-labelledby="comparison-heading">
+<h2 id="comparison-heading">条件別の研究成績</h2>
+<p class="muted" id="research-status">研究用集計ファイルが未配置です。データは自動公開されません。</p>
+<div style="overflow-x:auto"><table id="comparison" style="width:100%;border-collapse:collapse;text-align:left" hidden>
+<thead><tr><th scope="col">条件</th><th scope="col">対象R</th><th scope="col">的中率</th><th scope="col">回収率</th><th scope="col">見送り率</th></tr></thead><tbody></tbody></table></div>
+<p class="muted">過去の仮想成績であり、購入推奨ではありません。見送り率は比較条件に該当しないレースの割合です。</p>
+</section>
+<script>
+(async function(){
+  const status=document.getElementById('research-status');
+  const table=document.getElementById('comparison');
+  try {
+    const response=await fetch('./research-summary.json',{cache:'no-store'});
+    if(!response.ok) return;
+    const report=await response.json();
+    if(report.schema!=='premium-dashboard-v1'||report.mode!=='research_only'||!Array.isArray(report.conditions))return;
+    const labels={all:'全レース',top_pick_starts_lane1:'1号艇本命',
+      lane1_motor_at_least_40:'1号艇モーター40%以上',
+      exhibition_at_least_6:'展示データ6件以上',
+      top_relative_score_at_least_0_015:'v13相対スコア0.015以上'};
+    const pct=n=>typeof n==='number'&&Number.isFinite(n)?n.toFixed(2)+'%':'未算出';
+    for(const c of report.conditions){
+      if(!Object.prototype.hasOwnProperty.call(labels,c.name))continue;
+      const tr=document.createElement('tr');
+      [labels[c.name],c.selected_races,pct(c.hit_rate_percent),pct(c.return_rate_percent),pct(c.skip_rate_percent)].forEach(v=>{
+        const td=document.createElement('td');td.textContent=String(v);td.style.padding='12px 8px';
+        td.style.borderBottom='1px solid #334056';tr.appendChild(td);
+      });
+      table.tBodies[0].appendChild(tr);
+    }
+    table.hidden=false;
+    status.textContent='研究期間: '+report.date_start+'〜'+report.date_end+
+      ' / 保存日数: '+report.snapshot_days+'日'+
+      (report.enough_days_for_research?'':'（長期検証に必要な日数未達）');
+  }catch(e){status.textContent='研究用集計を読み込めません。過去の固定サマリーのみ表示しています。';}
+})();
+</script>
 <section class="card"><h2>次の研究項目</h2>
 <p class="muted">複数日データの自動照合、固定条件の時系列評価、締切前の水面コンディション取得、結果の透明な公開。</p>
 <button type="button" onclick="location.href='../index.html'">無料AI LABへ戻る</button></section>
