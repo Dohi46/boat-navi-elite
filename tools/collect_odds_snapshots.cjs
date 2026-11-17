@@ -33,12 +33,19 @@ async function main(){
  const existing=fs.existsSync(dest)?JSON.parse(fs.readFileSync(dest,'utf8')):{date,schema:'odds-observation-v1',races:{}};
  if(existing.date!==date||existing.schema!=='odds-observation-v1'||!existing.races||typeof existing.races!=='object')throw Error('Unexpected existing snapshot schema');
  let stored=0,skipped=0;
- const indexed=new Map(data.map(x=>[Number(x.stadium_number)+'-'+Number(x.number),x]));
+ const indexed=new Map();
+ for(const x of data){
+  const venue=Number(x.stadium_number),race=Number(x.number);
+  if(!Number.isInteger(venue)||venue<1||venue>24||!Number.isInteger(race)||race<1||race>12)continue;
+  const key=venue+'-'+race;
+  if(indexed.has(key)){console.warn('Duplicate source race; excluding:',key);indexed.set(key,null);continue;}
+  indexed.set(key,x);
+ }
  for(const r of prediction.races||[]){
   const cutoffMs=parseCutoff(r.cutoff),nowMs=Date.parse(observedAt);
   // Never record odds as usable pre-race if captured after cutoff. A source may be stale;
   // its unknown publication time is explicitly NOT inferred from observation time.
-  if(!Number.isFinite(cutoffMs)||nowMs>=cutoffMs){skipped++;continue;}
+  if(!Number.isFinite(cutoffMs)||r.raceDate!==date||nowMs>=cutoffMs){skipped++;continue;}
   const key=Number(r.venue)+'-'+Number(r.race),item=indexed.get(key);
   if(!item||item.date!==date||!item.trifecta_odds)continue;
   const flat={};
@@ -46,7 +53,7 @@ async function main(){
    const [a,b,c]=combo.split('-'),raw=item.trifecta_odds?.[a]?.[b]?.[c];
    if(raw===null||raw===undefined||raw==='')continue;
    const value=Number(raw);
-   if(Number.isFinite(value)&&value>0)flat[combo]=value;
+   if(Number.isFinite(value)&&value>=1&&value<=1000000)flat[combo]=value;
   }
   if(Object.keys(flat).length!==120)continue;
   const previous=existing.races[key];
@@ -55,7 +62,7 @@ async function main(){
   existing.races[key]={venue:Number(r.venue),race:Number(r.race),cutoff:r.cutoff,observedAt,source,sourcePublishedAt:null,sourceFreshnessVerified:false,odds:flat};
   stored++;
  }
- if(stored){fs.writeFileSync(dest,JSON.stringify(existing,null,2)+'\n');}
+ if(stored){const temp=dest+'.tmp';fs.writeFileSync(temp,JSON.stringify(existing,null,2)+'\n');fs.renameSync(temp,dest);}
  console.log(JSON.stringify({date,stored,skipped,previouslyStored:Object.keys(existing.races).length-stored,source,notice:'Observation timestamp only; upstream quote freshness unverified. Do not treat as exact prediction-time odds.'}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
