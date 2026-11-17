@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+'use strict';
+const assert=require('node:assert/strict');
+const {workflowStatus,shadowStatus}=require('./operations_health_policy.cjs');
+const base={id:'research',date:'2026-11-18',today:'2026-11-18',matching:[]};
+assert.equal(workflowStatus({...base,hour:1}).status,'pending','Delayed scheduled run within grace');
+assert.equal(workflowStatus({...base,hour:3}).status,'alert','Missing run after grace');
+assert.equal(workflowStatus({...base,id:'dailyMonitor',hour:2}).status,'pending');
+assert.equal(workflowStatus({...base,id:'collection',hour:1}).status,'alert','Previous-day collection must not be masked');
+assert.equal(workflowStatus({...base,date:'2026-11-17',hour:1}).status,'alert','Previous-day missing run must alert');
+assert.equal(workflowStatus({...base,hour:1,matching:[{status:'completed',conclusion:'failure'}]}).status,'alert','Completed failure must alert during grace');
+assert.equal(workflowStatus({...base,hour:1,matching:[{status:'in_progress'}]}).status,'pending');
+assert.equal(workflowStatus({...base,hour:4,matching:[{status:'completed',conclusion:'success'}]}).status,'ok');
+const s={date:'2026-11-17',expectedDate:'2026-11-17',valid:0,legacy:12,invalid:0};
+assert.equal(shadowStatus(s),'pending','Immutable legacy locks are not invalid');
+assert.equal(shadowStatus({...s,valid:1}),'ok');
+assert.equal(shadowStatus({...s,invalid:1}),'alert');
+assert.equal(shadowStatus({...s,date:'2026-11-16'}),'alert');
+assert.equal(shadowStatus({...s,legacy:0}),'alert');
+console.log('PASS: schedule grace, failures, and legacy shadow status');
