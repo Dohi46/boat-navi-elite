@@ -8,13 +8,14 @@
 <script>(()=>{'use strict';
 const $=id=>document.getElementById(id),yen=x=>Math.round(x).toLocaleString('ja-JP')+'円',pct=(a,b)=>b?(a/b*100).toFixed(1)+'%':'未検証';
 const valid=p=>typeof p?.pick==='string'&&/^[1-6]-[1-6]-[1-6]$/.test(p.pick)&&new Set(p.pick.split('-')).size===3&&Number.isFinite(Number(p.stake))&&Number(p.stake)>0;
-const stats=()=>({eligible:0,selected:0,skipped:0,settled:0,unsettled:0,picks:0,hits:0,stake:0,payout:0});
+const stats=()=>({eligible:0,legacy:0,selected:0,skipped:0,settled:0,unsettled:0,picks:0,hits:0,stake:0,payout:0});
 const merge=(a,b)=>{for(const k of Object.keys(a))a[k]+=b[k];};
 async function read(url){const r=await fetch(url+'?v='+Date.now(),{cache:'no-store'});if(r.status===404)return null;if(!r.ok)throw Error(url+': HTTP '+r.status);return r.json();}
 function collect(base,shadow,d){
  const s=stats(),hits=[];
  for(const r of base?.races||[]){
   const c=shadow?.races?.[r.venue+'-'+r.race],sel=c?.selection;
+  if(c&&!sel)s.legacy++;
   if(!c||sel?.schema!=='odds-free-selection-v1'||sel.rule!=='lane-adjusted-strength-margin-gte-0.75'||!['select','skip'].includes(sel.decision)||sel.lockedAt!==c.lockedAt||sel.oddsUsed!==false||c.oddsUsed!==false||!Number.isFinite(sel.margin)||!Array.isArray(c.picks)||!c.picks.every(valid))continue;
   const cutoff=/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/.test(r.cutoff||'')?Date.parse(r.cutoff.replace(' ','T')+'+09:00'):NaN;
   const locked=Date.parse(c.lockedAt),source=Date.parse(c.sourceCapturedAt);
@@ -36,10 +37,10 @@ async function run(){
   const start=Date.parse(today+'T00:00:00+09:00'),dates=Array.from({length:count},(_,i)=>new Date(start-i*86400000+9*3600000).toISOString().slice(0,10));
   const rows=await Promise.all(dates.map(async d=>{const [base,shadow]=await Promise.all([read('./data/auto/'+d+'.json'),read('./data/shadow/'+d+'.json')]);return {d,...collect(base,shadow,d)};}));
   const total=stats(),hits=[];for(const r of rows){merge(total,r.s);hits.push(...r.hits);}
-  const html='<div class="card"><h2>期間合計</h2><div class="grid">'+metric('事前判定',total.eligible+'R')+metric('選択',total.selected+'R')+metric('見送り',total.skipped+'R')+metric('選択・結果確定',total.settled+'R')+metric('的中',total.hits+'点')+metric('的中率',pct(total.hits,total.picks))+metric('回収率',pct(total.payout,total.stake))+metric('仮想収支',yen(total.payout-total.stake))+'</div><p class="muted">仮想購入 '+yen(total.stake)+' ／ 払戻 '+yen(total.payout)+' ／ 選択・結果待ち '+total.unsettled+'R</p></div>'+
+  const html='<div class="card"><h2>期間合計</h2><div class="grid">'+metric('事前判定',total.eligible+'R')+metric('旧形式（集計対象外）',total.legacy+'R')+metric('選択',total.selected+'R')+metric('見送り',total.skipped+'R')+metric('選択・結果確定',total.settled+'R')+metric('的中',total.hits+'点')+metric('的中率',pct(total.hits,total.picks))+metric('回収率',pct(total.payout,total.stake))+metric('仮想収支',yen(total.payout-total.stake))+'</div><p class="muted">仮想購入 '+yen(total.stake)+' ／ 払戻 '+yen(total.payout)+' ／ 選択・結果待ち '+total.unsettled+'R</p></div>'+
   '<div class="card" style="overflow-x:auto"><h2>日別成績</h2><table><thead><tr><th>日付</th><th>選択</th><th>見送り</th><th>的中</th><th>的中率</th><th>回収率</th></tr></thead><tbody>'+rows.filter(r=>r.s.eligible).map(r=>'<tr><td>'+r.d+'</td><td>'+r.s.selected+'</td><td>'+r.s.skipped+'</td><td>'+r.s.hits+'</td><td>'+pct(r.s.hits,r.s.picks)+'</td><td>'+pct(r.s.payout,r.s.stake)+'</td></tr>').join('')+'</tbody></table>'+(total.eligible?'':'<p class="muted">この期間に事前判定が保存されたレースはありません。</p>')+'</div>'+
   '<div class="card" style="overflow-x:auto"><h2>🎯 的中欄（選択レースのみ）</h2>'+(hits.length?'<table><thead><tr><th>日付・場・R</th><th>的中目</th><th>オッズ</th><th>購入</th><th>払戻</th></tr></thead><tbody>'+hits.sort((a,b)=>b.d.localeCompare(a.d)||a.venue-b.venue||a.race-b.race).map(h=>'<tr><td>'+h.d.slice(5)+' '+h.venue+'場 '+h.race+'R</td><td>'+h.pick+'</td><td>'+h.odds.toFixed(1)+'倍</td><td>'+yen(h.amount)+'</td><td>'+yen(h.payout)+'</td></tr>').join('')+'</tbody></table><p class="muted">的中 '+hits.length+'点 ／ 払戻合計 '+yen(total.payout)+'</p>':'<p class="muted">的中記録はまだありません。</p>')+'</div>';
-  $('results').innerHTML=html;$('status').textContent='対象 '+count+'暦日 ／ 事前判定 '+total.eligible+'R ／ 選択 '+total.selected+'R ／ 見送り '+total.skipped+'R';
+  $('results').innerHTML=html;$('status').textContent='対象 '+count+'暦日 ／ 事前判定 '+total.eligible+'R ／ 選択 '+total.selected+'R ／ 見送り '+total.skipped+'R ／ 旧形式（対象外） '+total.legacy+'R';
  }catch(e){$('status').textContent='読み込みエラー: '+e.message;}finally{$('refresh').disabled=false;}
 }
 $('refresh').addEventListener('click',run);run();
