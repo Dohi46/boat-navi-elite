@@ -31,12 +31,12 @@ async function run(){
  }
  return {d,base,shadow,live};
  }));
- const baseline=stats(),pairedBase=stats(),pairedShadow=stats();let settled=0,paired=0,missing=0,invalid=0;
+ const baseline=stats(),pairedBase=stats(),pairedShadow=stats();let settled=0,paired=0,missing=0,invalid=0,shadowPending=0,sourceErrors=0;
  for(const {d,base,shadow,live} of all){for(const r of base?.races||[]){
  const liveRace=live?.programs?.stadiums?.[String(r.venue)]?.races?.[String(r.race)];
  const livePayouts=liveRace?.date===d?liveRace?.result?.payouts?.trifecta:null;
  const payouts=Array.isArray(r.result?.winningCombinations)&&r.result.winningCombinations.length?r.result.winningCombinations:livePayouts;
- if(!Array.isArray(payouts)||!payouts.length)continue;
+ if(!Array.isArray(payouts)||!payouts.length){if(shadow?.races?.[r.venue+'-'+r.race])shadowPending++;continue;}
  const winning=new Map(payouts.filter(x=>/^[1-6]-[1-6]-[1-6]$/.test(x.combination)&&new Set(x.combination.split('-')).size===3&&Number(x.amount)>0).map(x=>[x.combination,Number(x.amount)]));
  if(!winning.size)continue;settled++;add(baseline,r.picks||[],winning);
  const s=shadow?.races?.[r.venue+'-'+r.race];if(!s){missing++;continue;}
@@ -45,7 +45,7 @@ async function run(){
  }}
  const box=document.createElement('div');box.innerHTML=card('現行AI（全結果確定分）',baseline)+(paired?'<h2>同一レースでの公平な比較</h2>'+card('現行AI（比較対象のみ）',pairedBase)+card('新AI（比較対象のみ）',pairedShadow):'<div class="card"><h2>新AI：未検証</h2><p class="muted">同じレースで締切前に確定した新AIの予想がまだありません。的中率・回収率は表示できません。</p></div>');
  $('results').append(box);
- $('status').textContent='結果確定 '+settled+'R ／ 比較可能 '+paired+'R ／ 新AI未記録 '+missing+'R ／ 無効な新AI記録 '+invalid+'R'+(paired?'\n※比較結果は試験段階。優位性の証明ではありません。':'\n※新AIの予想生成はまだ未稼働です。');
+ $('status').textContent='結果確定 '+settled+'R ／ 比較可能 '+paired+'R ／ 新AI未記録 '+missing+'R ／ 無効な新AI記録 '+invalid+'R ／ 新AI結果待ち '+shadowPending+'R'+(paired?'\n※比較結果は試験段階。優位性の証明ではありません。':'\n※新AIの予想が保存されていても結果待ちのレースは比較対象外です。');
  }catch(e){$('status').textContent='取得に失敗しました：'+e.message;}finally{$('refresh').disabled=false;}
 }
 $('refresh').addEventListener('click',run);run();
