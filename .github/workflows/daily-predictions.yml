@@ -49,7 +49,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/auto/
+          # Publish only today's verified snapshot; never stage historical files.
+          today=$(TZ=Asia/Tokyo date +%F)
+          git add -- "data/auto/$today.json"
           if ! git diff --cached --quiet; then
             git commit -m "data: publish verified daily baseline"
             # Retry if another workflow advances main. Never force push.
@@ -135,7 +137,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [ -d data/shadow ]; then git add data/shadow/; fi
+          # Publish only today's validated shadow locks; leave historical locks untouched.
+          today=$(TZ=Asia/Tokyo date +%F)
+          if [ -f "data/shadow/$today.json" ]; then
+            git add -- "data/shadow/$today.json"
+          else
+            echo "Validated shadow snapshot missing before publication" >&2
+            exit 1
+          fi
           if ! git diff --cached --quiet; then
             git commit -m "data: publish experimental shadow locks"
             # Retry if another workflow advances main. Never force push.
