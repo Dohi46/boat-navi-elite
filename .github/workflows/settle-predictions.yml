@@ -19,6 +19,10 @@ jobs:
           node-version: '22'
       - name: Validate collector syntax
         run: node --check tools/collect_odds_snapshots.cjs
+      - name: Validate experimental shadow generator
+        run: node --check tools/generate_shadow_predictions.cjs
+      - name: Lock experimental shadow predictions before cutoff
+        run: node tools/generate_shadow_predictions.cjs
       - name: Capture available pre-cutoff odds observations (read only)
         run: node tools/collect_odds_snapshots.cjs
       - name: Match predictions with published trifecta payouts
@@ -29,6 +33,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/auto/
           if [ -d data/odds ]; then git add data/odds/; fi
+          if [ -d data/shadow ]; then git add data/shadow/; fi
           if ! git diff --cached --quiet; then
             git commit -m "data: settle v13 predictions"
             # Retry if another workflow advances main. Never force push.
