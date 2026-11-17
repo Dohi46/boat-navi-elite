@@ -60,6 +60,15 @@ if(require.main===module){
  const folder=process.argv[2]||'data/auto';
  const files=fs.existsSync(folder)?fs.readdirSync(folder).filter(n=>/^\d{4}-\d{2}-\d{2}\.json$/.test(n)).sort():[];
  const docs=files.map(f=>JSON.parse(fs.readFileSync(path.join(folder,f),'utf8')));
- console.log(JSON.stringify({...evaluate(docs),filesAnalyzed:files.length},null,2));
+ const base=evaluate(docs);
+ const last=files.length?files[files.length-1].slice(0,10):null;
+ const rolling={};
+ for(const days of [7,30,90]){
+  const start=last?new Date(Date.parse(last+'T00:00:00Z')-(days-1)*86400000).toISOString().slice(0,10):null;
+  const selected=files.filter(f=>start&&f.slice(0,10)>=start&&f.slice(0,10)<=last);
+  const result=evaluate(selected.map(f=>JSON.parse(fs.readFileSync(path.join(folder,f),'utf8'))));
+  rolling[days+'d']={periodStart:start,periodEnd:last,calendarDays:days,filesAnalyzed:selected.length,missingDays:days-selected.length,quality:result.quality,allEligibleBaseline:result.allEligibleBaseline,strategies:result.strategies};
+ }
+ console.log(JSON.stringify({...base,filesAnalyzed:files.length,rolling,rollingNote:'Windows end at the latest stored snapshot date. Unsettled races are excluded from ROI. Compare strategies against the same-window eligible baseline; small samples are exploratory.'},null,2));
 }
 module.exports={safety,category,evaluate};
