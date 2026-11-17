@@ -17,9 +17,8 @@ def evaluate(doc):
     baseline = {"races": 0, "hit_races": 0, "stake": 0, "payout": 0}
     skipped = {"races": 0, "reasons": {}}
     pending = 0
-    for original, item in zip(races, adapted["assessments"]):
-        if not isinstance(original, dict):
-            continue
+    valid_races = [row for row in races if isinstance(row, dict)]
+    for original, item in zip(valid_races, adapted["assessments"]):
         skipped["races"] += 1
         for reason in item["reasons"]:
             skipped["reasons"][reason] = skipped["reasons"].get(reason, 0) + 1
