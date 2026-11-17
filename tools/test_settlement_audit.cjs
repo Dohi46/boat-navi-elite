@@ -32,7 +32,16 @@ try{
  shadowRace.selection={schema:'odds-free-selection-v1',rule:'lane-adjusted-strength-margin-gte-0.75',margin:0.8,decision:'select',lockedAt:lock,oddsUsed:false};
  writeShadow();result=run();
  assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('事前登録済み: 1R (選択 1R / 見送り 0R)'),result.stdout);
+ // Threshold boundary: exactly 0.75 selects; below 0.75 skips.
+ shadowRace.selection.margin=0.75;
+ writeShadow();result=run();
+ assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('選択 1R / 見送り 0R'),result.stdout);
+ shadowRace.selection.margin=0.749999;
  shadowRace.selection.decision='skip';
+ writeShadow();result=run();
+ assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('選択 0R / 見送り 1R'),result.stdout);
+ shadowRace.selection.margin=0.8;
+  shadowRace.selection.decision='skip';
  writeShadow();result=run();
  assert.equal(result.status,1,result.stdout);assert.ok(result.stdout.includes('Invalid pre-registered selection'),result.stdout);
  shadowRace.selection.decision='select';
