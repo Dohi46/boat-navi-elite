@@ -32,6 +32,17 @@ jobs:
           if(!fs.existsSync(file))throw Error('Daily baseline snapshot missing: '+file);
           const data=JSON.parse(fs.readFileSync(file,'utf8'));
           if(data.date!==date||!Array.isArray(data.races)||data.races.length===0)throw Error('Daily baseline snapshot empty or invalid: '+file);
+          const lastRun=Date.parse(data.lastRunAt);
+          if(!Number.isFinite(lastRun)||lastRun>Date.now()+60000||Date.now()-lastRun>10*60000)throw Error('Daily baseline snapshot was not refreshed in this run: '+file);
+          const keys=new Set();
+          for(const r of data.races){
+            const key=r.venue+'-'+r.race;
+            if(keys.has(key))throw Error('Duplicate baseline race: '+key);
+            keys.add(key);
+            const captured=Date.parse(r.capturedAt);
+            const cutoff=Date.parse(String(r.cutoff).replace(' ','T')+(String(r.cutoff).match(/(?:Z|[+-]\\d\\d:\\d\\d)$/)?'':'+09:00'));
+            if(r.raceDate!==date||!Number.isFinite(captured)||!Number.isFinite(cutoff)||captured>=cutoff||!Array.isArray(r.picks)||r.picks.length===0)throw Error('Invalid pre-cutoff baseline race: '+key);
+          }
           console.log('Verified baseline snapshot: '+date+' / '+data.races.length+' races');
           NODE
       - name: Test pre-cutoff shadow locking (offline)
