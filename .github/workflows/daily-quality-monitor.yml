@@ -1,0 +1,22 @@
+name: BOAT NEXUS daily data quality monitor
+on:
+  schedule:
+    - cron: '45 15 * * *' # 00:45 JST; after settlement and research jobs
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/monitor_daily_quality.cjs'
+      - '.github/workflows/daily-quality-monitor.yml'
+permissions:
+  contents: read
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect previous JST day's collection and settlement
+        run: node tools/monitor_daily_quality.cjs data/auto
