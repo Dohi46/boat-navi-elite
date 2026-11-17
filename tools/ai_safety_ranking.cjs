@@ -62,6 +62,13 @@ if(require.main===module){
  const files=fs.existsSync(folder)?fs.readdirSync(folder).filter(n=>/^\d{4}-\d{2}-\d{2}\.json$/.test(n)).sort():[];
  const docs=files.map(f=>JSON.parse(fs.readFileSync(path.join(folder,f),'utf8')));
  const base=evaluate(docs);
+ // Daily breakdown makes it possible to monitor future days separately from
+ // the initial exploratory cohort without changing historical snapshots.
+ const daily=files.map(f=>{
+  const doc=JSON.parse(fs.readFileSync(path.join(folder,f),'utf8'));
+  const result=evaluate([doc]);
+  return {date:f.slice(0,10),quality:result.quality,allEligibleBaseline:result.allEligibleBaseline,strategies:result.strategies};
+ });
  const last=files.length?files[files.length-1].slice(0,10):null;
  const rolling={};
  for(const days of [7,30,90]){
@@ -70,6 +77,6 @@ if(require.main===module){
   const result=evaluate(selected.map(f=>JSON.parse(fs.readFileSync(path.join(folder,f),'utf8'))));
   rolling[days+'d']={periodStart:start,periodEnd:last,calendarDays:days,filesAnalyzed:selected.length,missingDays:days-selected.length,quality:result.quality,allEligibleBaseline:result.allEligibleBaseline,strategies:result.strategies};
  }
- console.log(JSON.stringify({...base,filesAnalyzed:files.length,rolling,rollingNote:'Windows end at the latest stored snapshot date. Unsettled races are excluded from ROI. Compare strategies against the same-window eligible baseline; small samples are exploratory.'},null,2));
+ console.log(JSON.stringify({...base,filesAnalyzed:files.length,daily,rolling,rollingNote:'Windows end at the latest stored snapshot date. Unsettled races are excluded from ROI. Compare strategies against the same-window eligible baseline; small samples are exploratory.'},null,2));
 }
 module.exports={safety,category,evaluate};
