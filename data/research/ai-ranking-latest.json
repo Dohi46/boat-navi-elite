@@ -61,6 +61,191 @@
     }
   },
   "filesAnalyzed": 3,
+  "daily": [
+    {
+      "date": "2026-11-15",
+      "quality": {
+        "total": 134,
+        "eligible": 0,
+        "held": 134,
+        "weatherComplete": 0,
+        "unsettled": 0
+      },
+      "allEligibleBaseline": {
+        "races": 133,
+        "stake": 66500,
+        "payout": 57090,
+        "hits": 48,
+        "roiPercent": 85.85
+      },
+      "strategies": {
+        "baseline": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "favorite": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "medium": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "long": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "selected": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "skipped": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        }
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "quality": {
+        "total": 120,
+        "eligible": 115,
+        "held": 5,
+        "weatherComplete": 0,
+        "unsettled": 0
+      },
+      "allEligibleBaseline": {
+        "races": 120,
+        "stake": 60000,
+        "payout": 49150,
+        "hits": 38,
+        "roiPercent": 81.92
+      },
+      "strategies": {
+        "baseline": {
+          "races": 115,
+          "stake": 57500,
+          "payout": 47230,
+          "hits": 34,
+          "roiPercent": 82.14
+        },
+        "favorite": {
+          "races": 115,
+          "stake": 57500,
+          "payout": 47230,
+          "hits": 34,
+          "roiPercent": 82.14
+        },
+        "medium": {
+          "races": 67,
+          "stake": 33500,
+          "payout": 25500,
+          "hits": 21,
+          "roiPercent": 76.12
+        },
+        "long": {
+          "races": 15,
+          "stake": 7500,
+          "payout": 13040,
+          "hits": 7,
+          "roiPercent": 173.87
+        },
+        "selected": {
+          "races": 82,
+          "stake": 41000,
+          "payout": 38540,
+          "hits": 28,
+          "roiPercent": 94
+        },
+        "skipped": {
+          "races": 33,
+          "stake": 16500,
+          "payout": 8690,
+          "hits": 6,
+          "roiPercent": 52.67
+        }
+      }
+    },
+    {
+      "date": "2026-11-17",
+      "quality": {
+        "total": 132,
+        "eligible": 0,
+        "held": 9,
+        "weatherComplete": 0,
+        "unsettled": 123
+      },
+      "allEligibleBaseline": {
+        "races": 0,
+        "stake": 0,
+        "payout": 0,
+        "hits": 0,
+        "roiPercent": null
+      },
+      "strategies": {
+        "baseline": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "favorite": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "medium": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "long": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "selected": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        },
+        "skipped": {
+          "races": 0,
+          "stake": 0,
+          "payout": 0,
+          "hits": 0,
+          "roiPercent": null
+        }
+      }
+    }
+  ],
   "rolling": {
     "7d": {
       "periodStart": "2026-11-11",
