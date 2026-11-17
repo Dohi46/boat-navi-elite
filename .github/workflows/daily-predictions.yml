@@ -45,6 +45,26 @@ jobs:
           }
           console.log('Verified baseline snapshot: '+date+' / '+data.races.length+' races');
           NODE
+      - name: Publish verified production baseline before experimental steps
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/auto/
+          if ! git diff --cached --quiet; then
+            git commit -m "data: publish verified daily baseline"
+            # Retry if another workflow advances main. Never force push.
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main || { git rebase --abort || true; exit 1; }
+              if git push origin HEAD:main; then
+                echo "Production baseline published on attempt $attempt"
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "Could not publish production baseline after retries" >&2
+            exit 1
+          fi
       - name: Test pre-cutoff shadow locking (offline)
         run: node tools/test_shadow_lock.cjs
       - name: Validate experimental shadow generator
@@ -98,24 +118,23 @@ jobs:
               echo "- NOT RUN: validation outcome was $SHADOW_OUTCOME"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
-      - name: Commit snapshots
+      - name: Publish experimental shadow snapshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/auto/
           if [ -d data/shadow ]; then git add data/shadow/; fi
           if ! git diff --cached --quiet; then
-            git commit -m "data: collect daily v13 predictions"
+            git commit -m "data: publish experimental shadow locks"
             # Retry if another workflow advances main. Never force push.
             for attempt in 1 2 3 4 5; do
               git fetch origin main
               git rebase origin/main || { git rebase --abort || true; exit 1; }
               if git push origin HEAD:main; then
-                echo "Daily snapshot published on attempt $attempt"
+                echo "Experimental shadow published on attempt $attempt"
                 exit 0
               fi
               sleep 2
             done
-            echo "Could not publish daily snapshot after retries" >&2
+            echo "Could not publish experimental shadow after retries" >&2
             exit 1
           fi
