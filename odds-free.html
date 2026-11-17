@@ -16,7 +16,7 @@ function collect(base,shadow,d){
  for(const r of base?.races||[]){
   const c=shadow?.races?.[r.venue+'-'+r.race],sel=c?.selection;
   if(c&&!sel)s.legacy++;
-  if(!c||sel?.schema!=='odds-free-selection-v1'||sel.rule!=='lane-adjusted-strength-margin-gte-0.75'||!['select','skip'].includes(sel.decision)||sel.lockedAt!==c.lockedAt||sel.oddsUsed!==false||c.oddsUsed!==false||!Number.isFinite(sel.margin)||!Array.isArray(c.picks)||!c.picks.every(valid))continue;
+  if(!c||sel?.schema!=='odds-free-selection-v1'||sel.rule!=='lane-adjusted-strength-margin-gte-0.75'||!['select','skip'].includes(sel.decision)||sel.lockedAt!==c.lockedAt||sel.oddsUsed!==false||c.oddsUsed!==false||!Number.isFinite(sel.margin)||sel.decision!==(sel.margin>=0.75?'select':'skip')||!Array.isArray(c.picks)||!c.picks.every(valid))continue;
   const cutoff=/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/.test(r.cutoff||'')?Date.parse(r.cutoff.replace(' ','T')+'+09:00'):NaN;
   const locked=Date.parse(c.lockedAt),source=Date.parse(c.sourceCapturedAt);
   if(!Number.isFinite(cutoff)||!Number.isFinite(locked)||!Number.isFinite(source)||source>locked||locked>=cutoff)continue;
