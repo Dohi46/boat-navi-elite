@@ -23,7 +23,8 @@ function strength(f){
 let stored=0,skipped=0;
 for(const r of doc.races||[]){
  const now=new Date().toISOString(),t=Date.parse(now),limit=cutoff(r.cutoff);
- const captured=Date.parse(r.capturedAt);\n if(r.raceDate!==date||!Number.isFinite(limit)||!Number.isFinite(captured)||captured>t||captured>=limit||t>=limit){skipped++;continue;}
+ const captured=Date.parse(r.capturedAt);
+ if(r.raceDate!==date||!Number.isFinite(limit)||!Number.isFinite(captured)||captured>t||captured>=limit||t>=limit){skipped++;continue;}
  const key=r.venue+'-'+r.race;if(prior.races[key])continue;
  const s=Array.from({length:6},(_,i)=>strength(r.features?.[String(i+1)]));
  if(s.some(x=>x===null)){skipped++;continue;}
