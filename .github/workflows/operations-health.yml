@@ -1,0 +1,32 @@
+name: BOAT NEXUS operations health
+on:
+  schedule:
+    - cron: '30 16 * * *' # 01:30 JST, after nightly checks
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/operations_health.cjs'
+      - '.github/workflows/operations-health.yml'
+permissions:
+  actions: read
+  contents: read
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Aggregate workflow and snapshot health
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node tools/operations_health.cjs
+      - name: Upload health report even when alerts occur
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: operations-health-report
+          path: data/research/operations-health-latest.json
+          if-no-files-found: warn
