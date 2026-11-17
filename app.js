@@ -5,6 +5,11 @@ let data=null, selected=[], records=JSON.parse(localStorage.getItem("bn_records"
 const $=id=>document.getElementById(id);
 function page(name){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===name));document.querySelectorAll("[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===name));window.scrollTo({top:0,behavior:"smooth"});}
 document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>page(b.dataset.page)));
+document.getElementById("goDailyPredictions")?.addEventListener("click",()=>{
+ page("analysis");
+ document.getElementById("dailyAutoPanel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ document.getElementById("dailyAutoLoad")?.focus({preventScroll:true});
+});
 function yen(n){return Number(n||0).toLocaleString("ja-JP")+"円";}
 function getStadiums(){return data?.programs?.stadiums||{};}
 function getRaces(stadium){return stadium?.races||{};}
