@@ -29,6 +29,23 @@ footer{text-align:center;color:#758294;font-size:10px;margin-top:24px;border-top
 a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 @media(min-width:700px){.wrap{padding-top:28px}.hero{padding:28px}.bottom{display:none}nav button{font-size:13px}.boatrow{font-size:13px}}
 
+/* Mobile first: obvious entry point, readable navigation and safe-area spacing. */
+.home-start{display:grid;gap:12px;border-color:#705d3e}
+.home-start strong{font-size:16px}
+.home-start .btn{min-height:46px}
+nav{scrollbar-width:thin;scroll-padding-inline:12px}
+nav button{min-height:44px}
+@media(max-width:420px){
+ .wrap{padding-left:12px;padding-right:12px}
+ .hero{padding:16px}
+ .hero h1{font-size:22px;line-height:1.4}
+ .stats{gap:5px}
+ .stat{padding:8px 6px;min-width:0}
+ .stat b{font-size:17px}
+ .stat small{font-size:9px;line-height:1.5}
+ .home-start{padding:14px}
+ nav button{flex:0 0 auto;min-width:86px;font-size:12px}
+}
 /* Compact HOME stadium accordion */
 .home-venue{padding:0!important;margin-bottom:9px!important;overflow:hidden}
 .home-venue-summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;cursor:pointer;min-height:58px}
@@ -53,6 +70,10 @@ a{color:var(--gold)}.status{font-size:11px;color:var(--muted);line-height:1.6}
 </section>
 <nav id="tabs"><button class="active" data-page="home">⌂ HOME</button><button data-page="races">RACES</button><button data-page="analysis">AI LAB</button><button data-page="courseStats">COURSE</button><button data-page="playerStats">PLAYER</button><button data-page="manual">MY PICKS</button><button data-page="records">RECORD</button></nav>
 <section id="home" class="page active">
+ <div class="card home-start">
+  <div><strong>🚤 今日のAI予想をチェック</strong><p class="status" style="margin:6px 0 0">初めての方はこちら。AI LABの保存済み予想へ移動します。予想は参考情報で、的中や利益を保証しません。</p></div>
+  <button type="button" id="goDailyPredictions" class="btn">📅 今日の保存済み予想を見る</button>
+ </div>
  <div class="section-head"><div><div class="eyebrow">TODAY'S PROGRAM</div><h2>本日の開催レース</h2></div><span class="tiny muted" id="dataUpdated">データ確認中</span></div>
  <div class="card"><div class="row"><h3>データ接続状況</h3><span class="badge" id="apiBadge">接続確認中</span></div><div id="apiMessage" class="status">公開データを読み込んでいます。</div><button class="ghost" id="reload" style="margin-top:12px">データを再取得</button></div>
  <div id="venueList"></div>
