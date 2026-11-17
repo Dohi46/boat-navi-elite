@@ -18,6 +18,27 @@ jobs:
         run: node --check tools/compare_forward_strategies.cjs
       - name: Build forward-only comparison report
         run: node tools/compare_forward_strategies.cjs > forward-comparison.json
+      - name: Show verified comparison status
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const r=JSON.parse(fs.readFileSync('forward-comparison.json','utf8'));
+          const fmt=x=>x===null||x===undefined?'未検証':x+'%';
+          const lines=[
+            '### 新旧AI 実績検証',
+            '- 結果確定済み（現行AI）: '+r.settledRaces+'R',
+            '- 結果未確定（現行AI）: '+r.unsettledRaces+'R',
+            '- 新旧AI 同一レース比較: '+r.pairedRaces+'R',
+            '- 現行AI 全体回収率: '+fmt(r.strategies['v13-baseline'].roiPct),
+            '- 現行AI 比較対象回収率: '+fmt(r.pairedBaseline.roiPct),
+            '- 試験AI 比較対象回収率: '+fmt(r.strategies['feature-shadow'].roiPct),
+            '- 検証上の警告: '+r.warnings.length+'件',
+            r.comparisonValid?'※同一レースの実績比較。優位性の証明ではありません。':'※比較対象が0件のため、新旧AIの優劣は未検証です。'
+          ];
+          const out=lines.join('\\n')+'\\n';
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,out);
+          console.log(out);
+          NODE
       - name: Upload comparison report
         uses: actions/upload-artifact@v4
         with:
