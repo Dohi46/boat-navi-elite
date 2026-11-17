@@ -156,6 +156,22 @@ jobs:
             for attempt in 1 2 3 4 5; do
               git fetch origin main
               git rebase origin/main || { git rebase --abort || true; exit 1; }
+              # Re-check after every rebase: origin/main may have gained locks since validation.
+              SHADOW_DATE="$today" node - <<'NODE'
+              const cp=require('node:child_process');
+              const file='data/shadow/'+process.env.SHADOW_DATE+'.json';
+              const local=JSON.parse(cp.execFileSync('git',['show','HEAD:'+file],{encoding:'utf8'}));
+              let remote;
+              try{remote=JSON.parse(cp.execFileSync('git',['show','origin/main:'+file],{encoding:'utf8'}));}
+              catch(e){if(e.status!==128)throw e;}
+              if(remote){
+                if(remote.date!==local.date)throw Error('Shadow date changed during rebase');
+                for(const [key,lock] of Object.entries(remote.races||{})){
+                  if(JSON.stringify(local.races?.[key])!==JSON.stringify(lock))
+                    throw Error('Concurrent update changed a published shadow lock: '+key);
+                }
+              }
+              NODE
               if git push origin HEAD:main; then exit 0; fi
               sleep 2
             done
