@@ -8,7 +8,7 @@
     "hits": 86,
     "roiPercent": 83.98
   },
-  "disclaimer": "Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.",
+  "disclaimer": "Selected and skipped are complementary groups within the same feature-complete eligible cohort. Selection was defined on these same historical data, so comparisons are descriptive, not out-of-sample evidence. Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.",
   "quality": {
     "total": 386,
     "eligible": 115,
@@ -51,6 +51,13 @@
       "payout": 38540,
       "hits": 28,
       "roiPercent": 94
+    },
+    "skipped": {
+      "races": 33,
+      "stake": 16500,
+      "payout": 8690,
+      "hits": 6,
+      "roiPercent": 52.67
     }
   },
   "filesAnalyzed": 3,
@@ -110,6 +117,13 @@
           "payout": 38540,
           "hits": 28,
           "roiPercent": 94
+        },
+        "skipped": {
+          "races": 33,
+          "stake": 16500,
+          "payout": 8690,
+          "hits": 6,
+          "roiPercent": 52.67
         }
       }
     },
@@ -168,6 +182,13 @@
           "payout": 38540,
           "hits": 28,
           "roiPercent": 94
+        },
+        "skipped": {
+          "races": 33,
+          "stake": 16500,
+          "payout": 8690,
+          "hits": 6,
+          "roiPercent": 52.67
         }
       }
     },
@@ -226,6 +247,13 @@
           "payout": 38540,
           "hits": 28,
           "roiPercent": 94
+        },
+        "skipped": {
+          "races": 33,
+          "stake": 16500,
+          "payout": 8690,
+          "hits": 6,
+          "roiPercent": 52.67
         }
       }
     }
