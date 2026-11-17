@@ -35,7 +35,7 @@ jobs:
             '- 検証上の警告: '+r.warnings.length+'件',
             r.comparisonValid?'※同一レースの実績比較。優位性の証明ではありません。':'※比較対象が0件のため、新旧AIの優劣は未検証です。'
           ];
-          const out=lines.join('\\n')+'\\n';
+          const out=lines.join('\n')+'\n';
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,out);
           console.log(out);
           NODE
