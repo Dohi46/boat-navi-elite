@@ -1,0 +1,53 @@
+name: Premium research dashboard sync
+on:
+  workflow_dispatch:
+jobs:
+  sync:
+    if: github.ref == 'refs/heads/feature/premium-research-v1'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: premium-dashboard-sync
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run premium research unit tests
+        run: python -m unittest discover -s tests -p 'test_premium_*.py' -v
+      - name: Build candidate dashboard data
+        run: python scripts/premium_dashboard_report.py data/auto/*.json --output /tmp/research-summary.json
+      - name: Validate candidate and refuse unsafe publication
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('/tmp/research-summary.json').read_text())
+          assert report['schema']=='premium-dashboard-v1'
+          assert report['mode']=='research_only'
+          assert report['ready_for_premium'] is False
+          assert report['snapshot_days']==len(report['daily'])
+          assert sum(d['settled_races'] for d in report['daily'])==report['baseline']['settled_races']
+          for key in ('stake','payout','hit_races'):
+              assert abs(sum(d[key] for d in report['daily'])-report['baseline'][key])<0.01, key
+          assert all(c['selected_races']+c['excluded_baseline']['selected_races']==report['baseline']['selected_races'] for c in report['conditions'])
+          assert 'picks' not in json.dumps(report)
+          assert all('pick' not in c for c in report['conditions'])
+          print('Research-only candidate validated:',report['snapshot_days'],'days')
+          PY
+      - name: Update research preview JSON only
+        run: |
+          cp /tmp/research-summary.json premium/research-summary.json
+          git add -- premium/research-summary.json
+          if git diff --cached --quiet; then
+            echo 'No dashboard changes'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Refresh research-only dashboard aggregate [skip ci]'
+          git push origin HEAD:feature/premium-research-v1
