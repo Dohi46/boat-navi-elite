@@ -22,6 +22,25 @@ else{
   indexed.set(key,r);
   if(r.raceDate!==today||!Number.isFinite(limit)||!Number.isFinite(captured)||captured>=limit)note('ERROR','Invalid date or pre-cutoff baseline timestamp '+key);
   if(!Array.isArray(r.picks)||r.picks.some(p=>!validPick(p))||new Set((r.picks||[]).map(p=>p.pick)).size!==(r.picks||[]).length)note('ERROR','Invalid or duplicate baseline picks '+key);
+  if(r.result){
+   const result=r.result, winners=result.winningCombinations;
+   if(!Array.isArray(winners)||!winners.length||winners.some(w=>!validPick({pick:w.combination,stake:100})||!Number.isInteger(Number(w.amount))||Number(w.amount)<=0)||new Set(winners.map(w=>w.combination)).size!==winners.length){
+    note('ERROR','Invalid settlement winning combinations '+key);
+   }else{
+    const paid=new Map(winners.map(w=>[w.combination,Number(w.amount)]));
+    if(!Array.isArray(result.picks)||!Array.isArray(r.picks)||result.picks.length!==r.picks.length){
+     note('ERROR','Settlement picks mismatch '+key);
+    }else{
+     let stake=0,payout=0,hits=0,invalid=false;
+     for(let i=0;i<r.picks.length;i++){
+      const p=r.picks[i],actual=result.picks[i],amount=Number(p.stake),hit=paid.has(p.pick),expected=hit?Math.round(paid.get(p.pick)*amount/100):0;
+      if(!validPick(p)||actual?.pick!==p.pick||Number(actual.stake)!==amount||actual.hit!==hit||Number(actual.payout)!==expected)invalid=true;
+      stake+=amount;payout+=expected;if(hit)hits++;
+     }
+     if(invalid||Number(result.stake)!==stake||Number(result.payout)!==payout||Number(result.hits)!==hits)note('ERROR','Settlement amount/hit mismatch '+key);
+    }
+   }
+  }
   if(r.result?.winningCombinations?.length)counts.settled++;
   else{counts.pending++;if(Number.isFinite(limit)&&now>limit+90*60000){counts.overdue++;}}
  }
