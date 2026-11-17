@@ -3,10 +3,6 @@ on:
   schedule:
     - cron: '30 16 * * *' # 01:30 JST, after nightly checks
   workflow_dispatch:
-  push:
-    paths:
-      - 'tools/operations_health.cjs'
-      - '.github/workflows/operations-health.yml'
 permissions:
   actions: read
   contents: read
