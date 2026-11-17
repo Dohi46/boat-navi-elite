@@ -45,7 +45,12 @@ async function main(){
   const x=s.selection;
   return x?.schema==='odds-free-selection-v1'&&x.rule==='lane-adjusted-strength-margin-gte-0.75'&&x.oddsUsed===false&&s.oddsUsed===false&&x.lockedAt===s.lockedAt&&typeof x.margin==='number'&&Number.isFinite(x.margin)&&x.decision===(x.margin>=0.75?'select':'skip');
  });
- const shadowCheck={id:'shadowSelection',date:yesterday,status:shadow?.date===yesterday&&valid.length>0?'ok':'alert',locks:shadowRows.length,preRegistered:valid.length,legacy:shadowRows.filter(s=>!s.selection).length,invalid:shadowRows.filter(s=>s.selection).length-valid.length};
+ const legacy=shadowRows.filter(s=>!s.selection).length;
+ const invalid=shadowRows.filter(s=>s.selection).length-valid.length;
+ // Historical immutable locks without a selection field are not corrupt data.
+ // Report their migration status as pending, while malformed new-format decisions alert.
+ const shadowStatus=shadow?.date!==yesterday||invalid>0?'alert':valid.length>0?'ok':legacy>0?'pending':'alert';
+ const shadowCheck={id:'shadowSelection',date:yesterday,status:shadowStatus,locks:shadowRows.length,preRegistered:valid.length,legacy,invalid};
  const all=[...checksOut,snapshotCheck,shadowCheck];
  const report={schema:'boat-nexus-operations-health-v1',checkedAt:new Date().toISOString(),todayJst:today,yesterdayJst:yesterday,status:all.every(c=>c.status==='ok')?'ok':all.some(c=>c.status==='alert')?'alert':'pending',checks:all,note:'Checks scheduled/manual runs by JST creation date, not completion date. Push runs are excluded. A missing same-day daily monitor is pending because GitHub schedules can be delayed; completed failures still alert. Shadow pre-registration is monitored separately from production baseline health. No automatic repair.'};
  fs.mkdirSync('data/research',{recursive:true});
