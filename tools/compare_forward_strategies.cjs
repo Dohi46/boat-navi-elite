@@ -8,7 +8,8 @@ const auto=path.join(root,'auto'),shadow=path.join(root,'shadow');
 const files=fs.existsSync(auto)?fs.readdirSync(auto).filter(f=>/^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort():[];
 const candidateNames=['v13-baseline','feature-shadow'];
 const byStrategy=Object.fromEntries(candidateNames.map(x=>[x,{races:0,picks:0,hits:0,stake:0,payout:0,headCounts:Object.fromEntries('123456'.split('').map(n=>[n,0])),skips:0}]));
-const warnings=[];let settledRaces=0,unsettledRaces=0,pairedRaces=0;\nconst pairedBaseline={races:0,picks:0,hits:0,stake:0,payout:0,headCounts:Object.fromEntries('123456'.split('').map(n=>[n,0])),skips:0};
+const warnings=[];let settledRaces=0,unsettledRaces=0,pairedRaces=0;
+const pairedBaseline={races:0,picks:0,hits:0,stake:0,payout:0,headCounts:Object.fromEntries('123456'.split('').map(n=>[n,0])),skips:0};
 const validPick=x=>typeof x?.pick==='string'&&/^[1-6]-[1-6]-[1-6]$/.test(x.pick)&&new Set(x.pick.split('-')).size===3&&Number.isFinite(Number(x.stake))&&Number(x.stake)>0;
 function evaluate(target,picks,winners){target.races++;if(!picks.length)target.skips++;for(const p of picks){if(!validPick(p)){warnings.push('Invalid pick omitted');continue;}const stake=Number(p.stake),payout=winners.get(p.pick)||0;target.picks++;target.stake+=stake;target.headCounts[p.pick[0]]++;if(payout){target.hits++;target.payout+=Math.round(stake*payout/100);}}}
 for(const file of files){
@@ -28,9 +29,12 @@ for(const file of files){
   // A missing shadow record is NOT a skip: do not distort comparison by treating it as zero stake.
   if(!candidate)continue;
   const stamp=Date.parse(candidate.lockedAt);
-  const sourceTime=Date.parse(candidate.sourceCapturedAt);\n  const cutoff=typeof race.cutoff==='string'?Date.parse(race.cutoff.replace(' ','T')+'+09:00'):NaN;
+  const sourceTime=Date.parse(candidate.sourceCapturedAt);
+  const cutoff=typeof race.cutoff==='string'?Date.parse(race.cutoff.replace(' ','T')+'+09:00'):NaN;
   if(!Number.isFinite(stamp)||!Number.isFinite(sourceTime)||sourceTime>stamp||!Number.isFinite(cutoff)||stamp>=cutoff||candidate.strategy!=='feature-shadow'||!Array.isArray(candidate.picks)||!candidate.picks.every(validPick)){warnings.push('Unverifiable shadow decision '+file+' '+key);continue;}
-  pairedRaces++;\n  evaluate(pairedBaseline,race.picks||[],winners);\n  evaluate(byStrategy['feature-shadow'],candidate.picks,winners);
+  pairedRaces++;
+  evaluate(pairedBaseline,race.picks||[],winners);
+  evaluate(byStrategy['feature-shadow'],candidate.picks,winners);
  }
 }
 function finish(x){return {...x,profit:x.payout-x.stake,roiPct:x.stake?+(100*x.payout/x.stake).toFixed(2):null,hitRatePct:x.picks?+(100*x.hits/x.picks).toFixed(2):null};}
