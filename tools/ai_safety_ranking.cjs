@@ -33,12 +33,18 @@ const strategies={
 function evaluate(docs){
  const totals=Object.fromEntries(Object.keys(strategies).map(k=>[k,{races:0,stake:0,payout:0,hits:0}]));
  const quality={total:0,eligible:0,held:0,weatherComplete:0,unsettled:0};
+ const allEligible={races:0,stake:0,payout:0,hits:0};
  for(const doc of docs)for(const r of doc.races||[]){
   quality.total++;
   const safe=safety(r);
+  // Same pre-cutoff, settlement and stake-integrity checks as quality_rolling_report.
+  const pre=before(r),picks=Array.isArray(r.picks)?r.picks:[];
+  const bets=r.result?.picks;
+  const valid=pre&&picks.length>0&&Array.isArray(bets)&&Array.isArray(r.result?.winningCombinations)&&bets.length===picks.length&&bets.every((p,i)=>p.pick===picks[i].pick&&p.stake===picks[i].stake&&Number.isFinite(p.stake)&&p.stake>0&&Number.isFinite(p.payout)&&p.payout>=0&&typeof p.hit==='boolean');
+  if(valid){allEligible.races++;allEligible.stake+=bets.reduce((a,p)=>a+p.stake,0);allEligible.payout+=bets.reduce((a,p)=>a+p.payout,0);allEligible.hits+=bets.filter(p=>p.hit).length;}
   if(safe.status==='hold'){quality.held++;continue;}
   if(safe.weatherComplete)quality.weatherComplete++;
-  if(!r.result||!Array.isArray(r.result.picks)||!Array.isArray(r.result.winningCombinations)){quality.unsettled++;continue;}
+  if(!valid){quality.unsettled++;continue;}
   quality.eligible++;
   for(const [name,choose] of Object.entries(strategies)){
    if(!choose(r))continue;
@@ -48,7 +54,7 @@ function evaluate(docs){
    const t=totals[name];t.races++;t.stake+=stake;t.payout+=payout;t.hits+=bets.filter(p=>p.hit===true).length;
   }
  }
- return {schema:'experimental-ai-ranking-v1',disclaimer:'Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.',quality,strategies:Object.fromEntries(Object.entries(totals).map(([k,v])=>[k,{...v,roiPercent:v.stake?Number((100*v.payout/v.stake).toFixed(2)):null}]))};
+ return {schema:'experimental-ai-ranking-v1',comparisonNote:'allEligibleBaseline uses all valid pre-cutoff settled races; baseline and candidate strategies share a narrower six-racer-feature eligible cohort. Do not directly compare candidate ROI to allEligibleBaseline ROI.',allEligibleBaseline:{...allEligible,roiPercent:allEligible.stake?Number((100*allEligible.payout/allEligible.stake).toFixed(2)):null},disclaimer:'Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.',quality,strategies:Object.fromEntries(Object.entries(totals).map(([k,v])=>[k,{...v,roiPercent:v.stake?Number((100*v.payout/v.stake).toFixed(2)):null}]))};
 }
 if(require.main===module){
  const folder=process.argv[2]||'data/auto';
