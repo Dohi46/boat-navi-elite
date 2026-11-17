@@ -7,7 +7,7 @@ const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric'
 const compact=date.replace(/-/g,'');
 const base=path.resolve(__dirname,'../data/auto');
 const predictionFile=path.join(base,date+'.json');
-if(!fs.existsSync(predictionFile)){console.log('No predictions for '+date);process.exit(0);}
+if(!fs.existsSync(predictionFile)){console.log('ODDS_STATUS=no_predictions date='+date);process.exit(0);}
 const prediction=JSON.parse(fs.readFileSync(predictionFile,'utf8'));
 const endpoints=[
  'https://lamrongol.github.io/BoatraceOdds/v3/'+compact.slice(0,4)+'/'+compact+'.json',
@@ -27,12 +27,12 @@ async function main(){
    data=body.odds;source=url;observedAt=new Date().toISOString();break;
   }catch(e){console.warn('Odds source unavailable:',url,e.message);}
  }
- if(!data){console.log('No valid odds source; no snapshot written');return;}
+ if(!data){console.log('ODDS_STATUS=source_unavailable date='+date+'; no snapshot written');return;}
  const outdir=path.resolve(__dirname,'../data/odds');fs.mkdirSync(outdir,{recursive:true});
  const dest=path.join(outdir,date+'.json');
  const existing=fs.existsSync(dest)?JSON.parse(fs.readFileSync(dest,'utf8')):{date,schema:'odds-observation-v1',races:{}};
  if(existing.date!==date||existing.schema!=='odds-observation-v1'||!existing.races||typeof existing.races!=='object')throw Error('Unexpected existing snapshot schema');
- let stored=0,skipped=0;
+ let stored=0,skipped=0,incomplete=0,unmatched=0,alreadyStored=0;
  const indexed=new Map(),duplicates=new Set();
  for(const x of data){
   const venue=Number(x.stadium_number),race=Number(x.number);
@@ -47,7 +47,7 @@ async function main(){
   // its unknown publication time is explicitly NOT inferred from observation time.
   if(!Number.isFinite(cutoffMs)||r.raceDate!==date||nowMs>=cutoffMs){skipped++;continue;}
   const key=Number(r.venue)+'-'+Number(r.race),item=indexed.get(key);
-  if(!item||item.date!==date||!item.trifecta_odds)continue;
+  if(!item||item.date!==date||!item.trifecta_odds){unmatched++;continue;}
   const flat={};
   for(const combo of combinations){
    const [a,b,c]=combo.split('-'),raw=item.trifecta_odds?.[a]?.[b]?.[c];
@@ -55,14 +55,15 @@ async function main(){
    const value=Number(raw);
    if(Number.isFinite(value)&&value>=1&&value<=1000000)flat[combo]=value;
   }
-  if(Object.keys(flat).length!==120)continue;
+  if(Object.keys(flat).length!==120){incomplete++;continue;}
   const previous=existing.races[key];
   // Preserve first observed pre-cutoff odds per race, avoiding retrospective overwrite.
-  if(previous)continue;
+  if(previous){alreadyStored++;continue;}
   existing.races[key]={venue:Number(r.venue),race:Number(r.race),cutoff:r.cutoff,observedAt,source,sourcePublishedAt:null,sourceFreshnessVerified:false,odds:flat};
   stored++;
  }
  if(stored){const temp=dest+'.tmp';fs.writeFileSync(temp,JSON.stringify(existing,null,2)+'\n');fs.renameSync(temp,dest);}
- console.log(JSON.stringify({date,stored,skipped,previouslyStored:Object.keys(existing.races).length-stored,source,notice:'Observation timestamp only; upstream quote freshness unverified. Do not treat as exact prediction-time odds.'}));
+ console.log('ODDS_STATUS='+(stored?'saved':alreadyStored?'already_saved':'no_eligible_complete_races'));
+ console.log(JSON.stringify({date,stored,skippedAfterCutoff:skipped,unmatchedSourceRaces:unmatched,incompleteOdds:incomplete,alreadyStored,source,notice:'Observation timestamp only; upstream quote freshness unverified. Do not treat as exact prediction-time odds.'}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
