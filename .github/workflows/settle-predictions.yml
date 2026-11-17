@@ -76,6 +76,7 @@ jobs:
           NODE
       - name: Report actual saved data
         if: always()
+        continue-on-error: true
         run: |
           node - <<'NODE'
           const fs=require('node:fs');
@@ -108,8 +109,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Settlement may update yesterday and today; stage only tracked changes
-          # produced by the settlement run, not unrelated historical files.
+          # Settlement revisits up to 14 days of previously saved predictions.
+          # Stage updates to tracked history, but never add unrelated new historical files.
           git add -u -- data/auto/
           today=$(TZ=Asia/Tokyo date +%F)
           yesterday=$(TZ=Asia/Tokyo date -d 'yesterday' +%F)
