@@ -31,7 +31,7 @@ async function run(){
  const winning=new Map(payouts.filter(x=>/^[1-6]-[1-6]-[1-6]$/.test(x.combination)&&new Set(x.combination.split('-')).size===3&&Number(x.amount)>0).map(x=>[x.combination,Number(x.amount)]));
  if(!winning.size)continue;settled++;add(baseline,r.picks||[],winning);
  const s=shadow?.races?.[r.venue+'-'+r.race];if(!s){missing++;continue;}
- if(s.strategy!=='feature-shadow'||!Array.isArray(s.picks)||!s.picks.every(valid)||!Number.isFinite(Date.parse(s.lockedAt))||Date.parse(s.lockedAt)>=cutoff(r.cutoff)||!Number.isFinite(cutoff(r.cutoff))){invalid++;continue;}
+ if(s.strategy!=='feature-shadow'||!Array.isArray(s.picks)||!s.picks.every(valid)||!Number.isFinite(Date.parse(s.lockedAt))||!Number.isFinite(Date.parse(s.sourceCapturedAt))||Date.parse(s.sourceCapturedAt)>Date.parse(s.lockedAt)||Date.parse(s.lockedAt)>=cutoff(r.cutoff)||!Number.isFinite(cutoff(r.cutoff))){invalid++;continue;}
  paired++;add(pairedBase,r.picks||[],winning);add(pairedShadow,s.picks,winning);
  }}
  const box=document.createElement('div');box.innerHTML=card('現行AI（全結果確定分）',baseline)+(paired?'<h2>同一レースでの公平な比較</h2>'+card('現行AI（比較対象のみ）',pairedBase)+card('新AI（比較対象のみ）',pairedShadow):'<div class="card"><h2>新AI：未検証</h2><p class="muted">同じレースで締切前に確定した新AIの予想がまだありません。的中率・回収率は表示できません。</p></div>');
