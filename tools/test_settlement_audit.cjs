@@ -32,8 +32,20 @@ try{
  shadowRace.selection={schema:'odds-free-selection-v1',rule:'lane-adjusted-strength-margin-gte-0.75',margin:0.8,decision:'select',lockedAt:lock,oddsUsed:false};
  writeShadow();result=run();
  assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('事前登録済み: 1R (選択 1R / 見送り 0R)'),result.stdout);
- shadowRace.selection.lockedAt=new Date(Date.parse(date+'T23:59:59+09:00')+1000).toISOString();
+ shadowRace.selection.decision='skip';
  writeShadow();result=run();
  assert.equal(result.status,1,result.stdout);assert.ok(result.stdout.includes('Invalid pre-registered selection'),result.stdout);
-  console.log('PASS: winning and losing settlements accepted, corrupted payout rejected, pending not treated as loss, legacy excluded, valid selection counted, late selection rejected');
+ shadowRace.selection.decision='select';
+ shadowRace.selection.rule='unrecognized-rule';
+ writeShadow();result=run();
+ assert.equal(result.status,1,result.stdout);assert.ok(result.stdout.includes('Invalid pre-registered selection'),result.stdout);
+ shadowRace.selection.rule='lane-adjusted-strength-margin-gte-0.75';
+ shadowRace.selection.margin='0.8';
+ writeShadow();result=run();
+ assert.equal(result.status,1,result.stdout);assert.ok(result.stdout.includes('Invalid pre-registered selection'),result.stdout);
+ shadowRace.selection.margin=0.8;
+  shadowRace.selection.lockedAt=new Date(Date.parse(date+'T23:59:59+09:00')+1000).toISOString();
+ writeShadow();result=run();
+ assert.equal(result.status,1,result.stdout);assert.ok(result.stdout.includes('Invalid pre-registered selection'),result.stdout);
+  console.log('PASS: winning and losing settlements accepted, corrupted payout rejected, pending not treated as loss, legacy excluded, valid selection counted, late and inconsistent selections rejected');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
