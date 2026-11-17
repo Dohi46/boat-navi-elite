@@ -6,6 +6,7 @@ on:
       - 'tools/test_settlement_audit.cjs'
       - 'tools/test_mobile_navigation.cjs'
       - 'index.html'
+      - 'odds-free.html'
       - 'app.js'
       - 'tools/generate_shadow_predictions.cjs'
       - 'tools/audit_prediction_health.cjs'
