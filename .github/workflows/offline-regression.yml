@@ -4,6 +4,7 @@ on:
     paths:
       - 'tools/test_shadow_lock.cjs'
       - 'tools/test_settlement_audit.cjs'
+      - 'tools/test_settlement_execution.cjs'
       - 'tools/test_mobile_navigation.cjs'
       - 'index.html'
       - 'odds-free.html'
@@ -35,6 +36,7 @@ jobs:
           node --check tools/generate_shadow_predictions.cjs
           node --check tools/test_shadow_lock.cjs
           node --check tools/test_settlement_audit.cjs
+          node --check tools/test_settlement_execution.cjs
           node --check tools/test_mobile_navigation.cjs
           node --check tools/audit_prediction_health.cjs
           node --check tools/operations_health.cjs
@@ -49,5 +51,7 @@ jobs:
         run: node tools/test_shadow_lock.cjs
       - name: Check mobile navigation and AI LAB controls
         run: node tools/test_mobile_navigation.cjs
+      - name: Exercise settlement with mocked published results
+        run: node tools/test_settlement_execution.cjs
       - name: Test payout integrity and pending results
         run: node tools/test_settlement_audit.cjs
