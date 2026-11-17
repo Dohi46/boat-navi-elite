@@ -29,13 +29,11 @@ for(const file of files){
   const locked=Date.parse(candidate.lockedAt),source=Date.parse(candidate.sourceCapturedAt);
   const cutoff=Date.parse(String(r.cutoff).replace(' ','T')+'+09:00');
   if(!Number.isFinite(locked)||!Number.isFinite(source)||!Number.isFinite(cutoff)||source>locked||locked>=cutoff||candidate.oddsUsed!==false||!Array.isArray(candidate.picks)||!candidate.picks.every(validPick)){warnings.push('Invalid shadow '+file+' '+r.venue+'-'+r.race);continue;}
-  const strengths=Array.from({length:6},(_,i)=>strength(r.features?.[String(i+1)]));
-  if(strengths.some(x=>x===null))continue;
-  const scores=strengths.map((s,i)=>s+lane[i]).sort((a,b)=>b-a);
-  const margin=scores[0]-scores[1];
-  // Fixed prospective rule, not fitted to historical results.
-  // This margin is a heuristic strength gap, NOT a probability or expected return.
-  const accept=margin>=0.75;
+  // Only count decisions actually registered at prediction time. Old shadow
+  // predictions lacking selection are excluded, never classified retrospectively.
+  const selection=candidate.selection;
+  if(selection?.schema!=='odds-free-selection-v1'||selection.rule!=='lane-adjusted-strength-margin-gte-0.75'||!['select','skip'].includes(selection.decision)||selection.lockedAt!==candidate.lockedAt||selection.oddsUsed!==false||!Number.isFinite(selection.margin))continue;
+  const accept=selection.decision==='select';
   all.eligible++;if(accept)selected.eligible++;else selected.skipped++;
   const winners=r.result?.winningCombinations;
   if(!Array.isArray(winners)||!winners.length){all.unsettled++;if(accept)selected.unsettled++;continue;}
@@ -47,4 +45,4 @@ for(const file of files){
  }
 }
 function finish(s){return {...s,roiPct:s.stake?+(100*s.payout/s.stake).toFixed(2):null,hitPerRacePct:s.settled?+(100*s.hits/s.settled).toFixed(2):null};}
-console.log(JSON.stringify({schema:'odds-free-selection-audit-v1',rule:'Top two lane-adjusted feature strength margin >= 0.75',ruleStatus:'EXPERIMENTAL UNVALIDATED; fixed heuristic, not optimized',all:finish(all),selected:finish(selected),warnings,warning:'Retrospective filtering of already locked predictions is exploratory only; cannot establish forward-tested selectivity. No real-money recommendation.'},null,2));
+console.log(JSON.stringify({schema:'odds-free-selection-audit-v1',rule:'Top two lane-adjusted feature strength margin >= 0.75',ruleStatus:'FORWARD-LOCKED EXPERIMENTAL UNVALIDATED; fixed heuristic, not optimized',all:finish(all),selected:finish(selected),warnings,warning:'Only decisions locked before cutoff are evaluated; older shadow races without registered selection are excluded. No statistical advantage established. No real-money recommendation.'},null,2));
