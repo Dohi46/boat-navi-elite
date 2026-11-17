@@ -6,7 +6,7 @@ const fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'../data');
 const auto=path.join(root,'auto'),shadow=path.join(root,'shadow');
 const files=fs.existsSync(auto)?fs.readdirSync(auto).filter(f=>/^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort():[];
-const candidateNames=['v13-baseline','ev-shadow'];
+const candidateNames=['v13-baseline','feature-shadow'];
 const byStrategy=Object.fromEntries(candidateNames.map(x=>[x,{races:0,picks:0,hits:0,stake:0,payout:0,headCounts:Object.fromEntries('123456'.split('').map(n=>[n,0])),skips:0}]));
 const warnings=[];let settledRaces=0,unsettledRaces=0;
 const validPick=x=>typeof x?.pick==='string'&&/^[1-6]-[1-6]-[1-6]$/.test(x.pick)&&new Set(x.pick.split('-')).size===3&&Number.isFinite(Number(x.stake))&&Number(x.stake)>0;
@@ -29,8 +29,8 @@ for(const file of files){
   if(!candidate)continue;
   const stamp=Date.parse(candidate.lockedAt);
   const cutoff=typeof race.cutoff==='string'?Date.parse(race.cutoff.replace(' ','T')+'+09:00'):NaN;
-  if(!Number.isFinite(stamp)||!Number.isFinite(cutoff)||stamp>=cutoff||candidate.strategy!=='ev-shadow'||!Array.isArray(candidate.picks)){warnings.push('Unverifiable shadow decision '+file+' '+key);continue;}
-  evaluate(byStrategy['ev-shadow'],candidate.picks,winners);
+  if(!Number.isFinite(stamp)||!Number.isFinite(cutoff)||stamp>=cutoff||candidate.strategy!=='feature-shadow'||!Array.isArray(candidate.picks)){warnings.push('Unverifiable shadow decision '+file+' '+key);continue;}
+  evaluate(byStrategy['feature-shadow'],candidate.picks,winners);
  }
 }
 function finish(x){return {...x,profit:x.payout-x.stake,roiPct:x.stake?+(100*x.payout/x.stake).toFixed(2):null,hitRatePct:x.picks?+(100*x.hits/x.picks).toFixed(2):null};}
