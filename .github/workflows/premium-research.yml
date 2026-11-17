@@ -1,0 +1,39 @@
+name: Premium research validation
+on:
+  push:
+    branches: [feature/premium-research-v1]
+    paths:
+      - 'scripts/premium_*.py'
+      - 'tests/test_premium_*.py'
+      - 'data/auto/*.json'
+      - '.github/workflows/premium-research.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run isolated unit tests
+        run: python -m unittest discover -s tests -p 'test_premium_*.py' -v
+      - name: Compare actual snapshot settlement totals
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from scripts.premium_backtest import evaluate
+          for path in sorted(Path('data/auto').glob('*.json')):
+              doc=json.loads(path.read_text(encoding='utf-8'))
+              if not isinstance(doc,dict) or not isinstance(doc.get('races'),list):
+                  continue
+              result=evaluate(doc)
+              settlement=doc.get('settlement') or {}
+              if result['unsettled_races']==0 and settlement.get('settledRaces')==result['baseline']['races']:
+                  assert abs(result['baseline']['stake']-settlement['stake']) < 0.01, path
+                  assert abs(result['baseline']['payout']-settlement['payout']) < 0.01, path
+              print(path, result['baseline']['races'], result['baseline']['return_rate_percent'])
+          PY
