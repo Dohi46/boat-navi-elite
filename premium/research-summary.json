@@ -1,0 +1,132 @@
+{
+  "schema": "premium-dashboard-v1",
+  "mode": "research_only",
+  "date_start": "2026-11-15",
+  "date_end": "2026-11-17",
+  "snapshot_days": 3,
+  "minimum_days": 14,
+  "ready_for_premium": false,
+  "enough_days_for_research": false,
+  "baseline": {
+    "selected_races": 386,
+    "settled_races": 386,
+    "pending_races": 0,
+    "hit_races": 118,
+    "stake": 193000,
+    "payout": 144950,
+    "net": -48050,
+    "hit_rate_percent": 30.57,
+    "return_rate_percent": 75.1
+  },
+  "conditions": [
+    {
+      "name": "all",
+      "selected_races": 386,
+      "settled_races": 386,
+      "pending_races": 0,
+      "hit_races": 118,
+      "stake": 193000,
+      "payout": 144950,
+      "net": -48050,
+      "hit_rate_percent": 30.57,
+      "return_rate_percent": 75.1,
+      "skip_races": 0,
+      "skip_rate_percent": 0
+    },
+    {
+      "name": "top_pick_starts_lane1",
+      "selected_races": 376,
+      "settled_races": 376,
+      "pending_races": 0,
+      "hit_races": 115,
+      "stake": 188000,
+      "payout": 140370,
+      "net": -47630,
+      "hit_rate_percent": 30.59,
+      "return_rate_percent": 74.66,
+      "skip_races": 10,
+      "skip_rate_percent": 2.59
+    },
+    {
+      "name": "lane1_motor_at_least_40",
+      "selected_races": 59,
+      "settled_races": 59,
+      "pending_races": 0,
+      "hit_races": 17,
+      "stake": 29500,
+      "payout": 21240,
+      "net": -8260,
+      "hit_rate_percent": 28.81,
+      "return_rate_percent": 72,
+      "skip_races": 327,
+      "skip_rate_percent": 84.72
+    },
+    {
+      "name": "exhibition_at_least_6",
+      "selected_races": 1,
+      "settled_races": 1,
+      "pending_races": 0,
+      "hit_races": 0,
+      "stake": 500,
+      "payout": 0,
+      "net": -500,
+      "hit_rate_percent": 0,
+      "return_rate_percent": 0,
+      "skip_races": 385,
+      "skip_rate_percent": 99.74
+    },
+    {
+      "name": "top_relative_score_at_least_0_015",
+      "selected_races": 113,
+      "settled_races": 113,
+      "pending_races": 0,
+      "hit_races": 42,
+      "stake": 56500,
+      "payout": 37130,
+      "net": -19370,
+      "hit_rate_percent": 37.17,
+      "return_rate_percent": 65.72,
+      "skip_races": 273,
+      "skip_rate_percent": 70.73
+    }
+  ],
+  "daily": [
+    {
+      "date": "2026-11-15",
+      "selected_races": 134,
+      "settled_races": 134,
+      "pending_races": 0,
+      "hit_races": 48,
+      "stake": 67000,
+      "payout": 57090,
+      "net": -9910,
+      "hit_rate_percent": 35.82,
+      "return_rate_percent": 85.21
+    },
+    {
+      "date": "2026-11-16",
+      "selected_races": 120,
+      "settled_races": 120,
+      "pending_races": 0,
+      "hit_races": 38,
+      "stake": 60000,
+      "payout": 49150,
+      "net": -10850,
+      "hit_rate_percent": 31.67,
+      "return_rate_percent": 81.92
+    },
+    {
+      "date": "2026-11-17",
+      "selected_races": 132,
+      "settled_races": 132,
+      "pending_races": 0,
+      "hit_races": 32,
+      "stake": 66000,
+      "payout": 38710,
+      "net": -27290,
+      "hit_rate_percent": 24.24,
+      "return_rate_percent": 58.65
+    }
+  ],
+  "notice": "Historical hypothetical aggregates, not premium performance. Source: saved v13 result fields; no pre-cutoff odds."
+}
