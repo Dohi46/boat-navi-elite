@@ -46,6 +46,9 @@ async function main(){
    r.result={source:'boatraceopenapi-unofficial',checkedAt:new Date().toISOString(),winningCombinations:payouts,stake,payout:returned,hits:picks.filter(p=>p.hit).length,picks};
    settled++;
   }
+  // Do not rewrite a pending snapshot every 30 minutes when no result changed.
+  // Keep its last meaningful settlement timestamp and avoid needless Git conflicts.
+  if(settled===0&&doc.settlement){console.log(date,'no new results; snapshot unchanged');continue;}
   const done=doc.races.filter(r=>r.result),stake=done.reduce((a,r)=>a+r.result.stake,0),payout=done.reduce((a,r)=>a+r.result.payout,0);
   const totalPicks=done.reduce((a,r)=>a+r.result.picks.length,0),hits=done.reduce((a,r)=>a+r.result.hits,0);
   doc.settlement={checkedAt:new Date().toISOString(),settledRaces:done.length,pendingRaces:doc.races.length-done.length,settledPicks:totalPicks,hitPicks:hits,hitRatePercent:totalPicks?Number((100*hits/totalPicks).toFixed(2)):null,stake,payout,returnRatePercent:stake?Number((100*payout/stake).toFixed(2)):null};
