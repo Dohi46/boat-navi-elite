@@ -12,15 +12,15 @@ try{
  const shadowFile=path.join(shadowDir,date+'.json');
  const run=()=>cp.spawnSync(process.execPath,[path.join(tools,'audit_prediction_health.cjs')],{encoding:'utf8'});
  fs.writeFileSync(file,JSON.stringify({date,races:[r]}));let result=run();
- assert.equal(result.status,0,result.stderr);assert.ok(result.stdout.includes('ERROR: 0件'),result.stdout);
+ assert.equal(result.status,0,result.stderr);assert.ok(result.stdout.includes('ERROR: 0件'),result.stdout);assert.ok(result.stdout.includes('結果確定: 1R (的中 1R / 不的中 0R)'),result.stdout);
  r.result.payout=0;fs.writeFileSync(file,JSON.stringify({date,races:[r]}));result=run();
  assert.equal(result.status,1,result.stdout);assert.ok(result.stdout.includes('Settlement amount/hit mismatch'),result.stdout);
  // A confirmed losing race is settled, but must not be counted as a hit.
  r.result={winningCombinations:[{combination:'2-1-3',amount:980}],stake:300,payout:0,hits:0,picks:[{pick:'1-2-3',stake:200,hit:false,payout:0},{pick:'1-3-2',stake:100,hit:false,payout:0}]};
  fs.writeFileSync(file,JSON.stringify({date,races:[r]}));result=run();
- assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('結果確定: 1R'),result.stdout);
+ assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('結果確定: 1R (的中 0R / 不的中 1R)'),result.stdout);
  delete r.result;fs.writeFileSync(file,JSON.stringify({date,races:[r]}));result=run();
- assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('結果待ち: 1R'),result.stdout);
+ assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('結果待ち: 1R'),result.stdout);assert.ok(result.stdout.includes('結果確定: 0R (的中 0R / 不的中 0R)'),result.stdout);
  // Legacy shadow locks must remain excluded from pre-registered selection counts.
  const lock=new Date(Date.parse(date+'T00:00:00+09:00')+60000).toISOString();
  const shadowRace={strategy:'feature-shadow',model:'feature-ranking-v0-experimental',lockedAt:lock,sourceCapturedAt:r.capturedAt,picks:[{pick:'1-2-3',stake:100}],decision:'rank-only-test',oddsUsed:false,calibrated:false};
