@@ -31,19 +31,23 @@ async function run(){
  }
  return {d,base,shadow,live};
  }));
- const baseline=stats(),pairedBase=stats(),pairedShadow=stats();let settled=0,paired=0,missing=0,invalid=0,shadowPending=0,shadowUpcoming=0,shadowAwaitingResult=0;
- for(const {d,base,shadow,live} of all){for(const r of base?.races||[]){
+ const baseline=stats(),pairedBase=stats(),pairedShadow=stats(),daily=[],hitRows=[];let settled=0,paired=0,missing=0,invalid=0,shadowPending=0,shadowUpcoming=0,shadowAwaitingResult=0;
+ for(const {d,base,shadow,live} of all){const dayBase=stats(),dayPairedBase=stats(),dayShadow=stats();for(const r of base?.races||[]){
  const liveRace=live?.programs?.stadiums?.[String(r.venue)]?.races?.[String(r.race)];
  const livePayouts=liveRace?.date===d?liveRace?.result?.payouts?.trifecta:null;
  const payouts=Array.isArray(r.result?.winningCombinations)&&r.result.winningCombinations.length?r.result.winningCombinations:livePayouts;
  if(!Array.isArray(payouts)||!payouts.length){if(shadow?.races?.[r.venue+'-'+r.race]){shadowPending++;const deadline=cutoff(r.cutoff);if(Number.isFinite(deadline)&&Date.now()<deadline)shadowUpcoming++;else shadowAwaitingResult++;}continue;}
  const winning=new Map(payouts.filter(x=>/^[1-6]-[1-6]-[1-6]$/.test(x.combination)&&new Set(x.combination.split('-')).size===3&&Number(x.amount)>0).map(x=>[x.combination,Number(x.amount)]));
- if(!winning.size)continue;settled++;add(baseline,r.picks||[],winning);
+ if(!winning.size)continue;settled++;add(baseline,r.picks||[],winning);add(dayBase,r.picks||[],winning);
  const s=shadow?.races?.[r.venue+'-'+r.race];if(!s){missing++;continue;}
  if(s.strategy!=='feature-shadow'||!Array.isArray(s.picks)||!s.picks.every(valid)||!Number.isFinite(Date.parse(s.lockedAt))||!Number.isFinite(Date.parse(s.sourceCapturedAt))||Date.parse(s.sourceCapturedAt)>Date.parse(s.lockedAt)||Date.parse(s.lockedAt)>=cutoff(r.cutoff)||!Number.isFinite(cutoff(r.cutoff))){invalid++;continue;}
- paired++;add(pairedBase,r.picks||[],winning);add(pairedShadow,s.picks,winning);
- }}
+ paired++;add(pairedBase,r.picks||[],winning);add(pairedShadow,s.picks,winning);add(dayPairedBase,r.picks||[],winning);add(dayShadow,s.picks,winning);
+ for(const [model,picks] of [['現行AI',r.picks||[]],['試験AI',s.picks]])for(const p of picks){if(!valid(p)||!winning.has(p.pick))continue;const amount=Number(p.stake),pay=Math.round(amount*winning.get(p.pick)/100);hitRows.push({d,venue:r.venue,race:r.race,model,pick:p.pick,odds:winning.get(p.pick)/100,amount,pay});}
+ }daily.push({d,dayBase,dayPairedBase,dayShadow});}
  const box=document.createElement('div');box.innerHTML=card('現行AI（全結果確定分）',baseline)+(paired?'<h2>同一レースでの公平な比較</h2>'+card('現行AI（比較対象のみ）',pairedBase)+card('新AI（比較対象のみ）',pairedShadow):'<div class="card"><h2>新AI：未検証</h2><p class="muted">同じレースで締切前に確定した新AIの予想がまだありません。的中率・回収率は表示できません。</p></div>');
+ const dailyHtml='<h2>日別実績（仮想購入）</h2><div class="card" style="overflow-x:auto"><table><thead><tr><th>日付</th><th>現行AI全体</th><th>現行AI比較対象</th><th>試験AI比較対象</th><th>比較R</th></tr></thead><tbody>'+daily.filter(x=>x.dayBase.races||x.dayShadow.races).map(x=>'<tr><td>'+x.d+'</td><td>'+pct(x.dayBase.paid,x.dayBase.stake)+'</td><td>'+pct(x.dayPairedBase.paid,x.dayPairedBase.stake)+'</td><td>'+pct(x.dayShadow.paid,x.dayShadow.stake)+'</td><td>'+x.dayShadow.races+'</td></tr>').join('')+'</tbody></table><p class="muted">「現行AI全体」は比較対象外レースを含みます。— は未検証です。</p></div>';
+ const hitsHtml='<h2>🎯 的中欄（比較対象レースのみ）</h2><div class="card" style="overflow-x:auto">'+(hitRows.length?'<table><thead><tr><th>日付・場・R</th><th>AI</th><th>的中目</th><th>オッズ</th><th>購入</th><th>払戻</th></tr></thead><tbody>'+hitRows.sort((a,b)=>b.d.localeCompare(a.d)||a.venue-b.venue||a.race-b.race).map(x=>'<tr><td>'+x.d.slice(5)+' '+x.venue+'場 '+x.race+'R</td><td>'+x.model+'</td><td>'+x.pick+'</td><td>'+x.odds.toFixed(1)+'倍</td><td>'+yen(x.amount)+'</td><td>'+yen(x.pay)+'</td></tr>').join('')+'</tbody></table><p class="muted">的中 '+hitRows.length+'点 ／ 払戻合計 '+yen(hitRows.reduce((n,x)=>n+x.pay,0))+'</p>':'<p class="muted">比較対象レースの的中はまだありません（未確定レースは除外）。</p>')+'</div>';
+ box.insertAdjacentHTML('beforeend',dailyHtml+hitsHtml);
  $('results').append(box);
  $('status').textContent='結果確定 '+settled+'R ／ 比較可能 '+paired+'R ／ 新AI未記録 '+missing+'R ／ 無効な新AI記録 '+invalid+'R ／ 新AI締切前 '+shadowUpcoming+'R ／ 新AI結果公開待ち '+shadowAwaitingResult+'R'+(paired?'\n※比較結果は試験段階。優位性の証明ではありません。':'\n※締切前のレースと結果公開待ちのレースは比較対象外です。');
  }catch(e){$('status').textContent='取得に失敗しました：'+e.message;}finally{$('refresh').disabled=false;}
