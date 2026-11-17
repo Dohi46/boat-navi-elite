@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const URL='https://boatraceopenapi.github.io/api/v1/today.json';
 const fmt=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'});
-const date=fmt.format(new Date()),now=Date.now();
+const date=fmt.format(new Date());
 const metric=(x,k)=>{const v=x?.[k];if(v===null||v===undefined||v==='')return null;const n=Number(v);return Number.isFinite(n)?n:null;};
 const clamp=n=>Math.max(0,Math.min(1,n));
 function score(r){
@@ -46,14 +46,16 @@ async function main(){
   for(const [race,r] of Object.entries(stadium.races||{})){
    const key=venue+'-'+race;if(seen.has(key))continue;
    const close=cutoff(r);
-   if(!Number.isFinite(close)||close<=now){existing.skipped.push({venue,race,reason:Number.isFinite(close)?'already_closed':'cutoff_unknown'});continue;}
+   if(!Number.isFinite(close)||close<=Date.now()){existing.skipped.push({venue,race,reason:Number.isFinite(close)?'already_closed':'cutoff_unknown'});continue;}
    if(r.date&&r.date!==date){existing.skipped.push({venue,race,reason:'date_mismatch'});continue;}
    const picks=tickets(r);
    if(!picks){existing.skipped.push({venue,race,reason:'missing_racer_data'});continue;}
    const featureNames=['national_win_rate','local_win_rate','motor_top_2_percent','average_start_timing','local_top_3_percent'];
    const snapshot=Object.fromEntries([1,2,3,4,5,6].map(n=>[n,Object.fromEntries([...featureNames.map(k=>[k,metric(r.racers?.[n],k)]),['exhibition_time',metric(r.preview?.racers?.[n],'exhibition_time')]])]));
    const count=[1,2,3,4,5,6].filter(n=>metric(r.preview?.racers?.[n],'exhibition_time')!==null).length;
-   existing.races.push({venue:Number(venue),race:Number(race),raceDate:date,cutoff:r.closed_at,capturedAt:new Date().toISOString(),predictionPhase:'before',exhibitionPhase:count===6?'after':count===0?'before':'partial',exhibitionCount:count,features:snapshot,featureSchema:'lane-v1',picks:picks.map(x=>({...x,stake:100})),result:null});
+   const capturedAt=new Date().toISOString();
+   if(Date.parse(capturedAt)>=close){existing.skipped.push({venue,race,reason:'closed_during_collection'});continue;}
+   existing.races.push({venue:Number(venue),race:Number(race),raceDate:date,cutoff:r.closed_at,capturedAt,predictionPhase:'before',exhibitionPhase:count===6?'after':count===0?'before':'partial',exhibitionCount:count,features:snapshot,featureSchema:'lane-v1',picks:picks.map(x=>({...x,stake:100})),result:null});
    seen.add(key);
   }
  }
