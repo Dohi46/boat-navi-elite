@@ -1,5 +1,7 @@
 name: BOAT NEXUS AI ranking research (offline)
 on:
+  schedule:
+    - cron: '30 15 * * *' # 00:30 JST
   workflow_dispatch:
   push:
     paths:
