@@ -1,7 +1,7 @@
 // Prospective, pinned-rule evaluation. Never edits production predictions.
 'use strict';
 const fs=require('node:fs'),path=require('node:path');
-const {evaluate}=require('./ai_safety_ranking.cjs');
+const {evaluate}=require('./frozen_ai_safety_ranking_v1.cjs');
 const policy=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/research/forward-policy-v1.json'),'utf8'));
 const dir=process.argv[2]||'data/auto';
 const files=fs.existsSync(dir)?fs.readdirSync(dir).filter(n=>/^\d{4}-\d{2}-\d{2}\.json$/.test(n)&&n.slice(0,10)>=policy.effectiveDate).sort():[];
