@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Validate collector syntax
+        run: node --check tools/collect_odds_snapshots.cjs
       - name: Capture available pre-cutoff odds observations (read only)
         run: node tools/collect_odds_snapshots.cjs
       - name: Match predictions with published trifecta payouts
