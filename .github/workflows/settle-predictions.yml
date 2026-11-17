@@ -159,6 +159,9 @@ jobs:
           git add -- "data/shadow/$today.json"
           if ! git diff --cached --quiet; then
             git commit -m "data: publish validated intraday shadow locks"
+            # Keep unrelated experimental observations out of rebase's working tree.
+            # The runner is ephemeral; only the committed, validated shadow is pushed.
+            git stash push --include-untracked -m "unpublished experimental observations" || true
             for attempt in 1 2 3 4 5; do
               git fetch origin main
               git rebase origin/main || { git rebase --abort || true; exit 1; }
