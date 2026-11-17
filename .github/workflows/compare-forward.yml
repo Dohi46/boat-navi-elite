@@ -42,6 +42,10 @@ jobs:
             '- 選択レースでの新旧同条件比較: '+r.pairedSelected.races+'R',
             '- 選択レース・現行AI回収率: '+fmt(r.pairedSelected.baseline.roiPct),
             '- 選択レース・試験AI回収率: '+fmt(r.pairedSelected.shadow.roiPct),
+            '- 見送り結果確定: '+r.skipOutcomes.settled+'R',
+            '- 見送りで不的中を回避: '+r.skipOutcomes.avoidedLosingRaces+'R',
+            '- 見送りで的中を逃した: '+r.skipOutcomes.missedWinningRaces+'R',
+            '- 見送り仮想損益回避額: '+n(r.skipOutcomes.netAvoidedLossYen)+'円（見送った買い目を購入した場合との差。負値もあり）',
             '- データ警告: '+r.warnings.length+'件',
             r.selected.settled===0?'※選択レースの確定結果がないため、成績は未検証です。':'※少数レースの結果で優位性は証明できません。'
           ];
