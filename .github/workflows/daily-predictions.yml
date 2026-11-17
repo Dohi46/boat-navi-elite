@@ -139,6 +139,26 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Publish only today's validated shadow locks; leave historical locks untouched.
           today=$(TZ=Asia/Tokyo date +%F)
+          # Refuse to overwrite a previously published lock, including during retries.
+          verify_immutable() {
+            SHADOW_DATE="$today" node - <<'NODE'
+          const fs=require('node:fs'),cp=require('node:child_process');
+          const file='data/shadow/'+process.env.SHADOW_DATE+'.json';
+          const local=JSON.parse(fs.readFileSync(file,'utf8'));
+          let remote;
+          try{remote=JSON.parse(cp.execFileSync('git',['show','origin/main:'+file],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));}
+          catch(e){if(e.status!==128)throw e;}
+          if(remote){
+            if(remote.date!==local.date)throw Error('Shadow date mismatch');
+            for(const [key,lock] of Object.entries(remote.races||{})){
+              if(JSON.stringify(local.races?.[key])!==JSON.stringify(lock))
+                throw Error('Immutable published shadow lock differs: '+key);
+            }
+          }
+          NODE
+          }
+          git fetch origin main
+          verify_immutable
           if [ -f "data/shadow/$today.json" ]; then
             git add -- "data/shadow/$today.json"
           else
@@ -151,6 +171,7 @@ jobs:
             for attempt in 1 2 3 4 5; do
               git fetch origin main
               git rebase origin/main || { git rebase --abort || true; exit 1; }
+              verify_immutable
               if git push origin HEAD:main; then
                 echo "Experimental shadow published on attempt $attempt"
                 exit 0
