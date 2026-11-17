@@ -29,6 +29,8 @@ assert.match(intraday,/git stash push --include-untracked/,'Experimental observa
 const observations=step(settle,'Publish experimental observations independently');
 assert(settle.indexOf('      - name: Publish validated pre-cutoff shadow locks')<settle.indexOf('      - name: Publish experimental observations independently'),'Publish locked predictions before observations');
 assert.match(observations,/git stash pop/,'Restore stashed observations');
+assert.match(observations,/git restore -- "data\/shadow\/\$today\.json"/,'Discard invalid uncommitted tracked shadow before observation rebase');
+assert.match(observations,/git ls-files --error-unmatch/,'Discard invalid untracked shadow before observation rebase');
 assert.ok(observations.includes('data/odds/$day.json'),'Publish collected odds');
 assert.ok(observations.includes('data/external/boatracecsv/$today.json'),'Publish collected external CSV');
 assert.match(observations,/continue-on-error: true/,'Observation failures must not invalidate settlement');
