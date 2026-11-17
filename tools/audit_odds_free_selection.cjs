@@ -17,7 +17,7 @@ const strength=f=>{
 const lane=[2.25,.85,.48,.15,-.35,-.8];
 const validPick=p=>typeof p?.pick==='string'&&/^[1-6]-[1-6]-[1-6]$/.test(p.pick)&&new Set(p.pick.split('-')).size===3&&Number(p.stake)>0;
 const stats=()=>({eligible:0,skipped:0,settled:0,unsettled:0,hits:0,stake:0,payout:0});
-const all=stats(),selected=stats(),warnings=[];
+const all=stats(),selected=stats(),pairedBaseline=stats(),pairedShadow=stats(),warnings=[];
 const daily={};
 for(const file of files){
  const base=JSON.parse(fs.readFileSync(path.join(root,'auto',file),'utf8'));
@@ -25,7 +25,7 @@ for(const file of files){
  if(!fs.existsSync(shadowFile))continue;
  const shadow=JSON.parse(fs.readFileSync(shadowFile,'utf8'));
  const day=file.slice(0,10);
- if(!daily[day])daily[day]={all:stats(),selected:stats()};
+ if(!daily[day])daily[day]={all:stats(),selected:stats(),pairedBaseline:stats(),pairedShadow:stats()};
  for(const r of base.races||[]){
   const candidate=shadow.races?.[r.venue+'-'+r.race];
   if(!candidate)continue;
@@ -44,6 +44,13 @@ for(const file of files){
   const winners=r.result?.winningCombinations;
   if(!Array.isArray(winners)||!winners.length){for(const s of [all,dayAll])s.unsettled++;if(accept)for(const s of [selected,daySelected])s.unsettled++;continue;}
   const payouts=new Map(winners.map(x=>[x.combination,Number(x.amount)||0]));
+  // Paired comparison: same settled selected races, with valid original picks.
+  if(accept&&Array.isArray(r.picks)&&r.picks.length>0&&r.picks.every(validPick)){
+   for(const [s,picks] of [[pairedBaseline,r.picks],[pairedShadow,candidate.picks],[daily[day].pairedBaseline,r.picks],[daily[day].pairedShadow,candidate.picks]]){
+    s.eligible++;s.settled++;
+    for(const p of picks){const stake=Number(p.stake),pay=payouts.get(p.pick)||0;s.stake+=stake;if(pay>0){s.hits++;s.payout+=Math.round(stake*pay/100);}}
+   }
+  }
   for(const s of accept?[all,dayAll,selected,daySelected]:[all,dayAll]){
    s.settled++;
    for(const p of candidate.picks){const stake=Number(p.stake),pay=payouts.get(p.pick)||0;s.stake+=stake;if(pay>0){s.hits++;s.payout+=Math.round(stake*pay/100);}}
@@ -51,8 +58,8 @@ for(const file of files){
  }
 }
 function finish(s){return {...s,roiPct:s.stake?+(100*s.payout/s.stake).toFixed(2):null,hitPerRacePct:s.settled?+(100*s.hits/s.settled).toFixed(2):null};}
-const dailyRows=Object.entries(daily).filter(([,d])=>d.all.eligible>0).sort(([a],[b])=>a.localeCompare(b)).map(([date,d])=>({date,all:finish(d.all),selected:finish(d.selected)}));
+const dailyRows=Object.entries(daily).filter(([,d])=>d.all.eligible>0).sort(([a],[b])=>a.localeCompare(b)).map(([date,d])=>({date,all:finish(d.all),selected:finish(d.selected),pairedBaseline:finish(d.pairedBaseline),pairedShadow:finish(d.pairedShadow)}));
 const last7=dailyRows.slice(-7);
-const recent={all:stats(),selected:stats()};
-for(const row of last7)for(const k of ['all','selected'])for(const field of Object.keys(recent[k]))recent[k][field]+=row[k][field];
-console.log(JSON.stringify({schema:'odds-free-selection-audit-v1',daily:dailyRows,last7RecordedDays:{days:last7.length,from:last7[0]?.date||null,to:last7.at(-1)?.date||null,all:finish(recent.all),selected:finish(recent.selected)},rule:'Top two lane-adjusted feature strength margin >= 0.75',ruleStatus:'FORWARD-LOCKED EXPERIMENTAL UNVALIDATED; fixed heuristic, not optimized',all:finish(all),selected:finish(selected),warnings,warning:'Only decisions locked before cutoff are evaluated; older shadow races without registered selection are excluded. No statistical advantage established. No real-money recommendation.'},null,2));
+const recent={all:stats(),selected:stats(),pairedBaseline:stats(),pairedShadow:stats()};
+for(const row of last7)for(const k of ['all','selected','pairedBaseline','pairedShadow'])for(const field of Object.keys(recent[k]))recent[k][field]+=row[k][field];
+console.log(JSON.stringify({schema:'odds-free-selection-audit-v1',daily:dailyRows,last7RecordedDays:{days:last7.length,from:last7[0]?.date||null,to:last7.at(-1)?.date||null,all:finish(recent.all),selected:finish(recent.selected),pairedBaseline:finish(recent.pairedBaseline),pairedShadow:finish(recent.pairedShadow)},pairedSelected:{races:pairedShadow.settled,baseline:finish(pairedBaseline),shadow:finish(pairedShadow)},rule:'Top two lane-adjusted feature strength margin >= 0.75',ruleStatus:'FORWARD-LOCKED EXPERIMENTAL UNVALIDATED; fixed heuristic, not optimized',all:finish(all),selected:finish(selected),warnings,warning:'Only decisions locked before cutoff are evaluated; older shadow races without registered selection are excluded. No statistical advantage established. No real-money recommendation.'},null,2));
