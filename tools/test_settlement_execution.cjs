@@ -11,7 +11,8 @@ try{
  const doc={date,races:[{venue:1,race:1,raceDate:date,picks:[{pick:'1-2-3',stake:200},{pick:'1-3-2',stake:100}]}]};
  fs.writeFileSync(file,JSON.stringify(doc,null,2)+'\n');
  const preload=path.join(root,'mock-fetch.cjs');
- fs.writeFileSync(preload,`global.fetch=async()=>({ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'${date}',result:{payouts:{trifecta:[{combination:'1-2-3',amount:1250}]}}}}}}}}})});\n`);
+ const mockResponse={programs:{stadiums:{'1':{races:{'1':{date,result:{payouts:{trifecta:[{combination:'1-2-3',amount:1250}]}}}}}}}};
+ fs.writeFileSync(preload,'global.fetch=async()=>({ok:true,json:async()=>('+JSON.stringify(mockResponse)+')});\\n'.replace('\\\\n','\\n'));
  const script=path.resolve(__dirname,'settle_daily_predictions.cjs');
  const run=()=>cp.spawnSync(process.execPath,['--require',preload,script],{cwd:root,encoding:'utf8'});
  let result=run();assert.equal(result.status,0,result.stderr);
