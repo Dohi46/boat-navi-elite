@@ -49,6 +49,17 @@ jobs:
               summary.push('- '+label+': '+n+' races saved');
             }catch(e){summary.push('- '+label+': INVALID JSON '+e.message);process.exitCode=1;}
           }
+          const shadowFile='data/shadow/'+date+'.json';
+          if(fs.existsSync(shadowFile)){
+            const doc=JSON.parse(fs.readFileSync(shadowFile,'utf8'));
+            const races=Object.values(doc.races||{});
+            const selected=races.filter(r=>r.selection?.schema==='odds-free-selection-v1'&&r.selection.decision==='select');
+            const skipped=races.filter(r=>r.selection?.schema==='odds-free-selection-v1'&&r.selection.decision==='skip');
+            const legacy=races.length-selected.length-skipped.length;
+            summary.push('- Odds-free pre-registered: '+(selected.length+skipped.length)+'R (select '+selected.length+'R / skip '+skipped.length+'R)');
+            summary.push('- Legacy shadow without selection: '+legacy+'R (excluded from selection audit)');
+            summary.push(legacy===races.length&&races.length>0?'- Note: only legacy shadows found; wait for new races before cutoff. Existing records are not backfilled.':'- Existing shadow records are never reclassified after cutoff.');
+          }else summary.push('- Odds-free pre-registered: no shadow file yet');
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary.join('\n')+'\n');
           console.log(summary.join('\n'));
           NODE
