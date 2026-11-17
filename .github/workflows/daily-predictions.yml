@@ -66,12 +66,20 @@ jobs:
             exit 1
           fi
       - name: Test pre-cutoff shadow locking (offline)
+        continue-on-error: true
+        id: shadow_test
         run: node tools/test_shadow_lock.cjs
       - name: Validate experimental shadow generator
+        continue-on-error: true
+        id: shadow_syntax
         run: node --check tools/generate_shadow_predictions.cjs
       - name: Lock experimental shadow predictions immediately after collection
+        if: steps.shadow_test.outcome == 'success' && steps.shadow_syntax.outcome == 'success'
+        continue-on-error: true
+        id: shadow_generation
         run: node tools/generate_shadow_predictions.cjs
       - name: Verify experimental shadow locks and pre-registered decisions
+        if: steps.shadow_generation.outcome == 'success'
         id: shadow_validation
         # Experimental failures must not prevent publication of valid baseline predictions.
         continue-on-error: true
@@ -105,20 +113,25 @@ jobs:
         if: always()
         env:
           SHADOW_OUTCOME: ${{ steps.shadow_validation.outcome }}
+          SHADOW_TEST: ${{ steps.shadow_test.outcome }}
+          SHADOW_SYNTAX: ${{ steps.shadow_syntax.outcome }}
+          SHADOW_GENERATION: ${{ steps.shadow_generation.outcome }}
         run: |
           {
             echo '### Experimental shadow validation'
             if [ "$SHADOW_OUTCOME" = "success" ]; then
               echo '- PASS: pre-cutoff locks and selection decisions validated'
             elif [ "$SHADOW_OUTCOME" = "failure" ]; then
-              echo '- WARNING: experimental validation failed; inspect the validation step logs'
+              echo '- WARNING: experimental validation failed; shadow publication skipped'
               echo '- Production baseline publication remains independent of this experimental check'
               echo '::warning::Experimental shadow validation failed. Review the step logs.'
             else
-              echo "- NOT RUN: validation outcome was $SHADOW_OUTCOME"
+              echo "- NOT RUN: validation outcome was $SHADOW_OUTCOME (test=$SHADOW_TEST, syntax=$SHADOW_SYNTAX, generation=$SHADOW_GENERATION)"
+              echo '::warning::Experimental shadow pipeline did not complete; production baseline remains published.'
             fi
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Publish experimental shadow snapshots
+        if: steps.shadow_validation.outcome == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
