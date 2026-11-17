@@ -1,0 +1,23 @@
+name: Audit morning prediction calibration
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 16 * * *'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit settled morning picks (read only)
+        run: node tools/audit_morning_predictions.cjs > morning-audit.json
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: morning-audit
+          path: morning-audit.json
+          retention-days: 30
