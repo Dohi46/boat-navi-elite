@@ -5,7 +5,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const now=Date.now(),today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 const issues=[],counts={baseline:0,shadow:0,settled:0,pending:0,overdue:0};
-const validPick=p=>p&&typeof p.pick==='string'&&/^[1-6]-[1-6]-[1-6]-[1-6]$/.test(p.pick)&&new Set(p.pick.split('-')).size===3&&Number.isFinite(Number(p.stake))&&Number(p.stake)>0;
+const validPick=p=>p&&typeof p.pick==='string'&&/^[1-6]-[1-6]-[1-6]$/.test(p.pick)&&new Set(p.pick.split('-')).size===3&&Number.isFinite(Number(p.stake))&&Number(p.stake)>0;
 const cutoff=s=>typeof s==='string'&&/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/.test(s)?Date.parse(s.replace(' ','T')+'+09:00'):NaN;
 const note=(severity,message)=>issues.push({severity,message});
 const read=(folder,date)=>{const p=path.join(__dirname,'..','data',folder,date+'.json');if(!fs.existsSync(p))return null;try{return JSON.parse(fs.readFileSync(p,'utf8'));}catch(e){note('ERROR',folder+'/'+date+' invalid JSON: '+e.message);return null;}};
