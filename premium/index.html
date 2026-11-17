@@ -26,6 +26,11 @@ button:focus-visible{outline:3px solid #e7c783}ul{line-height:1.9}
 <section class="card"><h2>現在の選別判断</h2><p class="tag">SKIP / 購入推奨なし</p>
 <ul><li>校正済みの的中確率：未取得</li><li>締切前オッズ：未取得</li><li>風向・風速・波高の時刻付き履歴：未接続</li><li>独立した長期評価：未完了</li></ul>
 <p class="muted">結果確定後の情報を予想の根拠に混ぜない設計で検証中です。</p></section>
+<section class="card" aria-labelledby="daily-heading">
+<h2 id="daily-heading">日別の回収率推移</h2>
+<p class="muted">保存済みv13予想の仮想成績。厳選AIの運用実績ではありません。</p>
+<div id="daily-bars" role="img" aria-label="日別回収率の棒グラフ"><p class="muted">集計データの読み込み待ち</p></div>
+</section>
 <section class="card" aria-labelledby="comparison-heading">
 <h2 id="comparison-heading">条件別の研究成績</h2>
 <p class="muted" id="research-status">研究用集計ファイルが未配置です。データは自動公開されません。</p>
@@ -55,6 +60,25 @@ button:focus-visible{outline:3px solid #e7c783}ul{line-height:1.9}
         td.style.borderBottom='1px solid #334056';tr.appendChild(td);
       });
       table.tBodies[0].appendChild(tr);
+    }
+    const bars=document.getElementById('daily-bars');
+    if(Array.isArray(report.daily)&&report.daily.length){
+      bars.replaceChildren();
+      for(const day of report.daily){
+        if(typeof day.date!=='string')continue;
+        const line=document.createElement('div');
+        line.style.margin='12px 0';
+        const title=document.createElement('div');
+        title.style.fontSize='13px';
+        const rate=day.return_rate_percent;
+        title.textContent=day.date+' / '+pct(rate)+' / '+day.selected_races+'R';
+        const track=document.createElement('div');
+        track.style.cssText='height:14px;background:#2b364a;border-radius:8px;overflow:hidden;margin-top:6px';
+        const fill=document.createElement('div');
+        fill.style.cssText='height:100%;background:#c5a760;border-radius:8px';
+        fill.style.width=(typeof rate==='number'&&Number.isFinite(rate)?Math.min(100,Math.max(0,rate)):0)+'%';
+        track.appendChild(fill);line.append(title,track);bars.appendChild(line);
+      }
     }
     table.hidden=false;
     status.textContent='研究期間: '+report.date_start+'〜'+report.date_end+
