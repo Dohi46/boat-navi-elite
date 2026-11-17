@@ -17,7 +17,7 @@ try {
   const isoJst=(v)=>[v.year,v.month,v.day].join('-')+' '+v.hour+':'+v.minute+':00';
   const racers=Object.fromEntries(Array.from({length:6},(_,i)=>[i+1,{national_win_rate:5,local_win_rate:5,motor_top_2_percent:40,average_start_timing:0.16,local_top_3_percent:45}]));
   const preview={racers:Object.fromEntries(Array.from({length:6},(_,i)=>[i+1,{exhibition_time:6.8}]))};
-  const fixture={programs:{stadiums:{'1':{races:{'1':{date,closed_at:isoJst(f),racers,preview},'2':{date,closed_at:isoJst(p),racers,preview}}}}}}};
+  const fixture={programs:{stadiums:{'1':{races:{'1':{date,closed_at:isoJst(f),racers,preview},'2':{date,closed_at:isoJst(p),racers,preview}}}}}};
   const preload=path.join(temp,'mock-fetch.cjs');
   const mockSource = 'const RealDate=Date;const fixed='+fixedNow.getTime()+';global.Date=class extends RealDate{constructor(...args){super(...(args.length?args:[fixed]));}static now(){return fixed;}};global.fetch=async()=>({ok:true,json:async()=>'+JSON.stringify(fixture)+'});\\n';
   fs.writeFileSync(preload,mockSource);
