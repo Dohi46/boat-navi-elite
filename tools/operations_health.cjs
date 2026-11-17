@@ -25,7 +25,9 @@ async function main(){
   const matching=(payload.workflow_runs||[]).filter(r=>['schedule','workflow_dispatch'].includes(r.event)&&jst(new Date(r.created_at))===c.date);
   const success=matching.find(r=>r.status==='completed'&&r.conclusion==='success');
   const latest=matching[0]||null;
-  checksOut.push({...c,status:success?'ok':latest?.status==='in_progress'||latest?.status==='queued'?'pending':'alert',runId:success?.id||latest?.id||null,conclusion:success?.conclusion||latest?.conclusion||null,runCount:matching.length});
+  // A newly introduced workflow cannot have a scheduled run before its first scheduled window.
+  const bootstrap=c.id==='dailyMonitor'&&c.date==='2026-11-17'&&!latest;
+  checksOut.push({...c,status:success?'ok':bootstrap||latest?.status==='in_progress'||latest?.status==='queued'?'pending':'alert',runId:success?.id||latest?.id||null,conclusion:success?.conclusion||latest?.conclusion||null,runCount:matching.length});
  }
  const snapshot='data/auto/'+yesterday+'.json';
  let data=null;
@@ -34,7 +36,7 @@ async function main(){
  const unsettled=races.filter(r=>!r.result).length;
  const snapshotCheck={id:'snapshot',date:yesterday,status:data?.date===yesterday&&races.length&&unsettled===0?'ok':'alert',races:races.length,unsettled};
  const all=[...checksOut,snapshotCheck];
- const report={schema:'boat-nexus-operations-health-v1',checkedAt:new Date().toISOString(),todayJst:today,yesterdayJst:yesterday,status:all.every(c=>c.status==='ok')?'ok':all.some(c=>c.status==='alert')?'alert':'pending',checks:all,note:'Checks scheduled/manual runs by JST creation date, not completion date. Push runs are excluded. Missing or delayed schedules trigger review; no automatic repair.'};
+ const report={schema:'boat-nexus-operations-health-v1',checkedAt:new Date().toISOString(),todayJst:today,yesterdayJst:yesterday,status:all.every(c=>c.status==='ok')?'ok':all.some(c=>c.status==='alert')?'alert':'pending',checks:all,note:'Checks scheduled/manual runs by JST creation date, not completion date. Push runs are excluded. New monitor has a one-day bootstrap grace on 2026-11-17 JST; missing or delayed schedules thereafter trigger review. No automatic repair.'};
  fs.mkdirSync('data/research',{recursive:true});
  fs.writeFileSync('data/research/operations-health-latest.json',JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify(report,null,2));
