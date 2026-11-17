@@ -19,6 +19,34 @@ jobs:
           node-version: '22'
       - name: Match predictions with published trifecta payouts
         run: node tools/settle_daily_predictions.cjs
+      - name: Commit settled results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Settlement revisits up to 14 days of previously saved predictions.
+          # Stage updates to tracked history, but never add unrelated new historical files.
+          git add -u -- data/auto/
+          today=$(TZ=Asia/Tokyo date +%F)
+          yesterday=$(TZ=Asia/Tokyo date -d 'yesterday' +%F)
+          for day in "$yesterday" "$today"; do
+            if [ -f "data/auto/$day.json" ]; then git add -- "data/auto/$day.json"; fi
+          done
+          # Experimental observations and shadow locks are published separately.
+          if ! git diff --cached --quiet; then
+            git commit -m "data: settle v13 predictions"
+            # Retry if another workflow advances main. Never force push.
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main || { git rebase --abort || true; exit 1; }
+              if git push origin HEAD:main; then
+                echo "Daily snapshot published on attempt $attempt"
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "Could not publish daily snapshot after retries" >&2
+            exit 1
+          fi
       - name: Validate experimental collector scripts
         id: experimental_syntax
         continue-on-error: true
@@ -105,36 +133,6 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary.join('\n')+'\n');
           console.log(summary.join('\n'));
           NODE
-      - name: Commit settled results
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Settlement revisits up to 14 days of previously saved predictions.
-          # Stage updates to tracked history, but never add unrelated new historical files.
-          git add -u -- data/auto/
-          today=$(TZ=Asia/Tokyo date +%F)
-          yesterday=$(TZ=Asia/Tokyo date -d 'yesterday' +%F)
-          for day in "$yesterday" "$today"; do
-            if [ -f "data/auto/$day.json" ]; then git add -- "data/auto/$day.json"; fi
-            if [ -f "data/odds/$day.json" ]; then git add -- "data/odds/$day.json"; fi
-          done
-          # Shadow publication is handled only by the validated shadow step.
-          if [ -d data/external/boatracecsv ]; then git add -u -- data/external/boatracecsv/; fi
-          if ! git diff --cached --quiet; then
-            git commit -m "data: settle v13 predictions"
-            # Retry if another workflow advances main. Never force push.
-            for attempt in 1 2 3 4 5; do
-              git fetch origin main
-              git rebase origin/main || { git rebase --abort || true; exit 1; }
-              if git push origin HEAD:main; then
-                echo "Daily snapshot published on attempt $attempt"
-                exit 0
-              fi
-              sleep 2
-            done
-            echo "Could not publish daily snapshot after retries" >&2
-            exit 1
-          fi
       - name: Publish validated pre-cutoff shadow locks
         if: steps.shadow_validation.outcome == 'success'
         run: |
