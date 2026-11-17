@@ -6,6 +6,8 @@ on:
       - 'scripts/premium_*.py'
       - 'tests/test_premium_*.py'
       - 'data/auto/*.json'
+      - 'premium/index.html'
+      - 'premium/research-summary.json'
       - '.github/workflows/premium-research.yml'
   workflow_dispatch:
 jobs:
@@ -55,6 +57,10 @@ jobs:
           for key in ('stake','payout','hit_races'):
               assert abs(sum(d[key] for d in daily)-report['baseline'][key])<0.01, key
           assert 'picks' not in json.dumps(report)
+          assert all(c['selected_races'] + c['excluded_baseline']['selected_races'] == report['baseline']['selected_races'] for c in report['conditions'])
+          for c in report['conditions']:
+              for key in ('stake','payout','hit_races'):
+                  assert abs(c[key] + c['excluded_baseline'][key] - report['baseline'][key]) < 0.01, (c['name'], key)
           print('Research-only aggregate validated for',len(daily),'days')
           PY
       - name: Generate chronological holdout report
@@ -79,6 +85,24 @@ jobs:
         with:
           name: premium-walkforward-research
           path: /tmp/premium-walkforward.json
+          retention-days: 14
+      - name: Prepare offline preview bundle
+        run: |
+          mkdir -p /tmp/premium-preview
+          cp premium/index.html /tmp/premium-preview/index.html
+          cp /tmp/premium-research-summary.json /tmp/premium-preview/research-summary.json
+          python - <<'PY'
+          from pathlib import Path
+          html=Path('/tmp/premium-preview/index.html').read_text(encoding='utf-8')
+          assert "fetch('./research-summary.json'" in html
+          assert '研究プレビュー' in html
+          print('Research preview bundle ready; no deployment or repository writes')
+          PY
+      - name: Upload offline research preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-research-preview
+          path: /tmp/premium-preview/
           retention-days: 14
       - name: Upload research aggregate for review
         uses: actions/upload-artifact@v4
