@@ -53,7 +53,7 @@ async function main(){
    const featureNames=['national_win_rate','local_win_rate','motor_top_2_percent','average_start_timing','local_top_3_percent'];
    const snapshot=Object.fromEntries([1,2,3,4,5,6].map(n=>[n,Object.fromEntries([...featureNames.map(k=>[k,metric(r.racers?.[n],k)]),['exhibition_time',metric(r.preview?.racers?.[n],'exhibition_time')]])]));
    const count=[1,2,3,4,5,6].filter(n=>metric(r.preview?.racers?.[n],'exhibition_time')!==null).length;
-   existing.races.push({venue:Number(venue),race:Number(race),raceDate:date,cutoff:r.closed_at,capturedAt:new Date().toISOString(),predictionPhase:count===6?'after':count===0?'before':'partial',exhibitionCount:count,features:snapshot,featureSchema:'lane-v1',picks:picks.map(x=>({...x,stake:100})),result:null});
+   existing.races.push({venue:Number(venue),race:Number(race),raceDate:date,cutoff:r.closed_at,capturedAt:new Date().toISOString(),predictionPhase:'before',exhibitionPhase:count===6?'after':count===0?'before':'partial',exhibitionCount:count,features:snapshot,featureSchema:'lane-v1',picks:picks.map(x=>({...x,stake:100})),result:null});
    seen.add(key);
   }
  }
