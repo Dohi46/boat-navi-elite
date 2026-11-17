@@ -14,7 +14,11 @@ try{
  assert.equal(result.status,0,result.stderr);assert.ok(result.stdout.includes('ERROR: 0件'),result.stdout);
  r.result.payout=0;fs.writeFileSync(file,JSON.stringify({date,races:[r]}));result=run();
  assert.equal(result.status,1,result.stdout);assert.ok(result.stdout.includes('Settlement amount/hit mismatch'),result.stdout);
+ // A confirmed losing race is settled, but must not be counted as a hit.
+ r.result={winningCombinations:[{combination:'2-1-3',amount:980}],stake:300,payout:0,hits:0,picks:[{pick:'1-2-3',stake:200,hit:false,payout:0},{pick:'1-3-2',stake:100,hit:false,payout:0}]};
+ fs.writeFileSync(file,JSON.stringify({date,races:[r]}));result=run();
+ assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('結果確定: 1R'),result.stdout);
  delete r.result;fs.writeFileSync(file,JSON.stringify({date,races:[r]}));result=run();
  assert.equal(result.status,0,result.stdout);assert.ok(result.stdout.includes('結果待ち: 1R'),result.stdout);
- console.log('PASS: correct settlement accepted, corrupted payout rejected, pending race not treated as loss');
+ console.log('PASS: winning and losing settlements accepted, corrupted payout rejected, pending race not treated as loss');
 }finally{fs.rmSync(root,{recursive:true,force:true});}
