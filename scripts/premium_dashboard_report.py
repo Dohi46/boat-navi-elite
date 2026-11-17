@@ -30,8 +30,14 @@ def summarize(docs, min_days=14):
     conditions = []
     for name, predicate in CONDITIONS.items():
         selected = [r for r in rows if predicate(r)]
+        rejected = [r for r in rows if not predicate(r)]
         m = metrics(selected)
+        skipped_metrics = metrics(rejected)
+        selected_roi = m["return_rate_percent"]
+        baseline_roi = base["return_rate_percent"]
         conditions.append({"name": name, **m,
+                           "excluded_baseline": skipped_metrics,
+                           "roi_delta_vs_all_percentage_points": round(selected_roi-baseline_roi, 2) if selected_roi is not None and baseline_roi is not None else None,
                            "sample_sufficient_for_review": len(dates) >= min_days and m["settled_races"] >= 100,
                            "sample_warning": ("Insufficient history or fewer than 100 settled races; descriptive only" if len(dates) < min_days or m["settled_races"] < 100 else None),
                            "skip_races": len(rows) - len(selected),
