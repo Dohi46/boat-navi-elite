@@ -23,6 +23,8 @@ jobs:
         run: node tools/test_prediction_cutoff.cjs
       - name: Collect predictions
         run: node tools/collect_daily_predictions.cjs
+      - name: Test pre-cutoff shadow locking (offline)
+        run: node tools/test_shadow_lock.cjs
       - name: Validate experimental shadow generator
         run: node --check tools/generate_shadow_predictions.cjs
       - name: Lock experimental shadow predictions immediately after collection
