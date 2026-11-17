@@ -6,7 +6,10 @@ All metrics are hypothetical. No recommendations are published.
 import argparse
 import json
 from pathlib import Path
-from scripts.premium_auto_adapter import convert
+try:
+    from scripts.premium_auto_adapter import convert
+except ModuleNotFoundError:
+    from premium_auto_adapter import convert
 
 def evaluate(doc):
     adapted = convert(doc)
