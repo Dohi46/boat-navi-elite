@@ -43,6 +43,37 @@ jobs:
         if: steps.experimental_syntax.outcome == 'success'
         continue-on-error: true
         run: node tools/collect_boatracecsv_observations.cjs
+      - name: Verify experimental shadow locks and pre-registered decisions
+        if: steps.shadow_generation.outcome == 'success'
+        id: shadow_validation
+        # Experimental failures must not prevent publication of valid baseline predictions.
+        continue-on-error: true
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+          const base=JSON.parse(fs.readFileSync('data/auto/'+date+'.json','utf8'));
+          const file='data/shadow/'+date+'.json';
+          if(!fs.existsSync(file))throw Error('Experimental shadow snapshot missing: '+file);
+          const doc=JSON.parse(fs.readFileSync(file,'utf8'));
+          if(doc.date!==date||!doc.races||Array.isArray(doc.races)||typeof doc.races!=='object')throw Error('Invalid experimental shadow snapshot');
+          const races=new Map(base.races.map(r=>[r.venue+'-'+r.race,r]));
+          const locks=Object.entries(doc.races);
+          if(locks.length===0)throw Error('Experimental shadow snapshot contains no locked races');
+          let selected=0,skipped=0,legacy=0;
+          for(const [key,s] of locks){
+            const r=races.get(key);
+            const cutoff=r&&Date.parse(String(r.cutoff).replace(' ','T')+'+09:00');
+            const locked=Date.parse(s.lockedAt),captured=Date.parse(s.sourceCapturedAt);
+            if(!r||!Number.isFinite(cutoff)||!Number.isFinite(locked)||!Number.isFinite(captured)||captured>locked||locked>=cutoff)throw Error('Invalid pre-cutoff shadow lock: '+key);
+            if(!s.selection){legacy++;continue;}
+            const sel=s.selection;
+            if(sel.schema!=='odds-free-selection-v1'||sel.rule!=='lane-adjusted-strength-margin-gte-0.75'||sel.oddsUsed!==false||s.oddsUsed!==false||sel.lockedAt!==s.lockedAt||typeof sel.margin!=='number'||!Number.isFinite(sel.margin)||sel.decision!==(sel.margin>=0.75?'select':'skip'))throw Error('Invalid pre-registered selection: '+key);
+            if(sel.decision==='select')selected++;else skipped++;
+          }
+          console.log('Shadow locks '+locks.length+' / selected '+selected+' / skipped '+skipped+' / legacy '+legacy);
+          if(selected+skipped===0)throw Error('No new-format pre-registered shadow decisions were saved');
+          NODE
       - name: Report actual saved data
         if: always()
         run: |
@@ -94,6 +125,24 @@ jobs:
               sleep 2
             done
             echo "Could not publish daily snapshot after retries" >&2
+            exit 1
+          fi
+      - name: Publish validated pre-cutoff shadow locks
+        if: steps.shadow_validation.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          today=$(TZ=Asia/Tokyo date +%F)
+          git add -- "data/shadow/$today.json"
+          if ! git diff --cached --quiet; then
+            git commit -m "data: publish validated intraday shadow locks"
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main || { git rebase --abort || true; exit 1; }
+              if git push origin HEAD:main; then exit 0; fi
+              sleep 2
+            done
+            echo "Could not publish validated shadow locks" >&2
             exit 1
           fi
       - name: Audit prediction data health
