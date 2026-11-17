@@ -1,0 +1,28 @@
+name: Audit captured odds snapshots
+on:
+  schedule:
+    - cron: '30 16 * * *' # 01:30 JST
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check audit syntax
+        run: node --check tools/audit_odds_snapshots.cjs
+      - name: Validate stored odds and create quality report
+        run: node tools/audit_odds_snapshots.cjs > odds-audit.json
+      - name: Upload quality report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: odds-quality-audit
+          path: odds-audit.json
+          if-no-files-found: warn
+          retention-days: 30
