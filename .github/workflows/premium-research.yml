@@ -57,6 +57,29 @@ jobs:
           assert 'picks' not in json.dumps(report)
           print('Research-only aggregate validated for',len(daily),'days')
           PY
+      - name: Generate chronological holdout report
+        run: |
+          python scripts/premium_walkforward.py data/auto/*.json --min-train-days 14 > /tmp/premium-walkforward.json
+      - name: Validate chronological separation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('/tmp/premium-walkforward.json').read_text())
+          assert report['mode']=='research_only'
+          assert report['ready_for_premium'] is False
+          for fold in report['folds']:
+              assert fold['train_dates']
+              assert all(d < fold['evaluation_date'] for d in fold['train_dates'])
+              assert fold['evaluation_date'] not in fold['train_dates']
+          print('Chronological folds:',report['fold_count'])
+          PY
+      - name: Upload chronological research report
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-walkforward-research
+          path: /tmp/premium-walkforward.json
+          retention-days: 14
       - name: Upload research aggregate for review
         uses: actions/upload-artifact@v4
         with:
