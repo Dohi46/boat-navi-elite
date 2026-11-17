@@ -34,10 +34,16 @@ for(const name of names){
  days.push(day);
 }
 const windows={};
+const last=days.at(-1)?.date;
 for(const n of [7,30,90]){
- const selected=days.slice(-n),agg=selected.reduce((a,d)=>{for(const k of ['races','settled','eligible','stake','payout','hits','excluded'])a[k]+=d[k];return a},{races:0,settled:0,eligible:0,stake:0,payout:0,hits:0,excluded:0});
- windows[n+'d']={...agg,days:selected.length,roiPercent:agg.stake?Number((100*agg.payout/agg.stake).toFixed(2)):null,profit:agg.payout-agg.stake,periodStart:selected[0]?.date||null,periodEnd:selected.at(-1)?.date||null};
+ const end=last?Date.parse(last+'T00:00:00Z'):NaN;
+ const start=Number.isFinite(end)?new Date(end-(n-1)*86400000).toISOString().slice(0,10):null;
+ const selected=days.filter(d=>start&&d.date>=start&&d.date<=last);
+ const agg=selected.reduce((a,d)=>{for(const k of ['races','settled','eligible','stake','payout','hits','excluded'])a[k]+=d[k];return a},{races:0,settled:0,eligible:0,stake:0,payout:0,hits:0,excluded:0});
+ const missingDates=[];
+ if(start)for(let i=0;i<n;i++){const date=new Date(Date.parse(start+'T00:00:00Z')+i*86400000).toISOString().slice(0,10);if(!selected.some(d=>d.date===date))missingDates.push(date);}
+ windows[n+'d']={...agg,days:selected.length,calendarDays:n,missingDays:missingDates.length,missingDates,roiPercent:agg.stake?Number((100*agg.payout/agg.stake).toFixed(2)):null,profit:agg.payout-agg.stake,periodStart:start,periodEnd:last||null};
 }
-const report={schema:'boat-nexus-quality-rolling-v1',generatedAt:new Date().toISOString(),source:'existing data/auto files only',files:names.length,checks:{errors:errors.length,warnings:warnings.length},errors:errors.slice(0,100),warnings:warnings.slice(0,100),windows,days:days.map(d=>({...d,roiPercent:d.stake?Number((100*d.payout/d.stake).toFixed(2)):null,profit:d.payout-d.stake})),note:'Virtual v13 picks, not real bets. Windows are latest available dated files, not necessarily consecutive calendar days. No profitability guarantee.'};
+const report={schema:'boat-nexus-quality-rolling-v1',generatedAt:new Date().toISOString(),source:'existing data/auto files only',files:names.length,checks:{errors:errors.length,warnings:warnings.length},errors:errors.slice(0,100),warnings:warnings.slice(0,100),windows,days:days.map(d=>({...d,roiPercent:d.stake?Number((100*d.payout/d.stake).toFixed(2)):null,profit:d.payout-d.stake})),note:'Virtual v13 picks, not real bets. Calendar windows end at the latest stored date. Missing dates are reported, never counted as zero-return racing days. No profitability guarantee.'};
 console.log(JSON.stringify(report,null,2));
 if(!names.length)process.exitCode=2;
