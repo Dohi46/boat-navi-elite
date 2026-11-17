@@ -1436,10 +1436,10 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
   for(const v of ['集計枠','実データ日数','対象R','仮想回収率']){const th=document.createElement('th');th.textContent=v;th.style.padding='6px 3px';head.append(th);}table.append(head);
   for(const key of ['7d','30d','90d']){
    const x=d.windows?.[key];if(!x)continue;const tr=document.createElement('tr');
-   for(const v of [key.replace('d','日'),String(x.days),String(x.eligible),x.roiPercent===null?'—':x.roiPercent.toFixed(2)+'%']){const td=document.createElement('td');td.textContent=v;td.style.cssText='padding:7px 3px;border-top:1px solid var(--line)';tr.append(td);}table.append(tr);
+   for(const v of [key.replace('d','日'),String(x.days)+'/'+String(x.calendarDays||x.days)+'日',String(x.eligible),x.roiPercent===null?'—':x.roiPercent.toFixed(2)+'%']){const td=document.createElement('td');td.textContent=v;td.style.cssText='padding:7px 3px;border-top:1px solid var(--line)';tr.append(td);}table.append(tr);
   }
   panel.append(table);
-  const note=document.createElement('p');note.className='tiny muted';note.textContent='直近の保存済み7・30・90日付ファイルを集計。暦日で連続した期間とは限りません。締切前に保存され結果照合済みの仮想購入のみ対象。実購入成績ではありません。';panel.append(note);
+  const note=document.createElement('p');note.className='tiny muted';note.textContent='最終保存日を基準に暦日7・30・90日を集計。実データ日数が少ない期間は欠損日があります。締切前保存・結果照合済みの仮想購入のみ対象。実購入成績ではありません。';panel.append(note);
  }).catch(e=>{status.textContent='品質レポートはまだ表示できません：'+e.message;});
 })();
 
@@ -1454,7 +1454,7 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
  host.parentElement.insertBefore(panel,host);
  fetch('./data/research/ai-ranking-latest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('ランキングファイル未生成');return r.json()}).then(d=>{
   const labels={baseline:'全購入（基準）',favorite:'本命寄り',medium:'中穴候補',long:'大穴候補',selected:'厳選候補'};
-  status.textContent='保存済み '+d.filesAnalyzed+'日分 ／ 評価対象 '+d.quality.eligible+'R ／ 保留 '+d.quality.held+'R ／ 水面情報あり '+d.quality.weatherComplete+'R';
+  status.textContent='全体基準 '+(d.allEligibleBaseline?.races??'—')+'R（'+(d.allEligibleBaseline?.roiPercent??'—')+'%） ／ 選別比較対象 '+d.quality.eligible+'R ／ 保留 '+d.quality.held+'R ／ 水面情報あり '+d.quality.weatherComplete+'R';
   const t=document.createElement('table');t.style.cssText='width:100%;font-size:12px;border-collapse:collapse';
   const head=document.createElement('tr');
   for(const label of ['分類','対象R','的中点','仮想回収率']){const th=document.createElement('th');th.textContent=label;th.style.padding='6px 3px';head.append(th);}
@@ -1466,7 +1466,7 @@ $('recordSource')?.addEventListener('change',e=>{recordSourceFilter=e.target.val
    t.append(tr);
   }
   table.replaceChildren(t);
-  const note=document.createElement('p');note.className='tiny muted';note.textContent='全て既存v13の同じ買い目による仮想成績。独立した学習済みAI同士の比較ではありません。大穴候補は少数レースで、将来の利益は保証されません。';table.append(note);
+  const note=document.createElement('p');note.className='tiny muted';note.textContent='表の全購入（基準）は選別AIと同じ特徴量完備レースだけ。上の全体基準とは母集団が異なるため直接比較不可。全て既存v13の仮想成績で独立学習AIではありません。少数レースの好成績は未検証です。';table.append(note);
  }).catch(e=>{status.textContent='ランキングを表示できません：'+e.message;});
 })();
 
