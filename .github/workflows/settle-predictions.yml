@@ -1,7 +1,7 @@
 name: Settle BOAT NEXUS predictions
 on:
   schedule:
-    - cron: '30 14 * * *' # 23:30 JST
+    - cron: '*/30 * * * *' # Every 30 minutes, including daytime (UTC)
   workflow_dispatch:
 permissions:
   contents: write
