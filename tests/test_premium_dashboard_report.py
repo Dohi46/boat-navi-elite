@@ -18,6 +18,8 @@ class DashboardTests(unittest.TestCase):
         self.assertEqual(r["conditions"][0]["skip_races"],0)
         self.assertFalse(r["ready_for_premium"])
         self.assertFalse(r["enough_days_for_research"])
+        self.assertFalse(r["conditions"][0]["sample_sufficient_for_review"])
+        self.assertIsNotNone(r["conditions"][0]["sample_warning"])
         self.assertNotIn("picks",str(r))
         self.assertNotIn("1-2-3",str(r))
     def test_daily_totals_match_baseline(self):
