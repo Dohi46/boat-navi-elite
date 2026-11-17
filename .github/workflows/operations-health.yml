@@ -1,7 +1,7 @@
 name: BOAT NEXUS operations health
 on:
   schedule:
-    - cron: '30 16 * * *' # 01:30 JST, after nightly checks
+    - cron: '30 18 * * *' # 03:30 JST, after nightly checks and schedule-delay grace
   workflow_dispatch:
 permissions:
   actions: read
