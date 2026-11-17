@@ -4,6 +4,9 @@ on:
     paths:
       - 'tools/test_shadow_lock.cjs'
       - 'tools/test_settlement_audit.cjs'
+      - 'tools/test_mobile_navigation.cjs'
+      - 'index.html'
+      - 'app.js'
       - 'tools/generate_shadow_predictions.cjs'
       - 'tools/audit_prediction_health.cjs'
       - '.github/workflows/offline-regression.yml'
@@ -24,8 +27,11 @@ jobs:
           node --check tools/generate_shadow_predictions.cjs
           node --check tools/test_shadow_lock.cjs
           node --check tools/test_settlement_audit.cjs
+          node --check tools/test_mobile_navigation.cjs
           node --check tools/audit_prediction_health.cjs
       - name: Test pre-cutoff locks without live data
         run: node tools/test_shadow_lock.cjs
+      - name: Check mobile navigation and AI LAB controls
+        run: node tools/test_mobile_navigation.cjs
       - name: Test payout integrity and pending results
         run: node tools/test_settlement_audit.cjs
