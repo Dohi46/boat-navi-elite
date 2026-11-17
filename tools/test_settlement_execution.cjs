@@ -33,7 +33,7 @@ try{
  assert.match(result.stdout,/no new results; snapshot unchanged/);
  // A confirmed losing pick is not a hit, and the pending race stays pending.
  const losingDoc={date,races:[{venue:1,race:1,raceDate:date,picks:[{pick:'2-1-3',stake:100}]},{venue:1,race:2,raceDate:date,picks:[{pick:'1-2-3',stake:100}]}]};
- fs.writeFileSync(file,JSON.stringify(losingDoc,null,2)+'\\n');
+ fs.writeFileSync(file,JSON.stringify(losingDoc,null,2)+'\n');
  result=run();assert.equal(result.status,0,result.stderr);
  saved=JSON.parse(fs.readFileSync(file,'utf8'));
  assert.equal(saved.races[0].result.hits,0,'A losing race cannot be counted as a hit');
