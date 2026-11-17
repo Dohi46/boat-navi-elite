@@ -35,6 +35,10 @@ jobs:
             '- 全対象の的中数: '+r.all.hits+'点 / 回収率: '+fmt(r.all.roiPct),
             '- 選択レースの的中数: '+r.selected.hits+'点 / 回収率: '+fmt(r.selected.roiPct),
             '- 選択レースの仮想購入: '+n(r.selected.stake)+'円 / 払戻: '+n(r.selected.payout)+'円',
+            '- 直近の記録日数: '+r.last7RecordedDays.days+'日（暦日7日間とは限りません）',
+            '- 直近記録日の選択: '+r.last7RecordedDays.selected.eligible+'R / 見送り: '+r.last7RecordedDays.selected.skipped+'R',
+            '- 直近記録日の選択的中: '+r.last7RecordedDays.selected.hits+'点 / 回収率: '+fmt(r.last7RecordedDays.selected.roiPct),
+            '- 日別集計: レポートの daily を参照',
             '- データ警告: '+r.warnings.length+'件',
             r.selected.settled===0?'※選択レースの確定結果がないため、成績は未検証です。':'※少数レースの結果で優位性は証明できません。'
           ];
