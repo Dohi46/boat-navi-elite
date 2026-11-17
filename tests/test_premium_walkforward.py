@@ -1,6 +1,13 @@
 import unittest
 from scripts.premium_walkforward import walkforward
-from tests.test_premium_selection_study import snapshot
+def snapshot(date, payout):
+    return {"date": date, "races": [{
+        "venue": 1, "race": 1, "raceDate": date,
+        "predictionPhase": "before", "cutoff": date + " 15:00:00",
+        "capturedAt": date + "T01:00:00+00:00",
+        "picks": [{"pick": "1-2-3", "stake": 100, "probability": 0.016}],
+        "result": {"winningCombinations": [{"combination": "1-2-3", "amount": payout}]}
+    }]}
 
 class WalkForwardTests(unittest.TestCase):
     def test_training_never_contains_evaluation_day(self):
