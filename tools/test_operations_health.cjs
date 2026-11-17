@@ -11,6 +11,8 @@ assert.equal(workflowStatus({...base,date:'2026-11-17',hour:1}).status,'alert','
 assert.equal(workflowStatus({...base,hour:1,matching:[{status:'completed',conclusion:'failure'}]}).status,'alert','Completed failure must alert during grace');
 assert.equal(workflowStatus({...base,hour:1,matching:[{status:'in_progress'}]}).status,'pending');
 assert.equal(workflowStatus({...base,hour:4,matching:[{status:'completed',conclusion:'success'}]}).status,'ok');
+assert.equal(workflowStatus({...base,hour:4,matching:[{status:'completed',conclusion:'failure'},{status:'completed',conclusion:'success'}]}).status,'alert','Latest failure must not be hidden by an earlier success');
+assert.equal(workflowStatus({...base,hour:4,matching:[{status:'completed',conclusion:'success'},{status:'completed',conclusion:'failure'}]}).status,'ok','Successful retry restores health');
 const s={date:'2026-11-17',expectedDate:'2026-11-17',valid:0,legacy:12,invalid:0};
 assert.equal(shadowStatus(s),'pending','Immutable legacy locks are not invalid');
 assert.equal(shadowStatus({...s,valid:1}),'ok');
