@@ -21,13 +21,19 @@ function strength(f){
  return .28*n+.12*l+.018*m-2*st;
 }
 let stored=0,skipped=0;
+const reasons={wrongRaceDate:0,invalidCutoff:0,invalidCapturedAt:0,capturedInFuture:0,capturedAfterCutoff:0,runAfterCutoff:0,alreadySaved:0,missingOrInvalidFeatures:0};
 for(const r of doc.races||[]){
  const now=new Date().toISOString(),t=Date.parse(now),limit=cutoff(r.cutoff);
  const captured=Date.parse(r.capturedAt);
- if(r.raceDate!==date||!Number.isFinite(limit)||!Number.isFinite(captured)||captured>t||captured>=limit||t>=limit){skipped++;continue;}
- const key=r.venue+'-'+r.race;if(prior.races[key])continue;
+ if(r.raceDate!==date){reasons.wrongRaceDate++;skipped++;continue;}
+ if(!Number.isFinite(limit)){reasons.invalidCutoff++;skipped++;continue;}
+ if(!Number.isFinite(captured)){reasons.invalidCapturedAt++;skipped++;continue;}
+ if(captured>t){reasons.capturedInFuture++;skipped++;continue;}
+ if(captured>=limit){reasons.capturedAfterCutoff++;skipped++;continue;}
+ if(t>=limit){reasons.runAfterCutoff++;skipped++;continue;}
+ const key=r.venue+'-'+r.race;if(prior.races[key]){reasons.alreadySaved++;continue;}
  const s=Array.from({length:6},(_,i)=>strength(r.features?.[String(i+1)]));
- if(s.some(x=>x===null)){skipped++;continue;}
+ if(s.some(x=>x===null)){reasons.missingOrInvalidFeatures++;skipped++;continue;}
  // Structural lane advantage is a prior, not a mandated quota or a guaranteed win.
  const lane=[2.25,.85,.48,.15,-.35,-.8];
  const ranked=combos.map(([a,b,c])=>({pick:a+'-'+b+'-'+c,score:1.35*(s[a-1]+lane[a-1])+.75*(s[b-1]+lane[b-1])+.4*(s[c-1]+lane[c-1])})).sort((x,y)=>y.score-x.score);
@@ -41,4 +47,4 @@ for(const r of doc.races||[]){
  stored++;
 }
 if(stored){fs.mkdirSync(path.dirname(dest),{recursive:true});const temp=dest+'.tmp';fs.writeFileSync(temp,JSON.stringify(prior,null,2)+'\n');fs.renameSync(temp,dest);}
-console.log(JSON.stringify({date,stored,skipped,total:Object.keys(prior.races).length,notice:'Experimental feature ranking only. No calibrated probabilities, EV, or guaranteed profit.'}));
+console.log(JSON.stringify({date,stored,skipped,alreadySaved:reasons.alreadySaved,reasons,total:Object.keys(prior.races).length,notice:'Experimental feature ranking only. No calibrated probabilities, EV, or guaranteed profit.'}));
