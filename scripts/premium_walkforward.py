@@ -6,6 +6,7 @@ Never publishes picks; historical results are used for evaluation only.
 """
 import argparse
 import json
+from datetime import date
 from pathlib import Path
 try:
     from scripts.premium_selection_study import extract, metrics, CONDITIONS
@@ -20,6 +21,11 @@ def walkforward(docs, min_train_days=14):
         day = doc.get("date")
         if not isinstance(day, str) or day in days:
             raise ValueError("missing or duplicate snapshot date")
+        try:
+            if date.fromisoformat(day).isoformat() != day:
+                raise ValueError("noncanonical date")
+        except ValueError as exc:
+            raise ValueError("invalid snapshot date: " + day) from exc
         days[day] = extract(doc)
     dates = sorted(days)
     folds = []
