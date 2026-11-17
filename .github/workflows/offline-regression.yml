@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'tools/test_shadow_lock.cjs'
+      - 'tools/test_settlement_audit.cjs'
       - 'tools/generate_shadow_predictions.cjs'
       - 'tools/audit_prediction_health.cjs'
       - '.github/workflows/offline-regression.yml'
@@ -22,6 +23,9 @@ jobs:
         run: |
           node --check tools/generate_shadow_predictions.cjs
           node --check tools/test_shadow_lock.cjs
+          node --check tools/test_settlement_audit.cjs
           node --check tools/audit_prediction_health.cjs
       - name: Test pre-cutoff locks without live data
         run: node tools/test_shadow_lock.cjs
+      - name: Test payout integrity and pending results
+        run: node tools/test_settlement_audit.cjs
