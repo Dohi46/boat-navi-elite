@@ -133,6 +133,23 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           today=$(TZ=Asia/Tokyo date +%F)
+          # Never rewrite an already published lock, even when a retry follows another push.
+          git fetch origin main
+          SHADOW_DATE="$today" node - <<'NODE'
+          const fs=require('node:fs'),cp=require('node:child_process');
+          const file='data/shadow/'+process.env.SHADOW_DATE+'.json';
+          const local=JSON.parse(fs.readFileSync(file,'utf8'));
+          let remote;
+          try{remote=JSON.parse(cp.execFileSync('git',['show','origin/main:'+file],{encoding:'utf8'}));}
+          catch(e){if(e.status!==128)throw e;}
+          if(remote){
+            if(remote.date!==local.date)throw Error('Shadow date changed');
+            for(const [key,lock] of Object.entries(remote.races||{})){
+              if(JSON.stringify(local.races?.[key])!==JSON.stringify(lock))
+                throw Error('Published shadow lock cannot change: '+key);
+            }
+          }
+          NODE
           git add -- "data/shadow/$today.json"
           if ! git diff --cached --quiet; then
             git commit -m "data: publish validated intraday shadow locks"
