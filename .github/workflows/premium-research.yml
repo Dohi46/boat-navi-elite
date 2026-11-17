@@ -91,10 +91,13 @@ jobs:
           mkdir -p /tmp/premium-preview
           cp premium/index.html /tmp/premium-preview/index.html
           cp /tmp/premium-research-summary.json /tmp/premium-preview/research-summary.json
+          cp /tmp/premium-walkforward.json /tmp/premium-preview/walkforward.json
           python - <<'PY'
           from pathlib import Path
           html=Path('/tmp/premium-preview/index.html').read_text(encoding='utf-8')
           assert "fetch('./research-summary.json'" in html
+          assert "fetch('./walkforward.json'" in html
+          assert Path("/tmp/premium-preview/walkforward.json").is_file()
           assert '研究プレビュー' in html
           print('Research preview bundle ready; no deployment or repository writes')
           PY
