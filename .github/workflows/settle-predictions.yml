@@ -193,6 +193,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # A failed experimental validation may leave an uncommitted shadow file.
+          # Never publish or rebase it with observations; preserve committed locks.
+          today=$(TZ=Asia/Tokyo date +%F)
+          if ! git diff --quiet -- "data/shadow/$today.json"; then
+            git restore -- "data/shadow/$today.json"
+          fi
+          if [ -f "data/shadow/$today.json" ] && ! git ls-files --error-unmatch "data/shadow/$today.json" >/dev/null 2>&1; then
+            rm -- "data/shadow/$today.json"
+          fi
           # Shadow publication temporarily stashes unrelated collector output.
           if git stash list | grep -q 'unpublished experimental observations'; then
             git stash pop || { echo 'Could not restore observations' >&2; exit 1; }
