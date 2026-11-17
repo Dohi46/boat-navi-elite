@@ -13,6 +13,9 @@ on:
       - 'tools/operations_health.cjs'
       - 'tools/operations_health_policy.cjs'
       - 'tools/test_operations_health.cjs'
+      - 'tools/test_workflow_safety.cjs'
+      - '.github/workflows/daily-predictions.yml'
+      - '.github/workflows/settle-predictions.yml'
       - '.github/workflows/operations-health.yml'
       - '.github/workflows/offline-regression.yml'
   workflow_dispatch:
@@ -37,6 +40,9 @@ jobs:
           node --check tools/operations_health.cjs
           node --check tools/operations_health_policy.cjs
           node --check tools/test_operations_health.cjs
+          node --check tools/test_workflow_safety.cjs
+      - name: Test production and shadow workflow isolation
+        run: node tools/test_workflow_safety.cjs
       - name: Test operations monitoring classifications
         run: node tools/test_operations_health.cjs
       - name: Test pre-cutoff locks without live data
