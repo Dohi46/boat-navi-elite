@@ -32,6 +32,8 @@ def summarize(docs, min_days=14):
         selected = [r for r in rows if predicate(r)]
         m = metrics(selected)
         conditions.append({"name": name, **m,
+                           "sample_sufficient_for_review": len(dates) >= min_days and m["settled_races"] >= 100,
+                           "sample_warning": ("Insufficient history or fewer than 100 settled races; descriptive only" if len(dates) < min_days or m["settled_races"] < 100 else None),
                            "skip_races": len(rows) - len(selected),
                            "skip_rate_percent": round(100*(len(rows)-len(selected))/len(rows), 2) if rows else None})
     return {"schema": "premium-dashboard-v1", "mode": "research_only",
