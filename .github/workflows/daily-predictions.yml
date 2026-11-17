@@ -52,6 +52,8 @@ jobs:
       - name: Lock experimental shadow predictions immediately after collection
         run: node tools/generate_shadow_predictions.cjs
       - name: Verify experimental shadow locks and pre-registered decisions
+        # Experimental failures must not prevent publication of valid baseline predictions.
+        continue-on-error: true
         run: |
           node - <<'NODE'
           const fs=require('node:fs');
