@@ -44,7 +44,14 @@ def walkforward(docs, min_train_days=14):
     combined = {name: metrics([r for fold in folds
                  for r in days[fold["evaluation_date"]] if rule(r)])
                  for name, rule in CONDITIONS.items()}
+    evaluation_dates = [fold["evaluation_date"] for fold in folds]
+    evaluation_races = combined["all"]["settled_races"]
+    evaluation_ready = len(evaluation_dates) >= 7 and evaluation_races >= 100
     return {"mode": "research_only", "min_train_days": min_train_days,
+            "evaluation_days": len(evaluation_dates),
+            "evaluation_settled_races": evaluation_races,
+            "enough_holdout_for_review": evaluation_ready,
+            "holdout_warning": None if evaluation_ready else "Fewer than 7 evaluation dates or 100 settled evaluation races; no reliability claim",
             "available_days": dates, "fold_count": len(folds),
             "folds": folds, "all_evaluation_dates": combined,
             "ready_for_premium": False,
