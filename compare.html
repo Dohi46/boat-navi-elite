@@ -32,8 +32,10 @@ async function run(){
  return {d,base,shadow,live};
  }));
  const baseline=stats(),pairedBase=stats(),pairedShadow=stats();let settled=0,paired=0,missing=0,invalid=0;
- for(const {base,shadow} of all){for(const r of base?.races||[]){
- const payouts=r.result?.winningCombinations;
+ for(const {d,base,shadow,live} of all){for(const r of base?.races||[]){
+ const liveRace=live?.programs?.stadiums?.[String(r.venue)]?.races?.[String(r.race)];
+ const livePayouts=liveRace?.date===d?liveRace?.result?.payouts?.trifecta:null;
+ const payouts=Array.isArray(r.result?.winningCombinations)&&r.result.winningCombinations.length?r.result.winningCombinations:livePayouts;
  if(!Array.isArray(payouts)||!payouts.length)continue;
  const winning=new Map(payouts.filter(x=>/^[1-6]-[1-6]-[1-6]$/.test(x.combination)&&new Set(x.combination.split('-')).size===3&&Number(x.amount)>0).map(x=>[x.combination,Number(x.amount)]));
  if(!winning.size)continue;settled++;add(baseline,r.picks||[],winning);
