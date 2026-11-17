@@ -29,8 +29,8 @@ assert.match(intraday,/git stash push --include-untracked/,'Experimental observa
 const observations=step(settle,'Publish experimental observations independently');
 assert(settle.indexOf('      - name: Publish validated pre-cutoff shadow locks')<settle.indexOf('      - name: Publish experimental observations independently'),'Publish locked predictions before observations');
 assert.match(observations,/git stash pop/,'Restore stashed observations');
-assert.match(observations,/data\\/odds\\/\\$day\\.json/,'Publish collected odds');
-assert.match(observations,/data\\/external\\/boatracecsv\\/\\$today\\.json/,'Publish collected external CSV');
+assert.ok(observations.includes('data/odds/$day.json'),'Publish collected odds');
+assert.ok(observations.includes('data/external/boatracecsv/$today.json'),'Publish collected external CSV');
 assert.match(observations,/continue-on-error: true/,'Observation failures must not invalidate settlement');
 assert.match(step(settle,'Report actual saved data'),/continue-on-error: true/);
 console.log('PASS: baseline-first, validated shadow-only, and independent reporting');
