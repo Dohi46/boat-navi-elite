@@ -31,5 +31,11 @@ jobs:
           git add data/research/ai-ranking-latest.json
           if ! git diff --cached --quiet; then
             git commit -m "research: refresh offline AI strategy ranking"
-            git push
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main || { git rebase --abort || true; exit 1; }
+              if git push origin HEAD:main; then exit 0; fi
+              sleep 2
+            done
+            exit 1
           fi
