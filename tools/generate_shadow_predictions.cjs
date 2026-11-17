@@ -33,7 +33,11 @@ for(const r of doc.races||[]){
  const ranked=combos.map(([a,b,c])=>({pick:a+'-'+b+'-'+c,score:1.35*(s[a-1]+lane[a-1])+.75*(s[b-1]+lane[b-1])+.4*(s[c-1]+lane[c-1])})).sort((x,y)=>y.score-x.score);
  // No fabricated EV or calibrated probability. Shadow tickets use fixed 100-yen stakes.
  const picks=ranked.slice(0,5).map(x=>({pick:x.pick,stake:100}));
- prior.races[key]={strategy:'feature-shadow',model:prior.model,lockedAt:now,sourceCapturedAt:r.capturedAt,picks,decision:'rank-only-test',oddsUsed:false,calibrated:false};
+ // Pre-register the odds-free selection decision before cutoff. Fixed research threshold.
+ const adjusted=s.map((v,i)=>v+lane[i]).sort((a,b)=>b-a);
+ const strengthMargin=adjusted[0]-adjusted[1];
+ const selectRace=strengthMargin>=0.75;
+ prior.races[key]={strategy:'feature-shadow',model:prior.model,lockedAt:now,sourceCapturedAt:r.capturedAt,picks,decision:'rank-only-test',oddsUsed:false,calibrated:false,selection:{schema:'odds-free-selection-v1',rule:'lane-adjusted-strength-margin-gte-0.75',margin:Number(strengthMargin.toFixed(6)),decision:selectRace?'select':'skip',lockedAt:now,oddsUsed:false}};
  stored++;
 }
 if(stored){fs.mkdirSync(path.dirname(dest),{recursive:true});const temp=dest+'.tmp';fs.writeFileSync(temp,JSON.stringify(prior,null,2)+'\n');fs.renameSync(temp,dest);}
