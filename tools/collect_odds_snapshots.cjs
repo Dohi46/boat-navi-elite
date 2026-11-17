@@ -33,12 +33,12 @@ async function main(){
  const existing=fs.existsSync(dest)?JSON.parse(fs.readFileSync(dest,'utf8')):{date,schema:'odds-observation-v1',races:{}};
  if(existing.date!==date||existing.schema!=='odds-observation-v1'||!existing.races||typeof existing.races!=='object')throw Error('Unexpected existing snapshot schema');
  let stored=0,skipped=0;
- const indexed=new Map();
+ const indexed=new Map(),duplicates=new Set();
  for(const x of data){
   const venue=Number(x.stadium_number),race=Number(x.number);
   if(!Number.isInteger(venue)||venue<1||venue>24||!Number.isInteger(race)||race<1||race>12)continue;
   const key=venue+'-'+race;
-  if(indexed.has(key)){console.warn('Duplicate source race; excluding:',key);indexed.set(key,null);continue;}
+  if(indexed.has(key)||duplicates.has(key)){console.warn('Duplicate source race; excluding:',key);duplicates.add(key);indexed.set(key,null);continue;}
   indexed.set(key,x);
  }
  for(const r of prediction.races||[]){
