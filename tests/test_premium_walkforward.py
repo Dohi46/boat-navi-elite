@@ -15,6 +15,10 @@ class WalkForwardTests(unittest.TestCase):
                             snapshot("2026-11-18",0),
                             snapshot("2026-11-19",2100)],min_train_days=2)
         self.assertEqual(report["fold_count"],1)
+        self.assertEqual(report["evaluation_days"],1)
+        self.assertEqual(report["evaluation_settled_races"],1)
+        self.assertFalse(report["enough_holdout_for_review"])
+        self.assertIsNotNone(report["holdout_warning"])
         fold=report["folds"][0]
         self.assertEqual(fold["evaluation_date"],"2026-11-19")
         self.assertEqual(fold["train_dates"],["2026-11-17","2026-11-18"])
@@ -23,6 +27,8 @@ class WalkForwardTests(unittest.TestCase):
     def test_insufficient_history_is_not_success(self):
         report=walkforward([snapshot("2026-11-17",2100)],min_train_days=14)
         self.assertEqual(report["fold_count"],0)
+        self.assertEqual(report["evaluation_days"],0)
+        self.assertFalse(report["enough_holdout_for_review"])
         self.assertFalse(report["ready_for_premium"])
 
     def test_invalid_date_rejected(self):
