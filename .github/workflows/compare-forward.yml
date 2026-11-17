@@ -20,6 +20,28 @@ jobs:
         run: node --check tools/audit_odds_free_selection.cjs
       - name: Build odds-free selection research report
         run: node tools/audit_odds_free_selection.cjs > odds-free-selection.json
+      - name: Show odds-free selection results
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const r=JSON.parse(fs.readFileSync('odds-free-selection.json','utf8'));
+          const fmt=x=>x===null||x===undefined?'未検証':x+'%';
+          const n=x=>Number(x||0).toLocaleString('ja-JP');
+          const lines=[
+            '### オッズなし見送り判断・実績検証',
+            '- 締切前に選別を固定したレース: '+r.all.eligible+'R',
+            '- 選択: '+r.selected.eligible+'R / 見送り: '+r.selected.skipped+'R',
+            '- 選択したレースの結果確定: '+r.selected.settled+'R / 結果待ち: '+r.selected.unsettled+'R',
+            '- 全対象の的中数: '+r.all.hits+'点 / 回収率: '+fmt(r.all.roiPct),
+            '- 選択レースの的中数: '+r.selected.hits+'点 / 回収率: '+fmt(r.selected.roiPct),
+            '- 選択レースの仮想購入: '+n(r.selected.stake)+'円 / 払戻: '+n(r.selected.payout)+'円',
+            '- データ警告: '+r.warnings.length+'件',
+            r.selected.settled===0?'※選択レースの確定結果がないため、成績は未検証です。':'※少数レースの結果で優位性は証明できません。'
+          ];
+          const out=lines.join('\n')+'\n';
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,out);
+          console.log(out);
+          NODE
       - name: Build forward-only comparison report
         run: node tools/compare_forward_strategies.cjs > forward-comparison.json
       - name: Show verified comparison status
