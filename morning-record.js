@@ -11,12 +11,13 @@
  let loading=false;
  async function update(){
   if(loading)return;
-  const d=date.value;if(!/^\d{4}-\d{2}-\d{2}$/.test(d))return;
+  const d=date.value;if(!/^\d{4}-\d{2}-\d{2}$/.test(d)){status.textContent='開催日を選択してください。';return;}
   loading=true;refresh.disabled=true;status.textContent='朝の予想と最新結果を照合中…';
   try{
    const pred=await fetch('./data/auto/'+d+'.json?t='+Date.now(),{cache:'no-store'});
    if(!pred.ok)throw Error(pred.status===404?'この日の朝の予想は未保存です':'予想取得 HTTP '+pred.status);
    const doc=await pred.json();if(doc.date!==d||!Array.isArray(doc.races)||!doc.races.length)throw Error('指定日の朝の予想データがありません（ファイル日付または形式を確認してください）');
+   if(date.value!==d)return; // Ignore a stale response after date selection changes.
    let live=null,liveError='';
    try{const res=await fetch(resultsUrl(d)+'?t='+Date.now(),{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);live=await res.json();if(!live?.programs?.stadiums)throw Error('結果形式が不正です');}
    catch(e){liveError=e.message;}
@@ -31,6 +32,7 @@
     return {r,done:true,hits,stake:picks.reduce((a,x)=>a+(Number(x.stake)||0),0),returned:hits.reduce((a,x)=>a+x.returned,0)};
    });
    const done=rows.filter(x=>x.done),stake=done.reduce((a,x)=>a+x.stake,0),returned=done.reduce((a,x)=>a+x.returned,0),hits=done.reduce((a,x)=>a+x.hits.length,0);
+   if(date.value!==d)return;
    totals.replaceChildren();
    const summary=document.createElement('div');summary.className='grid2';
    [['朝の予想',rows.length+'レース'],['結果確定',done.length+' / '+rows.length],['的中数',hits+'点'],['回収率',stake?(returned/stake*100).toFixed(1)+'%':'—'],['仮想購入額（確定分）',money(stake)],['仮想払戻',money(returned)]].forEach(([k,v])=>{const el=document.createElement('div');el.className='card';const small=document.createElement('div');small.className='tiny muted';small.textContent=k;const strong=document.createElement('b');strong.style.fontSize='22px';strong.textContent=v;el.append(small,strong);summary.append(el);});
@@ -49,10 +51,10 @@
     });venues.append(group);
    });
    status.textContent=d+' の朝の予想 '+rows.length+'Rを読み込み済み ／ 最終確認 '+new Date().toLocaleTimeString('ja-JP')+' ／ '+(liveError?'公開結果の取得不可（GitHub保存済み結果のみ反映）：'+liveError:'最新の公開結果を確認')+' ／ 予想は読み取り専用・購入額は仮想';
-  }catch(e){status.textContent='朝の自動予想を表示できません（'+d+'）：'+e.message+'。再読み込み後も続く場合は、このエラーを確認してください。';totals.replaceChildren();venues.replaceChildren();}
+  }catch(e){if(date.value===d){status.textContent='朝の自動予想を表示できません（'+d+'）：'+e.message+'。再読み込み後も続く場合は、このエラーを確認してください。';totals.replaceChildren();venues.replaceChildren();}}
   finally{loading=false;refresh.disabled=false;}
  }
- refresh.addEventListener('click',update);date.addEventListener('change',update);
+ refresh.addEventListener('click',update);date.addEventListener('change',()=>{if(!loading)update();else status.textContent='日付を変更しました。読み込みが終わったら再取得してください。';});
  let last='';setInterval(()=>{if(document.visibilityState==='visible'&&host.closest('.page')?.classList.contains('active')&&date.value===jst()){const slot=Math.floor(Date.now()/300000);if(last!==String(slot)){last=String(slot);update();}}},30000);
  document.querySelectorAll('[data-page="records"]').forEach(b=>b.addEventListener('click',()=>{if(!totals.childElementCount)update();}));
  update();
