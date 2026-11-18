@@ -35,23 +35,37 @@ class VisibleText(HTMLParser):
             self.parts.append(data)
 
 def parse_conditions(html, retrieved_at):
-    """Conservative weather extraction. Unrecognized wind direction remains unknown."""
+    """Parse only explicitly visible data; never infer wind-arrow images or ST."""
     parser = VisibleText()
     parser.feed(html)
     text = re.sub(r"\s+", " ", "".join(parser.parts))
-    match = re.search(r"水面気象情報.{0,120}?気温\s*([0-9]+(?:\.[0-9]+)?)\s*℃.{0,100}?風速\s*([0-9]+(?:\.[0-9]+)?)\s*m.{0,100}?水温\s*([0-9]+(?:\.[0-9]+)?)\s*℃.{0,100}?波高\s*([0-9]+(?:\.[0-9]+)?)\s*cm", text)
+    def measurement(label, unit):
+        match = re.search(re.escape(label) + r"\s*(-?\d+(?:\.\d+)?)\s*" + re.escape(unit), text)
+        return float(match.group(1)) if match else None
+
+    air = measurement("気温", "℃")
+    wind = measurement("風速", "m")
+    water = measurement("水温", "℃")
+    wave = measurement("波高", "cm")
     weather = None
-    if match:
-        air, wind, water, wave = map(float, match.groups())
-        if 0 <= wind <= 60 and 0 <= wave <= 500 and -20 <= air <= 60 and -5 <= water <= 45:
-            weather = {"observed_at": retrieved_at, "source": "BOAT RACE official beforeinfo",
-                       "air_temperature_c": air, "wind_speed_mps": wind,
-                       "water_temperature_c": water, "wave_height_cm": wave,
-                       "wind_direction_deg": None}
-    # The table is parsed only if six unambiguous consecutive weight/time/tilt
-    # triplets are found before the start-exhibition section.
+    if (air is not None and wind is not None and water is not None and wave is not None
+            and -20 <= air <= 60 and 0 <= wind <= 60
+            and -5 <= water <= 45 and 0 <= wave <= 500
+            and "水面気象情報" in text):
+        weather = {"observed_at": retrieved_at, "source": "BOAT RACE official beforeinfo",
+                   "air_temperature_c": air, "wind_speed_mps": wind,
+                   "water_temperature_c": water, "wave_height_cm": wave,
+                   "wind_direction_deg": None}
+        # Direction often appears as an icon; only accept an explicit labeled number.
+        direction = re.search(r"風向(?:き)?\s*([0-9]{1,3})\s*(?:度|°)", text)
+        if direction and 0 <= int(direction.group(1)) <= 360:
+            weather["wind_direction_deg"] = int(direction.group(1))
+
+    # Scope the six rows to the racer table, not previous-race ST statistics.
     before_start = text.split("スタート展示", 1)[0]
-    triplets = re.findall(r"\b(?:[3-9][0-9](?:\.[0-9]+)?)\s*kg\s+([4-9]\.[0-9]{2})\s+(-?[0-9]\.[0-9])\b", before_start)
+    triplets = re.findall(
+        r"\b(?:[3-9][0-9](?:\.[0-9]+)?)\s*kg\s+([4-9]\.[0-9]{2})\s+(-?[0-9]\.[0-9])\b",
+        before_start)
     exhibition = None
     if len(triplets) == 6:
         exhibition = {"observed_at": retrieved_at, "source": "BOAT RACE official beforeinfo",
@@ -59,6 +73,18 @@ def parse_conditions(html, retrieved_at):
                                  "tilt": float(pair[1]), "start_timing": None}
                                 for i, pair in enumerate(triplets, 1)],
                       "start_exhibition_status": "unparsed"}
+
+    # Start exhibition is a distinct table: do NOT confuse it with prior-race ST.
+    start_match = re.search(r"スタート展示\s*コース\s*並び\s*ST\s*(.*?)\s*水面気象情報", text)
+    if exhibition and start_match:
+        section = start_match.group(1)
+        # A six-row table must explicitly include course numbers 1..6 and ST.
+        entries = re.findall(r"(?<!\d)([1-6])\s+(?:Image\s+)?(F?\.?\d{1,2})(?!\d)", section)
+        if len(entries) == 6 and [int(e[0]) for e in entries] == list(range(1, 7)):
+            for lane, (_, st) in zip(exhibition["lanes"], entries):
+                lane["start_timing"] = -float(st[1:]) if st.startswith("F") else float(st)
+            exhibition["start_exhibition_status"] = "parsed_course_order_only"
+            exhibition["entry_course_mapping_status"] = "unverified: boat identity not in text"
     return weather, exhibition
 
 def capture(day, venue, race, *, opener=urlopen, now=None):
@@ -90,7 +116,7 @@ def capture(day, venue, race, *, opener=urlopen, now=None):
         "html_sha256": hashlib.sha256(body).hexdigest(),
         "html": html,
         "weather": weather, "exhibition": exhibition,
-        "structured_data_status": "partial_weather_only" if weather else "unparsed",
+        "structured_data_status": "partial_weather_and_exhibition" if weather and exhibition else ("partial_weather_only" if weather else ("partial_exhibition_only" if exhibition else "unparsed")),
         "ready_for_premium": False
     }
 
