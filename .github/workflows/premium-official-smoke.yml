@@ -1,0 +1,46 @@
+name: Premium official data smoke test
+on:
+  push:
+    branches: [feature/premium-research-v1]
+    paths:
+      - 'scripts/premium_official_smoke.py'
+      - 'scripts/premium_official_capture.py'
+      - '.github/workflows/premium-official-smoke.yml'
+  workflow_dispatch:
+jobs:
+  official-connectivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Probe one official historical race
+        run: |
+          python -m scripts.premium_official_smoke --date 2026-11-14 --venue 2 --race 5 --output /tmp/premium-official-smoke.json
+      - name: Summarize connectivity and extraction
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('/tmp/premium-official-smoke.json').read_text())
+          assert r['mode']=='research_only' and r['ready_for_premium'] is False
+          print('HTTP/HTML:',r['status'])
+          print('Weather:',r.get('weather_parsed','unknown'))
+          print('Exhibition:',r.get('exhibition_parsed','unknown'))
+          print('Wind direction:',r.get('wind_direction_parsed','unknown'))
+          print('ST count:',r.get('start_timing_count','unknown'))
+          if r['status']!='fetched':
+              print('WARNING: live official page could not be fetched')
+          PY
+      - name: Upload non-sensitive smoke report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-official-smoke
+          path: /tmp/premium-official-smoke.json
+          if-no-files-found: warn
+          retention-days: 7
