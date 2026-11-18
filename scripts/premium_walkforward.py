@@ -44,6 +44,22 @@ def walkforward(docs, min_train_days=14):
     combined = {name: metrics([r for fold in folds
                  for r in days[fold["evaluation_date"]] if rule(r)])
                  for name, rule in CONDITIONS.items()}
+    stability = {}
+    for name in CONDITIONS:
+        observations = [f["conditions"][name]["evaluation"] for f in folds]
+        observed = [m for m in observations if m["settled_races"] > 0 and m["return_rate_percent"] is not None]
+        profitable = sum(m["return_rate_percent"] >= 100 for m in observed)
+        total = len(observed)
+        stability[name] = {
+            "evaluated_days": total,
+            "days_with_no_settled_races": len(observations) - total,
+            "days_at_or_above_100_percent": profitable,
+            "days_below_100_percent": total - profitable,
+            "profitable_day_share_percent": round(100 * profitable / total, 2) if total else None,
+            "min_daily_return_rate_percent": min((m["return_rate_percent"] for m in observed), default=None),
+            "max_daily_return_rate_percent": max((m["return_rate_percent"] for m in observed), default=None),
+            "caution": "Descriptive only; days have unequal stake and overlapping training histories."
+        }
     evaluation_dates = [fold["evaluation_date"] for fold in folds]
     evaluation_races = combined["all"]["settled_races"]
     evaluation_ready = len(evaluation_dates) >= 7 and evaluation_races >= 100
@@ -53,6 +69,7 @@ def walkforward(docs, min_train_days=14):
             "enough_holdout_for_review": evaluation_ready,
             "holdout_warning": None if evaluation_ready else "Fewer than 7 evaluation dates or 100 settled evaluation races; no reliability claim",
             "available_days": dates, "fold_count": len(folds),
+            "stability": stability,
             "folds": folds, "all_evaluation_dates": combined,
             "ready_for_premium": False,
             "note": "Selection thresholds are fixed; no odds or calibrated probabilities. "
