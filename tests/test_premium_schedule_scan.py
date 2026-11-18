@@ -30,6 +30,7 @@ class ScheduleScanTests(unittest.TestCase):
                                deadline_fetch=lambda day, venue, race: {"deadline_jst": deadlines[race]},
                                collector=collector)
         self.assertEqual(selected, [10])
+        self.assertEqual(report["outcome"], "capture_partial_or_skipped")
         self.assertEqual(report["results"][0]["status"], "captured")
         self.assertEqual(report["candidates"][0]["status"], "skip_cutoff")
 
@@ -38,6 +39,7 @@ class ScheduleScanTests(unittest.TestCase):
                                deadline_fetch=lambda *args: {"deadline_jst": "2026-11-18T15:00:00+09:00"},
                                collector=lambda *args, **kwargs: self.fail("must not collect"))
         self.assertEqual(report["results"], [])
+        self.assertEqual(report["outcome"], "no_eligible_race")
         self.assertEqual(report["candidates"][0]["status"], "skip_cutoff")
 
     def test_upcoming_candidate_limit(self):
