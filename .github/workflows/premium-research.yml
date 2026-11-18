@@ -149,6 +149,27 @@ jobs:
           if r.get('outcome') != 'capture_with_both_fields':
               print('RESEARCH DATA NOT COMPLETE: do not interpret green CI as a successful full capture')
           print('NOTE: unknown deadline or failed fetch is not a successful capture')
+          from os import environ
+          summary = environ.get('GITHUB_STEP_SUMMARY')
+          if summary:
+              outcome = r.get('outcome', 'unknown')
+              rows = [
+                  '## Official data collection — research only',
+                  '',
+                  f'- Outcome: \`{outcome}\`',
+                  f'- Checked date (JST): {r.get("date", "unknown")}',
+                  f'- Venue code: {r.get("venue", "unknown")}',
+                  f'- Candidates checked: {len(r.get("candidates", []))}',
+                  f'- Full captures: {sum(x.get("status") == "captured" and bool(x.get("weather_parsed")) and bool(x.get("exhibition_parsed")) for x in r["results"])}',
+                  '',
+                  '| Race | Status | Weather | Exhibition |',
+                  '|---|---|---|---|',
+              ]
+              for x in r['results']:
+                  rows.append(f'| {x.get("race", "?")} | {x.get("status", "?")} | {bool(x.get("weather_parsed"))} | {bool(x.get("exhibition_parsed"))} |')
+              if outcome != 'capture_with_both_fields':
+                  rows.extend(['', '**Not a verified full capture. Green CI only means the checks ran successfully.**'])
+              Path(summary).open('a', encoding='utf-8').write('\\n'.join(rows) + '\\n')
           PY
       - name: Upload official schedule research report
         if: always()
