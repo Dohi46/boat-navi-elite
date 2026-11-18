@@ -34,6 +34,26 @@ class ScheduleScanTests(unittest.TestCase):
         self.assertEqual(report["results"][0]["status"], "captured")
         self.assertEqual(report["candidates"][0]["status"], "skip_cutoff")
 
+    def test_upcoming_full_capture_requires_both_fields(self):
+        deadline = "2026-11-18T15:40:00+09:00"
+        report = scan_upcoming("2026-11-18", 2, now=NOW, candidates=(9,),
+                               deadline_fetch=lambda *args: {"deadline_jst": deadline},
+                               collector=lambda *args, **kwargs: {
+                                   "race": 9, "status": "captured",
+                                   "weather_parsed": True, "exhibition_parsed": True})
+        self.assertEqual(report["outcome"], "capture_with_both_fields")
+        self.assertFalse(report["ready_for_premium"])
+
+    def test_upcoming_partial_capture_not_full_success(self):
+        deadline = "2026-11-18T15:40:00+09:00"
+        report = scan_upcoming("2026-11-18", 2, now=NOW, candidates=(9,),
+                               deadline_fetch=lambda *args: {"deadline_jst": deadline},
+                               collector=lambda *args, **kwargs: {
+                                   "race": 9, "status": "captured",
+                                   "weather_parsed": True, "exhibition_parsed": False})
+        self.assertEqual(report["outcome"], "capture_partial_or_skipped")
+        self.assertFalse(report["ready_for_premium"])
+
     def test_upcoming_all_expired_never_collects(self):
         report = scan_upcoming("2026-11-18", 2, now=NOW, candidates=(8,),
                                deadline_fetch=lambda *args: {"deadline_jst": "2026-11-18T15:00:00+09:00"},
