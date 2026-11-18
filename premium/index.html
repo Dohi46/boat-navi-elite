@@ -91,8 +91,8 @@ button:focus-visible{outline:3px solid #e7c783}ul{line-height:1.9}
 <h2 id="holdout-heading">時系列評価（学習期間より後のデータ）</h2>
 <p class="muted" id="holdout-status">時系列検証レポートの読み込み待ち。評価日数が不足している場合は成績の優位性を判断しません。</p>
 <div style="overflow-x:auto"><table id="holdout-table" style="width:100%;border-collapse:collapse;text-align:left" hidden>
-<thead><tr><th scope="col">固定条件</th><th scope="col">評価R</th><th scope="col">的中率</th><th scope="col">回収率</th><th scope="col">全レースとの差</th></tr></thead><tbody></tbody></table></div>
-<p class="muted">同じ固定条件を日付順に評価した記述統計です。各評価日の学習期間は重複します。収益性・独立性・購入推奨を示すものではありません。</p>
+<thead><tr><th scope="col">固定条件</th><th scope="col">評価R</th><th scope="col">的中率</th><th scope="col">回収率</th><th scope="col">全レースとの差</th><th scope="col">100%以上の日</th><th scope="col">日別回収率の範囲</th></tr></thead><tbody></tbody></table></div>
+<p class="muted">同じ固定条件を日付順に評価した記述統計です。各評価日の学習期間は重複します。100%以上の日は各日単位の仮想回収率であり、日ごとの購入額は異なります。収益性・独立性・購入推奨を示すものではありません。</p>
 </section>
 <script>
 (async function(){
@@ -116,7 +116,10 @@ button:focus-visible{outline:3px solid #e7c783}ul{line-height:1.9}
      if(!m)continue;
      const delta=typeof m.return_rate_percent==='number'&&typeof base==='number'?((m.return_rate_percent-base)>=0?'+':'')+(m.return_rate_percent-base).toFixed(2)+'pt':'未算出';
      const tr=document.createElement('tr');
-     [label,m.settled_races,pct(m.hit_rate_percent),pct(m.return_rate_percent),delta].forEach(value=>{
+     const s=report.stability?.[key];
+     const positiveDays=s&&Number.isInteger(s.evaluated_days)?s.days_at_or_above_100_percent+'/'+s.evaluated_days+'日':'未算出';
+     const range=s&&typeof s.min_daily_return_rate_percent==='number'&&typeof s.max_daily_return_rate_percent==='number'?pct(s.min_daily_return_rate_percent)+'〜'+pct(s.max_daily_return_rate_percent):'未算出';
+     [label,m.settled_races,pct(m.hit_rate_percent),pct(m.return_rate_percent),delta,positiveDays,range].forEach(value=>{
        const td=document.createElement('td');td.textContent=String(value);
        td.style.cssText='padding:12px 8px;border-bottom:1px solid #334056';tr.appendChild(td);
      });table.tBodies[0].appendChild(tr);
