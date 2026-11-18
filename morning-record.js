@@ -52,9 +52,9 @@
    });
    status.textContent=d+' の朝の予想 '+rows.length+'Rを読み込み済み ／ 最終確認 '+new Date().toLocaleTimeString('ja-JP')+' ／ '+(liveError?'公開結果の取得不可（GitHub保存済み結果のみ反映）：'+liveError:'最新の公開結果を確認')+' ／ 予想は読み取り専用・購入額は仮想';
   }catch(e){if(date.value===d){status.textContent='朝の自動予想を表示できません（'+d+'）：'+e.message+'。再読み込み後も続く場合は、このエラーを確認してください。';totals.replaceChildren();venues.replaceChildren();}}
-  finally{loading=false;refresh.disabled=false;}
+  finally{loading=false;refresh.disabled=false;if(date.value!==d)update();}
  }
- refresh.addEventListener('click',update);date.addEventListener('change',()=>{if(!loading)update();else status.textContent='日付を変更しました。読み込みが終わったら再取得してください。';});
+ refresh.addEventListener('click',update);date.addEventListener('change',()=>{if(!loading)update();else status.textContent='日付を変更しました。現在の取得が終わり次第、自動的に再取得します。';});
  let last='';setInterval(()=>{if(document.visibilityState==='visible'&&host.closest('.page')?.classList.contains('active')&&date.value===jst()){const slot=Math.floor(Date.now()/300000);if(last!==String(slot)){last=String(slot);update();}}},30000);
  document.querySelectorAll('[data-page="records"]').forEach(b=>b.addEventListener('click',()=>{if(!totals.childElementCount)update();}));
  update();
