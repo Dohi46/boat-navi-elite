@@ -17,6 +17,9 @@ class WalkForwardTests(unittest.TestCase):
         self.assertEqual(report["fold_count"],1)
         self.assertEqual(report["evaluation_days"],1)
         self.assertEqual(report["evaluation_settled_races"],1)
+        self.assertEqual(report["stability"]["all"]["evaluated_days"],1)
+        self.assertEqual(report["stability"]["all"]["days_at_or_above_100_percent"],1)
+        self.assertEqual(report["stability"]["all"]["profitable_day_share_percent"],100.0)
         self.assertFalse(report["enough_holdout_for_review"])
         self.assertIsNotNone(report["holdout_warning"])
         fold=report["folds"][0]
@@ -28,6 +31,8 @@ class WalkForwardTests(unittest.TestCase):
         report=walkforward([snapshot("2026-11-17",2100)],min_train_days=14)
         self.assertEqual(report["fold_count"],0)
         self.assertEqual(report["evaluation_days"],0)
+        self.assertEqual(report["stability"]["all"]["evaluated_days"],0)
+        self.assertIsNone(report["stability"]["all"]["profitable_day_share_percent"])
         self.assertFalse(report["enough_holdout_for_review"])
         self.assertFalse(report["ready_for_premium"])
 
