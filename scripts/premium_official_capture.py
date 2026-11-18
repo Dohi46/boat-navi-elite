@@ -8,10 +8,47 @@ import hashlib
 import json
 from datetime import date, datetime, timezone
 from pathlib import Path
+from html.parser import HTMLParser
+import re
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 BASE = "https://www.boatrace.jp/owpc/pc/race/beforeinfo"
+
+class VisibleText(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts = []
+        self.hidden = 0
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self.hidden += 1
+        if tag in ("tr", "td", "th", "li", "div", "p", "br"):
+            self.parts.append(" ")
+    def handle_endtag(self, tag):
+        if tag in ("script", "style") and self.hidden:
+            self.hidden -= 1
+        if tag in ("tr", "td", "th", "li", "div", "p"):
+            self.parts.append(" ")
+    def handle_data(self, data):
+        if not self.hidden:
+            self.parts.append(data)
+
+def parse_conditions(html, retrieved_at):
+    """Conservative weather extraction. Unrecognized wind direction remains unknown."""
+    parser = VisibleText()
+    parser.feed(html)
+    text = re.sub(r"\\s+", " ", "".join(parser.parts))
+    match = re.search(r"水面気象情報.{0,120}?気温\\s*([0-9]+(?:\\.[0-9]+)?)\\s*℃.{0,100}?風速\\s*([0-9]+(?:\\.[0-9]+)?)\\s*m.{0,100}?水温\\s*([0-9]+(?:\\.[0-9]+)?)\\s*℃.{0,100}?波高\\s*([0-9]+(?:\\.[0-9]+)?)\\s*cm", text)
+    weather = None
+    if match:
+        air, wind, water, wave = map(float, match.groups())
+        if 0 <= wind <= 60 and 0 <= wave <= 500 and -20 <= air <= 60 and -5 <= water <= 45:
+            weather = {"observed_at": retrieved_at, "source": "BOAT RACE official beforeinfo",
+                       "air_temperature_c": air, "wind_speed_mps": wind,
+                       "water_temperature_c": water, "wave_height_cm": wave,
+                       "wind_direction_deg": None}
+    return weather, None
 
 def capture(day, venue, race, *, opener=urlopen, now=None):
     if date.fromisoformat(day).isoformat() != day:
@@ -32,15 +69,17 @@ def capture(day, venue, race, *, opener=urlopen, now=None):
     observed_at = now or datetime.now(timezone.utc)
     if observed_at.tzinfo is None:
         raise ValueError("timestamp must be timezone-aware")
+    html = body.decode("utf-8", errors="replace")
+    weather, exhibition = parse_conditions(html, observed_at.isoformat())
     return {
         "schema": "premium-official-capture-v1", "mode": "research_only",
         "source_url": url, "source": "BOAT RACE official beforeinfo",
         "race_date": day, "venue": venue, "race": race,
         "retrieved_at": observed_at.isoformat(),
         "html_sha256": hashlib.sha256(body).hexdigest(),
-        "html": body.decode("utf-8", errors="replace"),
-        "weather": None, "exhibition": None,
-        "structured_data_status": "unparsed: do not infer availability or pre-cutoff timing",
+        "html": html,
+        "weather": weather, "exhibition": exhibition,
+        "structured_data_status": "partial_weather_only" if weather else "unparsed",
         "ready_for_premium": False
     }
 
