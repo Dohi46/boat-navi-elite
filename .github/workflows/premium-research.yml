@@ -86,18 +86,31 @@ jobs:
           name: premium-walkforward-research
           path: /tmp/premium-walkforward.json
           retention-days: 14
+      - name: Build offline integration safety report
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from scripts.premium_integration import integrate
+          report=integrate({'races':[]})
+          assert report['ready_for_premium'] is False
+          Path('/tmp/premium-integration-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
       - name: Prepare offline preview bundle
         run: |
           mkdir -p /tmp/premium-preview
           cp premium/index.html /tmp/premium-preview/index.html
           cp /tmp/premium-research-summary.json /tmp/premium-preview/research-summary.json
           cp /tmp/premium-walkforward.json /tmp/premium-preview/walkforward.json
+          cp /tmp/premium-integration-report.json /tmp/premium-preview/integration-report.json
           python - <<'PY'
           from pathlib import Path
           html=Path('/tmp/premium-preview/index.html').read_text(encoding='utf-8')
           assert "fetch('./research-summary.json'" in html
           assert "fetch('./walkforward.json'" in html
           assert Path("/tmp/premium-preview/walkforward.json").is_file()
+          assert "fetch(\'./integration-report.json\'" in html
+          assert Path("/tmp/premium-preview/integration-report.json").is_file()
           assert '研究プレビュー' in html
           print('Research preview bundle ready; no deployment or repository writes')
           PY
