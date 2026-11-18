@@ -3,6 +3,7 @@
  const $=id=>document.getElementById(id), host=$('morningTracker');
  if(!host)return;
  const date=$('morningDate'), refresh=$('morningRefresh'), status=$('morningStatus'), totals=$('morningTotals'), venues=$('morningVenues');
+ if(!date||!refresh||!status||!totals||!venues)return;
  const jst=()=>{const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const field=t=>parts.find(p=>p.type===t)?.value;return [field('year'),field('month'),field('day')].join('-');};
  date.value=jst();
  const money=n=>Number(n||0).toLocaleString('ja-JP')+'円';
@@ -15,7 +16,7 @@
   loading=true;refresh.disabled=true;status.textContent='朝の予想と最新結果を照合中…';
   try{
    const pred=await fetch('./data/auto/'+d+'.json?t='+Date.now(),{cache:'no-store'});
-   if(!pred.ok)throw Error(pred.status===404?'この日の朝の予想は未保存です':'予想取得 HTTP '+pred.status);
+   if(!pred.ok)throw Error(pred.status===404?'この日の朝の予想ファイルが未生成です。GitHub Actionsの朝の自動実行を確認してください。':'予想取得 HTTP '+pred.status);
    const doc=await pred.json();if(doc.date!==d||!Array.isArray(doc.races)||!doc.races.length)throw Error('指定日の朝の予想データがありません（ファイル日付または形式を確認してください）');
    if(date.value!==d)return; // Ignore a stale response after date selection changes.
    let live=null,liveError='';
@@ -41,7 +42,7 @@
    [...groups].sort((a,b)=>a[0]-b[0]).forEach(([v,items])=>{
     const group=document.createElement('details');group.className='card';group.style.marginTop='10px';
     const title=document.createElement('summary');title.style.cursor='pointer';
-    title.textContent=(typeof STADIUMS!=='undefined'?STADIUMS[v]:null||'場'+v)+'　'+items.filter(x=>x.done).length+'/'+items.length+'R確定　的中'+items.reduce((a,x)=>a+x.hits.length,0)+'点';
+    title.textContent=((typeof STADIUMS!=='undefined'&&STADIUMS[v])||'場'+v)+'　'+items.filter(x=>x.done).length+'/'+items.length+'R確定　的中'+items.reduce((a,x)=>a+x.hits.length,0)+'点';
     group.append(title);
     items.sort((a,b)=>Number(a.r.race)-Number(b.r.race)).forEach(x=>{
      const line=document.createElement('div');line.className='status';line.style.cssText='padding:8px 0;border-bottom:1px solid var(--line)';
