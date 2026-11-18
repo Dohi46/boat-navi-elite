@@ -5,12 +5,22 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from scripts.premium_official_capture import capture
+from scripts.premium_official_deadline import fetch_deadline
 
 JST = ZoneInfo("Asia/Tokyo")
 
-def collect(day, venue, race, deadline, *, fetch=capture, now=None, minimum_lead_minutes=2):
+def collect(day, venue, race, deadline, *, fetch=capture, now=None, minimum_lead_minutes=2, deadline_fetch=fetch_deadline):
     if date.fromisoformat(day).isoformat() != day:
         raise ValueError("invalid race date")
+    deadline_source = None
+    if deadline == "auto":
+        official = deadline_fetch(day, venue, race)
+        deadline = official.get("deadline_jst")
+        deadline_source = official.get("source_url")
+        if not deadline:
+            return {"schema": "premium-precutoff-v1", "mode": "research_only",
+                    "race_date": day, "venue": venue, "race": race,
+                    "status": "skip_deadline_unknown", "ready_for_premium": False}
     cutoff = datetime.fromisoformat(deadline)
     if cutoff.tzinfo is None:
         raise ValueError("deadline requires explicit timezone offset")
@@ -23,7 +33,8 @@ def collect(day, venue, race, deadline, *, fetch=capture, now=None, minimum_lead
     lead = cutoff - instant.astimezone(JST)
     base = {"schema": "premium-precutoff-v1", "mode": "research_only",
             "race_date": day, "venue": venue, "race": race,
-            "deadline_jst": cutoff.isoformat(), "checked_at": instant.isoformat(),
+            "deadline_jst": cutoff.isoformat(), "deadline_source": deadline_source,
+            "checked_at": instant.isoformat(),
             "ready_for_premium": False}
     if lead < timedelta(minutes=minimum_lead_minutes):
         return {**base, "status": "skip_cutoff", "reason": "insufficient time before verified deadline"}
@@ -45,7 +56,7 @@ def main():
     p.add_argument("--date", required=True)
     p.add_argument("--venue", required=True, type=int)
     p.add_argument("--race", required=True, type=int)
-    p.add_argument("--deadline-jst", required=True, help="Verified deadline with timezone, e.g. 2026-11-18T15:50:00+09:00")
+    p.add_argument("--deadline-jst", required=True, help="Verified deadline with timezone, or auto for official extraction")
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
     try:
