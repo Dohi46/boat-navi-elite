@@ -131,13 +131,16 @@ jobs:
         if: github.event_name == 'push'
         timeout-minutes: 3
         run: |
-          python -m scripts.premium_schedule_scan --venue 2 --races 8 9 --output /tmp/premium-schedule-scan.json
+          python -m scripts.premium_schedule_scan --venue 2 --auto-upcoming --output /tmp/premium-schedule-scan.json
           python - <<'PY'
           import json
           from pathlib import Path
           r=json.loads(Path('/tmp/premium-schedule-scan.json').read_text(encoding='utf-8'))
           assert r['mode']=='research_only' and r['ready_for_premium'] is False
-          assert len(r['results'])<=3
+          assert len(r['results'])<=1
+          assert len(r.get('candidates',[]))<=6
+          for candidate in r.get('candidates',[]):
+              print('candidate:',candidate['race'],'status:',candidate['status'])
           for x in r['results']:
               print('race:',x['race'],'status:',x['status'])
           print('NOTE: unknown deadline or failed fetch is not a successful capture')
