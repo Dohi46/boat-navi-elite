@@ -141,8 +141,13 @@ jobs:
           assert len(r.get('candidates',[]))<=6
           for candidate in r.get('candidates',[]):
               print('candidate:',candidate['race'],'status:',candidate['status'])
+          print('OUTCOME:',r.get('outcome','unknown'))
           for x in r['results']:
-              print('race:',x['race'],'status:',x['status'])
+              print('race:',x['race'],'status:',x['status'],
+                    'weather:',x.get('weather_parsed','unknown'),
+                    'exhibition:',x.get('exhibition_parsed','unknown'))
+          if r.get('outcome') != 'capture_with_both_fields':
+              print('RESEARCH DATA NOT COMPLETE: do not interpret green CI as a successful full capture')
           print('NOTE: unknown deadline or failed fetch is not a successful capture')
           PY
       - name: Upload official schedule research report
