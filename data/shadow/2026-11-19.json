@@ -1,0 +1,5155 @@
+{
+  "date": "2026-11-19",
+  "schema": "shadow-v1",
+  "model": "feature-ranking-v0-experimental",
+  "races": {
+    "1-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.351Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.500Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.2236,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.351Z",
+        "oddsUsed": false
+      }
+    },
+    "1-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.351Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.501Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.87398,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.351Z",
+        "oddsUsed": false
+      }
+    },
+    "1-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.352Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.501Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.15648,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.352Z",
+        "oddsUsed": false
+      }
+    },
+    "1-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.352Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.501Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.40396,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.352Z",
+        "oddsUsed": false
+      }
+    },
+    "1-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.352Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.502Z",
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.14332,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.352Z",
+        "oddsUsed": false
+      }
+    },
+    "1-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.352Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.502Z",
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.16144,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.352Z",
+        "oddsUsed": false
+      }
+    },
+    "1-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.353Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.503Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.3485,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.353Z",
+        "oddsUsed": false
+      }
+    },
+    "1-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.354Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.503Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.11614,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.354Z",
+        "oddsUsed": false
+      }
+    },
+    "1-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.354Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.505Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "3-1-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.5367,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.354Z",
+        "oddsUsed": false
+      }
+    },
+    "1-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.354Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.505Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.59976,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.354Z",
+        "oddsUsed": false
+      }
+    },
+    "1-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.354Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.505Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.065,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.354Z",
+        "oddsUsed": false
+      }
+    },
+    "1-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.354Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.505Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.54156,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.354Z",
+        "oddsUsed": false
+      }
+    },
+    "2-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.354Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.505Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.56808,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.354Z",
+        "oddsUsed": false
+      }
+    },
+    "2-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.355Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.505Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.95212,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.355Z",
+        "oddsUsed": false
+      }
+    },
+    "2-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.355Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.506Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.2773,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.355Z",
+        "oddsUsed": false
+      }
+    },
+    "2-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.355Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.506Z",
+      "picks": [
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.21704,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.355Z",
+        "oddsUsed": false
+      }
+    },
+    "2-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.355Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.506Z",
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.94532,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.355Z",
+        "oddsUsed": false
+      }
+    },
+    "2-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.355Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.506Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.15812,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.355Z",
+        "oddsUsed": false
+      }
+    },
+    "2-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.355Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.506Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.55326,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.355Z",
+        "oddsUsed": false
+      }
+    },
+    "2-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.506Z",
+      "picks": [
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "3-2-1",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.33158,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "2-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.507Z",
+      "picks": [
+        {
+          "pick": "1-5-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.45948,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "2-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.507Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.6852,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "2-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.507Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.25432,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "2-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.508Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.4341,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "4-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.508Z",
+      "picks": [
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.16318,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "4-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.508Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.63128,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "4-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.508Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.72564,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "4-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.508Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.92648,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "4-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.356Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.509Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.4707,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.356Z",
+        "oddsUsed": false
+      }
+    },
+    "4-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.357Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.509Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.36296,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.357Z",
+        "oddsUsed": false
+      }
+    },
+    "4-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.357Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.509Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.23348,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.357Z",
+        "oddsUsed": false
+      }
+    },
+    "4-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.357Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.509Z",
+      "picks": [
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.26698,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.357Z",
+        "oddsUsed": false
+      }
+    },
+    "4-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.357Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.509Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.0871,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.357Z",
+        "oddsUsed": false
+      }
+    },
+    "4-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.357Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.509Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.27082,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.357Z",
+        "oddsUsed": false
+      }
+    },
+    "4-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.357Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.509Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.02682,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.357Z",
+        "oddsUsed": false
+      }
+    },
+    "4-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.510Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.96534,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.510Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.73928,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.510Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.8225,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.510Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.37104,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.510Z",
+      "picks": [
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "2-4-1",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.13296,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.510Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.19542,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.510Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-6-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.31672,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.511Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.06546,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.358Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.511Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "3-1-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.69802,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.358Z",
+        "oddsUsed": false
+      }
+    },
+    "9-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.511Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.71404,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "9-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.511Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.64378,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "9-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.512Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.54612,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "9-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.512Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.39348,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.512Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.41062,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.512Z",
+      "picks": [
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.79678,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.512Z",
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.1041,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.513Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.10146,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.513Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.33018,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.513Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.68562,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.513Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.26048,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.514Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.1273,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.359Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.514Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.0708,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.359Z",
+        "oddsUsed": false
+      }
+    },
+    "11-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.514Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.47784,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "11-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.514Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.91032,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "11-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.514Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.88274,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.514Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.80124,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.514Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.09988,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.05118,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.51982,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.4598,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.03566,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.88464,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "3-1-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "3-1-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.25062,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.09648,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.69996,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.515Z",
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.43168,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "14-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.516Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.50016,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.516Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.19134,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.516Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.08784,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.516Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.15934,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.516Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.67194,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.516Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.18634,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.517Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.50286,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.517Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.15234,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.517Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.9689,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.517Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.92852,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.517Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.15554,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.517Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.1629,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "15-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.360Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.518Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.31746,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.360Z",
+        "oddsUsed": false
+      }
+    },
+    "17-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.518Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.45512,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.518Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.49462,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.519Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.44726,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.519Z",
+      "picks": [
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.4713,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.62076,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.3619,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.46636,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.71774,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.18836,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.40784,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.4844,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "17-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.78592,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.520Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.90676,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.521Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.74664,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.521Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.14606,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.521Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.1052,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.521Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.76928,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.521Z",
+      "picks": [
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.5495,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.521Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.91072,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.522Z",
+      "picks": [
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-6-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.24758,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.522Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.84396,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.522Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.04066,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.522Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.60922,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "18-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.523Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.8348,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "22-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.523Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.44758,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "22-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.523Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.7885,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "22-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.523Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "3-1-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.94944,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "22-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.361Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.523Z",
+      "picks": [
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-5",
+          "stake": 100
+        },
+        {
+          "pick": "2-3-1",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.18362,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.361Z",
+        "oddsUsed": false
+      }
+    },
+    "22-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.524Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.5165,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "22-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.524Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.08172,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "22-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.524Z",
+      "picks": [
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.22118,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "22-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.524Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.51054,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "22-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.525Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.32444,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "22-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.525Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.16986,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "22-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.525Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.20568,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "22-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.525Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.73038,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-1": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.525Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.83622,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-2": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.525Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.6621,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-3": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.526Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.43916,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-4": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.526Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.2245,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-5": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.526Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-5-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.71274,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-6": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.526Z",
+      "picks": [
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "4-1-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.84818,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-7": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.526Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-4",
+          "stake": 100
+        },
+        {
+          "pick": "2-1-3",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 0.42714,
+        "decision": "skip",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-8": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.526Z",
+      "picks": [
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-5",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.59932,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-9": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.526Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.48168,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-10": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.527Z",
+      "picks": [
+        {
+          "pick": "1-4-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-6",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 2.359,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-11": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.527Z",
+      "picks": [
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-4",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.57566,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    },
+    "24-12": {
+      "strategy": "feature-shadow",
+      "model": "feature-ranking-v0-experimental",
+      "lockedAt": "2026-11-18T23:06:03.362Z",
+      "sourceCapturedAt": "2026-11-18T23:06:01.527Z",
+      "picks": [
+        {
+          "pick": "1-2-4",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-3",
+          "stake": 100
+        },
+        {
+          "pick": "1-2-5",
+          "stake": 100
+        },
+        {
+          "pick": "1-4-2",
+          "stake": 100
+        },
+        {
+          "pick": "1-3-2",
+          "stake": 100
+        }
+      ],
+      "decision": "rank-only-test",
+      "oddsUsed": false,
+      "calibrated": false,
+      "selection": {
+        "schema": "odds-free-selection-v1",
+        "rule": "lane-adjusted-strength-margin-gte-0.75",
+        "margin": 1.084,
+        "decision": "select",
+        "lockedAt": "2026-11-18T23:06:03.362Z",
+        "oddsUsed": false
+      }
+    }
+  }
+}
