@@ -156,7 +156,7 @@ jobs:
               rows = [
                   '## Official data collection — research only',
                   '',
-                  f'- Outcome: \`{outcome}\`',
+                  f'- Outcome: `{outcome}`',
                   f'- Checked date (JST): {r.get("date", "unknown")}',
                   f'- Venue code: {r.get("venue", "unknown")}',
                   f'- Candidates checked: {len(r.get("candidates", []))}',
@@ -169,7 +169,7 @@ jobs:
                   rows.append(f'| {x.get("race", "?")} | {x.get("status", "?")} | {bool(x.get("weather_parsed"))} | {bool(x.get("exhibition_parsed"))} |')
               if outcome != 'capture_with_both_fields':
                   rows.extend(['', '**Not a verified full capture. Green CI only means the checks ran successfully.**'])
-              Path(summary).open('a', encoding='utf-8').write('\\n'.join(rows) + '\\n')
+              Path(summary).open('a', encoding='utf-8').write('\n'.join(rows) + '\n')
           PY
       - name: Upload official schedule research report
         if: always()
