@@ -48,7 +48,18 @@ def parse_conditions(html, retrieved_at):
                        "air_temperature_c": air, "wind_speed_mps": wind,
                        "water_temperature_c": water, "wave_height_cm": wave,
                        "wind_direction_deg": None}
-    return weather, None
+    # The table is parsed only if six unambiguous consecutive weight/time/tilt
+    # triplets are found before the start-exhibition section.
+    before_start = text.split("スタート展示", 1)[0]
+    triplets = re.findall(r"\\b(?:[3-9][0-9](?:\\.[0-9]+)?)\\s*kg\\s+([4-9]\\.[0-9]{2})\\s+(-?[0-9]\\.[0-9])\\b", before_start)
+    exhibition = None
+    if len(triplets) == 6:
+        exhibition = {"observed_at": retrieved_at, "source": "BOAT RACE official beforeinfo",
+                      "lanes": [{"lane": i, "exhibition_time": float(pair[0]),
+                                 "tilt": float(pair[1]), "start_timing": None}
+                                for i, pair in enumerate(triplets, 1)],
+                      "start_exhibition_status": "unparsed"}
+    return weather, exhibition
 
 def capture(day, venue, race, *, opener=urlopen, now=None):
     if date.fromisoformat(day).isoformat() != day:
