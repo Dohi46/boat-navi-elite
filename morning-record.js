@@ -3,7 +3,7 @@
  const $=id=>document.getElementById(id), host=$('morningTracker');
  if(!host)return;
  const date=$('morningDate'), refresh=$('morningRefresh'), status=$('morningStatus'), totals=$('morningTotals'), venues=$('morningVenues');
- const jst=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ const jst=()=>{const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const field=t=>parts.find(p=>p.type===t)?.value;return [field('year'),field('month'),field('day')].join('-');};
  date.value=jst();
  const money=n=>Number(n||0).toLocaleString('ja-JP')+'円';
  const valid=p=>Array.isArray(p)&&p.length&&p.every(x=>/^[1-6]-[1-6]-[1-6]$/.test(String(x.combination||''))&&Number.isInteger(Number(x.amount))&&Number(x.amount)>0);
@@ -16,7 +16,7 @@
   try{
    const pred=await fetch('./data/auto/'+d+'.json?t='+Date.now(),{cache:'no-store'});
    if(!pred.ok)throw Error(pred.status===404?'この日の朝の予想は未保存です':'予想取得 HTTP '+pred.status);
-   const doc=await pred.json();if(!Array.isArray(doc.races))throw Error('予想形式が不正です');
+   const doc=await pred.json();if(doc.date!==d||!Array.isArray(doc.races)||!doc.races.length)throw Error('指定日の朝の予想データがありません（ファイル日付または形式を確認してください）');
    let live=null,liveError='';
    try{const res=await fetch(resultsUrl(d)+'?t='+Date.now(),{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);live=await res.json();if(!live?.programs?.stadiums)throw Error('結果形式が不正です');}
    catch(e){liveError=e.message;}
@@ -48,8 +48,8 @@
      group.append(line);
     });venues.append(group);
    });
-   status.textContent='最終確認 '+new Date().toLocaleTimeString('ja-JP')+' ／ '+(liveError?'公開結果の取得不可（GitHub保存済み結果のみ反映）：'+liveError:'最新の公開結果を確認')+' ／ 予想は読み取り専用・購入額は仮想';
-  }catch(e){status.textContent='更新できません：'+e.message;}
+   status.textContent=d+' の朝の予想 '+rows.length+'Rを読み込み済み ／ 最終確認 '+new Date().toLocaleTimeString('ja-JP')+' ／ '+(liveError?'公開結果の取得不可（GitHub保存済み結果のみ反映）：'+liveError:'最新の公開結果を確認')+' ／ 予想は読み取り専用・購入額は仮想';
+  }catch(e){status.textContent='朝の自動予想を表示できません（'+d+'）：'+e.message+'。再読み込み後も続く場合は、このエラーを確認してください。';totals.replaceChildren();venues.replaceChildren();}
   finally{loading=false;refresh.disabled=false;}
  }
  refresh.addEventListener('click',update);date.addEventListener('change',update);
