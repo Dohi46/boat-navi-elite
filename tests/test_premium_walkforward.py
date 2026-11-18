@@ -57,6 +57,20 @@ class WalkForwardTests(unittest.TestCase):
         self.assertIsNone(s["single_day_dependency_warning"])
         self.assertEqual(s["leave_one_day_out_days"],0)
 
+    def test_losing_days_and_drawdown(self):
+        report=walkforward([
+            snapshot("2026-11-15",0),
+            snapshot("2026-11-16",0),
+            snapshot("2026-11-17",0),
+            snapshot("2026-11-18",500),
+            snapshot("2026-11-19",0),
+        ],min_train_days=1)
+        s=report["stability"]["all"]
+        self.assertEqual(s["max_consecutive_losing_days"],2)
+        self.assertEqual(s["max_daily_net_loss"],-100)
+        self.assertEqual(s["max_drawdown_yen"],200)
+        self.assertEqual(s["risk_unit"],"evaluation_days")
+
     def test_invalid_date_rejected(self):
         with self.assertRaisesRegex(ValueError,"invalid snapshot date"):
             walkforward([snapshot("2026-11-31",0)],1)
