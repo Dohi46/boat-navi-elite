@@ -6,6 +6,7 @@ on:
       - 'scripts/premium_*.py'
       - 'tests/test_premium_*.py'
       - 'data/auto/*.json'
+      - '.github/workflows/premium-schedule-scan.yml'
       - 'premium/index.html'
       - 'premium/research-summary.json'
       - '.github/workflows/premium-research.yml'
@@ -126,3 +127,26 @@ jobs:
           name: premium-research-aggregate
           path: /tmp/premium-research-summary.json
           retention-days: 14
+      - name: Probe official deadlines and pre-cutoff capture (research only)
+        if: github.event_name == 'push'
+        timeout-minutes: 3
+        run: |
+          python -m scripts.premium_schedule_scan --venue 2 --races 8 9 --output /tmp/premium-schedule-scan.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('/tmp/premium-schedule-scan.json').read_text(encoding='utf-8'))
+          assert r['mode']=='research_only' and r['ready_for_premium'] is False
+          assert len(r['results'])<=3
+          for x in r['results']:
+              print('race:',x['race'],'status:',x['status'])
+          print('NOTE: unknown deadline or failed fetch is not a successful capture')
+          PY
+      - name: Upload official schedule research report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-schedule-scan
+          path: /tmp/premium-schedule-scan.json
+          if-no-files-found: ignore
+          retention-days: 7
