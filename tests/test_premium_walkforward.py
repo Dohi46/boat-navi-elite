@@ -36,6 +36,27 @@ class WalkForwardTests(unittest.TestCase):
         self.assertFalse(report["enough_holdout_for_review"])
         self.assertFalse(report["ready_for_premium"])
 
+    def test_single_big_payout_day_dependency(self):
+        report=walkforward([
+            snapshot("2026-11-15",0),
+            snapshot("2026-11-16",2100),
+            snapshot("2026-11-17",0),
+            snapshot("2026-11-18",0),
+        ],min_train_days=1)
+        s=report["stability"]["all"]
+        self.assertEqual(s["largest_day_payout_share_percent"],100.0)
+        self.assertEqual(s["leave_one_day_out_days"],3)
+        self.assertEqual(s["leave_one_day_out_min_return_rate_percent"],0.0)
+        self.assertEqual(s["leave_one_day_out_max_return_rate_percent"],1050.0)
+        self.assertIsNotNone(s["single_day_dependency_warning"])
+
+    def test_no_payouts_has_no_concentration(self):
+        report=walkforward([snapshot("2026-11-15",0),snapshot("2026-11-16",0)],1)
+        s=report["stability"]["all"]
+        self.assertIsNone(s["largest_day_payout_share_percent"])
+        self.assertIsNone(s["single_day_dependency_warning"])
+        self.assertEqual(s["leave_one_day_out_days"],0)
+
     def test_invalid_date_rejected(self):
         with self.assertRaisesRegex(ValueError,"invalid snapshot date"):
             walkforward([snapshot("2026-11-31",0)],1)
