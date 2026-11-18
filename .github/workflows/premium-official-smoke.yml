@@ -34,7 +34,10 @@ jobs:
           print('Wind direction:',r.get('wind_direction_parsed','unknown'))
           print('ST count:',r.get('start_timing_count','unknown'))
           if r['status']!='fetched':
-              print('WARNING: live official page could not be fetched')
+              raise SystemExit('FAILED: official page could not be fetched; see artifact for error type')
+          if not r.get('weather_parsed') or not r.get('exhibition_parsed'):
+              raise SystemExit('FAILED: official page fetched but weather or exhibition extraction missing')
+          print('PASS: official HTML fetched and both weather and exhibition parsed')
           PY
       - name: Upload non-sensitive smoke report
         if: always()
