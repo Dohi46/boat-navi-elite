@@ -1,0 +1,38 @@
+name: Premium bounded schedule research
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/premium-research-v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Bounded official deadline scan (research only)
+        run: python -m scripts.premium_schedule_scan --venue 2 --races 8 9 --output /tmp/premium-schedule-scan.json
+      - name: Verify no premium readiness
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('/tmp/premium-schedule-scan.json').read_text())
+          assert r['mode']=='research_only' and r['ready_for_premium'] is False
+          assert len(r['results']) <= 3
+          print([(x['race'], x['status']) for x in r['results']])
+          PY
+      - name: Upload research-only scan report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-schedule-scan
+          path: /tmp/premium-schedule-scan.json
+          retention-days: 7
+          if-no-files-found: warn
