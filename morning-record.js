@@ -47,7 +47,8 @@
     items.sort((a,b)=>Number(a.r.race)-Number(b.r.race)).forEach(x=>{
      const line=document.createElement('div');line.className='status';line.style.cssText='padding:8px 0;border-bottom:1px solid var(--line)';
      const h=x.hits.map(p=>p.pick+'（'+money(p.returned)+'）').join('、');
-     line.textContent=x.r.race+'R：'+(x.done?(h?'🎯 '+h:'不的中'):'未確定')+(x.done?' ／ 払戻 '+money(x.returned):'');
+     const predictions=Array.isArray(x.r.picks)?x.r.picks.map(p=>p.pick).filter(p=>/^[1-6]-[1-6]-[1-6]$/.test(String(p))).join('、'):'なし';
+     line.textContent=x.r.race+'R：朝の買い目 '+predictions+' ／ '+(x.done?(h?'🎯 '+h:'不的中'):'結果未確定')+(x.done?' ／ 払戻 '+money(x.returned):'');
      group.append(line);
     });venues.append(group);
    });
