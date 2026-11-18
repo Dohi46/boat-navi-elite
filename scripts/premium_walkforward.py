@@ -50,7 +50,23 @@ def walkforward(docs, min_train_days=14):
         observed = [m for m in observations if m["settled_races"] > 0 and m["return_rate_percent"] is not None]
         profitable = sum(m["return_rate_percent"] >= 100 for m in observed)
         total = len(observed)
+        total_stake = sum(m["stake"] for m in observed)
+        total_payout = sum(m["payout"] for m in observed)
+        leave_one_day_out = []
+        for m in observed:
+            remaining_stake = total_stake - m["stake"]
+            if remaining_stake > 0:
+                leave_one_day_out.append(round(100 * (total_payout - m["payout"]) / remaining_stake, 2))
+        largest_payout_day = max((m["payout"] for m in observed), default=0)
         stability[name] = {
+            "largest_day_payout_share_percent": round(100 * largest_payout_day / total_payout, 2) if total_payout > 0 else None,
+            "leave_one_day_out_min_return_rate_percent": min(leave_one_day_out, default=None),
+            "leave_one_day_out_max_return_rate_percent": max(leave_one_day_out, default=None),
+            "leave_one_day_out_days": len(leave_one_day_out),
+            "single_day_dependency_warning": (
+                "Largest payout day exceeds half of all payouts"
+                if total_payout > 0 and largest_payout_day / total_payout > .5 else None
+            ),
             "evaluated_days": total,
             "days_with_no_settled_races": len(observations) - total,
             "days_at_or_above_100_percent": profitable,
