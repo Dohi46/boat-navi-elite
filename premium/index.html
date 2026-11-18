@@ -132,6 +132,31 @@ button:focus-visible{outline:3px solid #e7c783}ul{line-height:1.9}
  }catch(e){status.textContent='時系列検証レポートを確認できません。';}
 })();
 </script>
+<section class="card" aria-labelledby="feeds-heading">
+<h2 id="feeds-heading">外部データ連携・確率校正の検証状況</h2>
+<p class="muted">オッズ・風波・展示情報は取得時刻と出典を確認します。v13の相対スコアは校正済み確率ではありません。データ未接続時は自動的にSKIPします。</p>
+<p class="muted" id="feeds-status">研究用の連携検証レポートを読み込み中。実データの自動取得は未接続です。</p>
+<div id="feeds-list" aria-live="polite"></div>
+</section>
+<script>
+(async function(){
+ const status=document.getElementById('feeds-status');
+ const list=document.getElementById('feeds-list');
+ try{
+   const response=await fetch('./integration-report.json',{cache:'no-store'});
+   if(!response.ok){status.textContent='連携検証レポート未配置。購入推奨はSKIP。';return;}
+   const report=await response.json();
+   if(report.schema!=='premium-integration-v1'||report.mode!=='research_only'||report.ready_for_premium!==false||!Array.isArray(report.races))throw Error('invalid');
+   status.textContent='検証対象: '+report.races.length+'R / 自動購入推奨なし / 外部フィード未接続';
+   for(const race of report.races.slice(0,30)){
+     const p=document.createElement('p');
+     p.className='muted';
+     p.textContent='場'+String(race.venue??'?')+' '+String(race.race??'?')+'R: SKIP / '+(Array.isArray(race.reasons)?race.reasons.join('・'):'理由未取得');
+     list.appendChild(p);
+   }
+ }catch(e){status.textContent='連携検証レポートを検証できません。購入推奨はSKIP。';}
+})();
+</script>
 <section class="card"><h2>次の研究項目</h2>
 <p class="muted">複数日データの自動照合、固定条件の時系列評価、締切前の水面コンディション取得、結果の透明な公開。</p>
 <button type="button" onclick="location.href='../index.html'">無料AI LABへ戻る</button></section>
