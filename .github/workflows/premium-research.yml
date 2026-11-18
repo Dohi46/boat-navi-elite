@@ -171,6 +171,16 @@ jobs:
                   rows.extend(['', '**Not a verified full capture. Green CI only means the checks ran successfully.**'])
               Path(summary).open('a', encoding='utf-8').write('\n'.join(rows) + '\n')
           PY
+      - name: Build sanitized official capture digest
+        if: github.event_name == 'push'
+        run: python -m scripts.premium_capture_digest /tmp/premium-schedule-scan.json --output /tmp/premium-capture-digest.json
+      - name: Upload sanitized capture digest
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-capture-digest
+          path: /tmp/premium-capture-digest.json
+          retention-days: 14
       - name: Upload official schedule research report
         if: always()
         uses: actions/upload-artifact@v4
