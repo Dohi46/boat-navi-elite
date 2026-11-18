@@ -1,0 +1,23 @@
+name: Morning tracker smoke tests
+on:
+  pull_request:
+    paths:
+      - 'morning-record.js'
+      - 'index.html'
+      - 'tests/morning-record-smoke.cjs'
+      - '.github/workflows/morning-tracker-smoke.yml'
+  workflow_dispatch:
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: node --check morning-record.js
+      - name: Test morning prediction display and error handling
+        run: node tests/morning-record-smoke.cjs
