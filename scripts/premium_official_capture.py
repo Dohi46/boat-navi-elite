@@ -38,8 +38,8 @@ def parse_conditions(html, retrieved_at):
     """Conservative weather extraction. Unrecognized wind direction remains unknown."""
     parser = VisibleText()
     parser.feed(html)
-    text = re.sub(r"\\s+", " ", "".join(parser.parts))
-    match = re.search(r"水面気象情報.{0,120}?気温\\s*([0-9]+(?:\\.[0-9]+)?)\\s*℃.{0,100}?風速\\s*([0-9]+(?:\\.[0-9]+)?)\\s*m.{0,100}?水温\\s*([0-9]+(?:\\.[0-9]+)?)\\s*℃.{0,100}?波高\\s*([0-9]+(?:\\.[0-9]+)?)\\s*cm", text)
+    text = re.sub(r"\s+", " ", "".join(parser.parts))
+    match = re.search(r"水面気象情報.{0,120}?気温\s*([0-9]+(?:\.[0-9]+)?)\s*℃.{0,100}?風速\s*([0-9]+(?:\.[0-9]+)?)\s*m.{0,100}?水温\s*([0-9]+(?:\.[0-9]+)?)\s*℃.{0,100}?波高\s*([0-9]+(?:\.[0-9]+)?)\s*cm", text)
     weather = None
     if match:
         air, wind, water, wave = map(float, match.groups())
@@ -51,7 +51,7 @@ def parse_conditions(html, retrieved_at):
     # The table is parsed only if six unambiguous consecutive weight/time/tilt
     # triplets are found before the start-exhibition section.
     before_start = text.split("スタート展示", 1)[0]
-    triplets = re.findall(r"\\b(?:[3-9][0-9](?:\\.[0-9]+)?)\\s*kg\\s+([4-9]\\.[0-9]{2})\\s+(-?[0-9]\\.[0-9])\\b", before_start)
+    triplets = re.findall(r"\b(?:[3-9][0-9](?:\.[0-9]+)?)\s*kg\s+([4-9]\.[0-9]{2})\s+(-?[0-9]\.[0-9])\b", before_start)
     exhibition = None
     if len(triplets) == 6:
         exhibition = {"observed_at": retrieved_at, "source": "BOAT RACE official beforeinfo",
