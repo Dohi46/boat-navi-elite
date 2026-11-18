@@ -20,7 +20,7 @@
    const doc=await pred.json();if(doc.date!==d||!Array.isArray(doc.races)||!doc.races.length)throw Error('指定日の朝の予想データがありません（ファイル日付または形式を確認してください）');
    if(date.value!==d)return; // Ignore a stale response after date selection changes.
    let live=null,liveError='';
-   try{const res=await fetch(resultsUrl(d)+'?t='+Date.now(),{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);live=await res.json();if(!live?.programs?.stadiums)throw Error('結果形式が不正です');}
+   try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),5000);try{const res=await fetch(resultsUrl(d)+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});if(!res.ok)throw Error('HTTP '+res.status);live=await res.json();if(!live?.programs?.stadiums)throw Error('結果形式が不正です');}finally{clearTimeout(timeout);}}
    catch(e){liveError=e.message;}
    const rows=doc.races.map(r=>{
     const race=live?.programs?.stadiums?.[String(r.venue)]?.races?.[String(r.race)];
