@@ -73,10 +73,14 @@ def scan_upcoming(day, venue, *, now=None, deadline_fetch=fetch_deadline,
             results.append(result)
         except (OSError, TimeoutError, ValueError) as exc:
             results.append({"race": race, "status": "fetch_error", "error_type": type(exc).__name__})
+    outcome = ("no_eligible_race" if not eligible else
+               "capture_with_both_fields" if results and results[0].get("status") == "captured"
+               and results[0].get("weather_parsed") and results[0].get("exhibition_parsed") else
+               "capture_partial_or_skipped")
     return {"schema": "premium-schedule-scan-v1", "mode": "research_only",
             "date": day, "venue": venue, "checked_at": instant.isoformat(),
             "selection": "earliest_verified_upcoming_deadline", "candidates": inspected,
-            "ready_for_premium": False, "results": results}
+            "outcome": outcome, "ready_for_premium": False, "results": results}
 
 def main():
     p = argparse.ArgumentParser()
@@ -91,7 +95,7 @@ def main():
               else scan(day, args.venue, args.races, now=now))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"date": day, "venue": args.venue,
+    print(json.dumps({"date": day, "venue": args.venue, "outcome": report.get("outcome"),
                       "statuses": [r["status"] for r in report["results"]],
                       "candidate_statuses": [(r["race"], r["status"]) for r in report.get("candidates", [])]}, ensure_ascii=False))
 
