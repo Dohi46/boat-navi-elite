@@ -58,7 +58,25 @@ def walkforward(docs, min_train_days=14):
             if remaining_stake > 0:
                 leave_one_day_out.append(round(100 * (total_payout - m["payout"]) / remaining_stake, 2))
         largest_payout_day = max((m["payout"] for m in observed), default=0)
+        # Risk is measured on settled evaluation DAYS, not individual races.
+        # Skipped/no-stake days break the losing-day streak.
+        losing_streak = max_losing_streak = 0
+        equity = peak = max_drawdown = 0
+        for m in observations:
+            if m["stake"] <= 0:
+                losing_streak = 0
+                continue
+            losing_streak = losing_streak + 1 if m["net"] < 0 else 0
+            max_losing_streak = max(max_losing_streak, losing_streak)
+            equity += m["net"]
+            peak = max(peak, equity)
+            max_drawdown = max(max_drawdown, peak - equity)
         stability[name] = {
+            "max_consecutive_losing_days": max_losing_streak,
+            "max_daily_net_loss": min((m["net"] for m in observed), default=None),
+            "max_drawdown_yen": max_drawdown if observed else None,
+            "risk_unit": "evaluation_days",
+            "risk_note": "Day-level hypothetical settled stake/payout; no bankroll or race-level losing streak.",
             "largest_day_payout_share_percent": round(100 * largest_payout_day / total_payout, 2) if total_payout > 0 else None,
             "leave_one_day_out_min_return_rate_percent": min(leave_one_day_out, default=None),
             "leave_one_day_out_max_return_rate_percent": max(leave_one_day_out, default=None),
