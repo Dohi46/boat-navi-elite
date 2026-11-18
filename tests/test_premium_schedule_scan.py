@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime, timezone
-from scripts.premium_schedule_scan import scan
+from scripts.premium_schedule_scan import scan, scan_upcoming
 
 NOW = datetime(2026, 11, 18, 6, 20, tzinfo=timezone.utc)
 
@@ -17,6 +17,32 @@ class ScheduleScanTests(unittest.TestCase):
                       collector=lambda *args, **kwargs: {"status": "captured", "ready_for_premium": False})
         self.assertEqual(result["results"][0]["status"], "captured")
         self.assertEqual(result["results"][0]["deadline_source"], "official")
+
+    def test_upcoming_selects_earliest_future_race(self):
+        deadlines = {8: "2026-11-18T15:10:00+09:00",
+                     9: "2026-11-18T15:40:00+09:00",
+                     10: "2026-11-18T15:30:00+09:00"}
+        selected = []
+        def collector(day, venue, race, deadline, **kwargs):
+            selected.append(race)
+            return {"race": race, "status": "captured", "ready_for_premium": False}
+        report = scan_upcoming("2026-11-18", 2, now=NOW, candidates=(8, 9, 10),
+                               deadline_fetch=lambda day, venue, race: {"deadline_jst": deadlines[race]},
+                               collector=collector)
+        self.assertEqual(selected, [10])
+        self.assertEqual(report["results"][0]["status"], "captured")
+        self.assertEqual(report["candidates"][0]["status"], "skip_cutoff")
+
+    def test_upcoming_all_expired_never_collects(self):
+        report = scan_upcoming("2026-11-18", 2, now=NOW, candidates=(8,),
+                               deadline_fetch=lambda *args: {"deadline_jst": "2026-11-18T15:00:00+09:00"},
+                               collector=lambda *args, **kwargs: self.fail("must not collect"))
+        self.assertEqual(report["results"], [])
+        self.assertEqual(report["candidates"][0]["status"], "skip_cutoff")
+
+    def test_upcoming_candidate_limit(self):
+        with self.assertRaises(ValueError):
+            scan_upcoming("2026-11-18", 2, now=NOW, candidates=tuple(range(1, 8)))
 
     def test_bounded_requests(self):
         with self.assertRaises(ValueError):
