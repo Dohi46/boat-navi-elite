@@ -15,7 +15,7 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const daily={date:savedDate,races:[{venue:1,race:1,picks:[{pick:'1-2-3',stake:100},{pick:'1-3-2',stake:100}],result:results}]};
  const calls=[];
  const fetch=async url=>{calls.push(url);if(url.startsWith('./data/auto/'))return {ok:!missing,status:missing?404:200,json:async()=>daily};return {ok:false,status:503}};
- const ctx={document,fetch,Intl,Date,Number,String,Map,Array,Error,Math,setInterval:()=>0,STADIUMS:{1:'桐生'}};
+ const ctx={document,fetch,Intl,Date,Number,String,Map,Array,Error,Math,AbortController,setTimeout,clearTimeout,setInterval:()=>0,STADIUMS:{1:'桐生'}};
  vm.runInNewContext(source,ctx);
  await new Promise(resolve=>setTimeout(resolve,20));
  assert.equal(ids.morningDate.value.length,10);
