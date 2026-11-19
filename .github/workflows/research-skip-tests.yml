@@ -1,0 +1,19 @@
+name: Research skip-rule tests
+on:
+  push:
+    branches: [research/roi-baseline-20261119]
+    paths:
+      - 'research/evaluate-skip.cjs'
+      - 'research/evaluate-skip.test.cjs'
+      - '.github/workflows/research-skip-tests.yml'
+  workflow_dispatch:
+jobs:
+  research-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check research/evaluate-skip.cjs
+      - run: node research/evaluate-skip.test.cjs
