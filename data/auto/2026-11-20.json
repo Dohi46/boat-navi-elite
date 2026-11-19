@@ -12821,5 +12821,16 @@
     }
   ],
   "skipped": [],
-  "lastRunAt": "2026-11-19T23:01:31.583Z"
+  "lastRunAt": "2026-11-19T23:01:31.583Z",
+  "settlement": {
+    "checkedAt": "2026-11-19T23:12:11.386Z",
+    "settledRaces": 0,
+    "pendingRaces": 144,
+    "settledPicks": 0,
+    "hitPicks": 0,
+    "hitRatePercent": null,
+    "stake": 0,
+    "payout": 0,
+    "returnRatePercent": null
+  }
 }
