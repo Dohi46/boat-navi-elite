@@ -20,8 +20,17 @@
    const doc=await pred.json();if(doc.date!==d||!Array.isArray(doc.races)||!doc.races.length)throw Error('指定日の朝の予想データがありません（ファイル日付または形式を確認してください）');
    if(date.value!==d)return; // Ignore a stale response after date selection changes.
    let live=null,liveError='';
-   try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),5000);try{const res=await fetch(resultsUrl(d)+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});if(!res.ok)throw Error('HTTP '+res.status);live=await res.json();if(!live?.programs?.stadiums)throw Error('結果形式が不正です');}finally{clearTimeout(timeout);}}
-   catch(e){liveError=e.message;}
+   for(let attempt=1;attempt<=3;attempt++){
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),7000);
+    try{
+     const res=await fetch(resultsUrl(d)+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});
+     if(!res.ok)throw Error('HTTP '+res.status);
+     const data=await res.json();
+     if(!data?.programs?.stadiums)throw Error('結果形式が不正です');
+     live=data;liveError='';break;
+    }catch(e){liveError='結果API取得失敗（'+attempt+'/3）：'+e.message;}
+    finally{clearTimeout(timeout);}
+   }
    const rows=doc.races.map(r=>{
     const race=live?.programs?.stadiums?.[String(r.venue)]?.races?.[String(r.race)];
     const p=race?.date===d?race?.result?.payouts?.trifecta:null;
@@ -32,23 +41,23 @@
     const hits=picks.filter(x=>paid.has(x.pick)).map(x=>({pick:x.pick,stake:Number(x.stake)||0,odds:paid.get(x.pick),returned:Math.round(paid.get(x.pick)*(Number(x.stake)||0)/100)}));
     return {r,done:true,hits,stake:picks.reduce((a,x)=>a+(Number(x.stake)||0),0),returned:hits.reduce((a,x)=>a+x.returned,0)};
    });
-   const done=rows.filter(x=>x.done),stake=done.reduce((a,x)=>a+x.stake,0),returned=done.reduce((a,x)=>a+x.returned,0),hits=done.reduce((a,x)=>a+x.hits.length,0);
+   const done=rows.filter(x=>x.done),unresolved=rows.length-done.length,stake=done.reduce((a,x)=>a+x.stake,0),returned=done.reduce((a,x)=>a+x.returned,0),hits=done.reduce((a,x)=>a+x.hits.length,0);
    if(date.value!==d)return;
    totals.replaceChildren();
    const summary=document.createElement('div');summary.className='grid2';
-   [['朝の予想',rows.length+'レース'],['結果確定',done.length+' / '+rows.length],['的中数',hits+'点'],['回収率',stake?(returned/stake*100).toFixed(1)+'%':'—'],['仮想購入額（確定分）',money(stake)],['仮想払戻',money(returned)]].forEach(([k,v])=>{const el=document.createElement('div');el.className='card';const small=document.createElement('div');small.className='tiny muted';small.textContent=k;const strong=document.createElement('b');strong.style.fontSize='22px';strong.textContent=v;el.append(small,strong);summary.append(el);});
+   [['朝の予想',rows.length+'レース'],['結果確定',done.length+' / '+rows.length],['未判定（中止・取得待ち含む）',unresolved+'レース'],['的中数',hits+'点'],['回収率',stake?(returned/stake*100).toFixed(1)+'%':'—'],['仮想購入額（確定分）',money(stake)],['仮想払戻',money(returned)]].forEach(([k,v])=>{const el=document.createElement('div');el.className='card';const small=document.createElement('div');small.className='tiny muted';small.textContent=k;const strong=document.createElement('b');strong.style.fontSize='22px';strong.textContent=v;el.append(small,strong);summary.append(el);});
    totals.append(summary);venues.replaceChildren();
    const groups=new Map();rows.forEach(x=>{const k=Number(x.r.venue);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(x);});
    [...groups].sort((a,b)=>a[0]-b[0]).forEach(([v,items])=>{
     const group=document.createElement('details');group.className='card';group.style.marginTop='10px';
     const title=document.createElement('summary');title.style.cursor='pointer';
-    title.textContent=((typeof STADIUMS!=='undefined'&&STADIUMS[v])||'場'+v)+'　'+items.filter(x=>x.done).length+'/'+items.length+'R確定　的中'+items.reduce((a,x)=>a+x.hits.length,0)+'点';
+    title.textContent=((typeof STADIUMS!=='undefined'&&STADIUMS[v])||'場'+v)+'　'+items.filter(x=>x.done).length+'/'+items.length+'R確定（未判定'+items.filter(x=>!x.done).length+'R）　的中'+items.reduce((a,x)=>a+x.hits.length,0)+'点';
     group.append(title);
     items.sort((a,b)=>Number(a.r.race)-Number(b.r.race)).forEach(x=>{
      const line=document.createElement('div');line.className='status';line.style.cssText='padding:8px 0;border-bottom:1px solid var(--line)';
      const h=x.hits.map(p=>p.pick+'（'+money(p.returned)+'）').join('、');
      const predictions=Array.isArray(x.r.picks)?x.r.picks.map(p=>p.pick).filter(p=>/^[1-6]-[1-6]-[1-6]$/.test(String(p))).join('、'):'なし';
-     line.textContent=x.r.race+'R：朝の買い目 '+predictions+' ／ '+(x.done?(h?'🎯 '+h:'不的中'):'結果未確定')+(x.done?' ／ 払戻 '+money(x.returned):'');
+     line.textContent=x.r.race+'R：朝の買い目 '+predictions+' ／ '+(x.done?(h?'🎯 '+h:'不的中'):'結果未判定（中止・取得待ち含む）')+(x.done?' ／ 払戻 '+money(x.returned):'');
      group.append(line);
     });venues.append(group);
    });
