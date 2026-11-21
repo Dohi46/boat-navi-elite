@@ -9,35 +9,35 @@
     "ruleCommit": "251757eae220a28ad9ad31f5fb201652a656d4d7",
     "note": "Prospective evaluation cohort starts 2026-11-18 JST. Rule is frozen by pinned commit; do not retroactively adjust. Classification uses saved pre-cutoff features; daily report is computed after settlement."
   },
-  "filesAnalyzed": 3,
-  "daysWithEligibleRaces": 3,
+  "filesAnalyzed": 4,
+  "daysWithEligibleRaces": 4,
   "quality": {
-    "total": 408,
-    "eligible": 344,
-    "held": 23,
+    "total": 576,
+    "eligible": 502,
+    "held": 33,
     "weatherComplete": 0,
     "unsettled": 41
   },
   "selected": {
-    "races": 270,
-    "stake": 135000,
-    "payout": 130740,
-    "hits": 92,
-    "roiPercent": 96.84
+    "races": 395,
+    "stake": 197500,
+    "payout": 168880,
+    "hits": 126,
+    "roiPercent": 85.51
   },
   "skipped": {
-    "races": 74,
-    "stake": 37000,
-    "payout": 30910,
-    "hits": 31,
-    "roiPercent": 83.54
+    "races": 107,
+    "stake": 53500,
+    "payout": 40680,
+    "hits": 40,
+    "roiPercent": 76.04
   },
   "baseline": {
-    "races": 344,
-    "stake": 172000,
-    "payout": 161650,
-    "hits": 123,
-    "roiPercent": 93.98
+    "races": 502,
+    "stake": 251000,
+    "payout": 209560,
+    "hits": 166,
+    "roiPercent": 83.49
   },
   "daily": [
     {
@@ -132,11 +132,42 @@
         "hits": 41,
         "roiPercent": 98.03
       }
+    },
+    {
+      "date": "2026-11-21",
+      "quality": {
+        "total": 168,
+        "eligible": 158,
+        "held": 10,
+        "weatherComplete": 0,
+        "unsettled": 0
+      },
+      "selected": {
+        "races": 125,
+        "stake": 62500,
+        "payout": 38140,
+        "hits": 34,
+        "roiPercent": 61.02
+      },
+      "skipped": {
+        "races": 33,
+        "stake": 16500,
+        "payout": 9770,
+        "hits": 9,
+        "roiPercent": 59.21
+      },
+      "baseline": {
+        "races": 158,
+        "stake": 79000,
+        "payout": 47910,
+        "hits": 43,
+        "roiPercent": 60.65
+      }
     }
   ],
   "readiness": {
     "minimumCalendarDays": 30,
-    "observedCalendarDays": 3,
+    "observedCalendarDays": 4,
     "readyForReview": false
   },
   "note": "Virtual picks, not actual wagers. Future dates only; historical exploratory data excluded. Rules must remain pinned for prospective validity. Do not infer profitability from small samples."

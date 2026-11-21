@@ -2,65 +2,65 @@
   "schema": "experimental-ai-ranking-v1",
   "comparisonNote": "allEligibleBaseline uses all valid pre-cutoff settled races; baseline and candidate strategies share a narrower six-racer-feature eligible cohort. Do not directly compare candidate ROI to allEligibleBaseline ROI.",
   "allEligibleBaseline": {
-    "races": 747,
-    "stake": 373500,
-    "payout": 310890,
-    "hits": 244,
-    "roiPercent": 83.24
+    "races": 915,
+    "stake": 457500,
+    "payout": 364610,
+    "hits": 290,
+    "roiPercent": 79.7
   },
   "disclaimer": "Selected and skipped are complementary groups within the same feature-complete eligible cohort. Selection was defined on these same historical data, so comparisons are descriptive, not out-of-sample evidence. Hypothetical v13 picks, no actual betting. Favorite means races with at least one 1-first pick, not a separate trained AI. All groups use the same v13 picks. Strategy rules have not been independently validated.",
   "quality": {
-    "total": 794,
-    "eligible": 582,
-    "held": 171,
+    "total": 962,
+    "eligible": 740,
+    "held": 181,
     "weatherComplete": 0,
     "unsettled": 41
   },
   "strategies": {
     "baseline": {
-      "races": 582,
-      "stake": 291000,
-      "payout": 247230,
-      "hits": 188,
-      "roiPercent": 84.96
+      "races": 740,
+      "stake": 370000,
+      "payout": 295140,
+      "hits": 231,
+      "roiPercent": 79.77
     },
     "favorite": {
-      "races": 574,
-      "stake": 287000,
-      "payout": 246660,
-      "hits": 187,
-      "roiPercent": 85.94
+      "races": 730,
+      "stake": 365000,
+      "payout": 294570,
+      "hits": 230,
+      "roiPercent": 80.7
     },
     "medium": {
-      "races": 346,
-      "stake": 173000,
-      "payout": 150130,
-      "hits": 114,
-      "roiPercent": 86.78
+      "races": 446,
+      "stake": 223000,
+      "payout": 184420,
+      "hits": 145,
+      "roiPercent": 82.7
     },
     "long": {
-      "races": 98,
-      "stake": 49000,
-      "payout": 51440,
-      "hits": 30,
-      "roiPercent": 104.98
+      "races": 123,
+      "stake": 61500,
+      "payout": 55290,
+      "hits": 33,
+      "roiPercent": 89.9
     },
     "selected": {
-      "races": 444,
-      "stake": 222000,
-      "payout": 201570,
-      "hits": 144,
-      "roiPercent": 90.8
+      "races": 569,
+      "stake": 284500,
+      "payout": 239710,
+      "hits": 178,
+      "roiPercent": 84.26
     },
     "skipped": {
-      "races": 138,
-      "stake": 69000,
-      "payout": 45660,
-      "hits": 44,
-      "roiPercent": 66.17
+      "races": 171,
+      "stake": 85500,
+      "payout": 55430,
+      "hits": 53,
+      "roiPercent": 64.83
     }
   },
-  "filesAnalyzed": 6,
+  "filesAnalyzed": 7,
   "daily": [
     {
       "date": "2026-11-15",
@@ -427,201 +427,262 @@
           "roiPercent": 106.75
         }
       }
+    },
+    {
+      "date": "2026-11-21",
+      "quality": {
+        "total": 168,
+        "eligible": 158,
+        "held": 10,
+        "weatherComplete": 0,
+        "unsettled": 0
+      },
+      "allEligibleBaseline": {
+        "races": 168,
+        "stake": 84000,
+        "payout": 53720,
+        "hits": 46,
+        "roiPercent": 63.95
+      },
+      "strategies": {
+        "baseline": {
+          "races": 158,
+          "stake": 79000,
+          "payout": 47910,
+          "hits": 43,
+          "roiPercent": 60.65
+        },
+        "favorite": {
+          "races": 156,
+          "stake": 78000,
+          "payout": 47910,
+          "hits": 43,
+          "roiPercent": 61.42
+        },
+        "medium": {
+          "races": 100,
+          "stake": 50000,
+          "payout": 34290,
+          "hits": 31,
+          "roiPercent": 68.58
+        },
+        "long": {
+          "races": 25,
+          "stake": 12500,
+          "payout": 3850,
+          "hits": 3,
+          "roiPercent": 30.8
+        },
+        "selected": {
+          "races": 125,
+          "stake": 62500,
+          "payout": 38140,
+          "hits": 34,
+          "roiPercent": 61.02
+        },
+        "skipped": {
+          "races": 33,
+          "stake": 16500,
+          "payout": 9770,
+          "hits": 9,
+          "roiPercent": 59.21
+        }
+      }
     }
   ],
   "rolling": {
     "7d": {
-      "periodStart": "2026-11-14",
-      "periodEnd": "2026-11-20",
+      "periodStart": "2026-11-15",
+      "periodEnd": "2026-11-21",
       "calendarDays": 7,
-      "filesAnalyzed": 6,
-      "missingDays": 1,
+      "filesAnalyzed": 7,
+      "missingDays": 0,
       "quality": {
-        "total": 794,
-        "eligible": 582,
-        "held": 171,
+        "total": 962,
+        "eligible": 740,
+        "held": 181,
         "weatherComplete": 0,
         "unsettled": 41
       },
       "allEligibleBaseline": {
-        "races": 747,
-        "stake": 373500,
-        "payout": 310890,
-        "hits": 244,
-        "roiPercent": 83.24
+        "races": 915,
+        "stake": 457500,
+        "payout": 364610,
+        "hits": 290,
+        "roiPercent": 79.7
       },
       "strategies": {
         "baseline": {
-          "races": 582,
-          "stake": 291000,
-          "payout": 247230,
-          "hits": 188,
-          "roiPercent": 84.96
+          "races": 740,
+          "stake": 370000,
+          "payout": 295140,
+          "hits": 231,
+          "roiPercent": 79.77
         },
         "favorite": {
-          "races": 574,
-          "stake": 287000,
-          "payout": 246660,
-          "hits": 187,
-          "roiPercent": 85.94
+          "races": 730,
+          "stake": 365000,
+          "payout": 294570,
+          "hits": 230,
+          "roiPercent": 80.7
         },
         "medium": {
-          "races": 346,
-          "stake": 173000,
-          "payout": 150130,
-          "hits": 114,
-          "roiPercent": 86.78
+          "races": 446,
+          "stake": 223000,
+          "payout": 184420,
+          "hits": 145,
+          "roiPercent": 82.7
         },
         "long": {
-          "races": 98,
-          "stake": 49000,
-          "payout": 51440,
-          "hits": 30,
-          "roiPercent": 104.98
+          "races": 123,
+          "stake": 61500,
+          "payout": 55290,
+          "hits": 33,
+          "roiPercent": 89.9
         },
         "selected": {
-          "races": 444,
-          "stake": 222000,
-          "payout": 201570,
-          "hits": 144,
-          "roiPercent": 90.8
+          "races": 569,
+          "stake": 284500,
+          "payout": 239710,
+          "hits": 178,
+          "roiPercent": 84.26
         },
         "skipped": {
-          "races": 138,
-          "stake": 69000,
-          "payout": 45660,
-          "hits": 44,
-          "roiPercent": 66.17
+          "races": 171,
+          "stake": 85500,
+          "payout": 55430,
+          "hits": 53,
+          "roiPercent": 64.83
         }
       }
     },
     "30d": {
-      "periodStart": "2026-10-22",
-      "periodEnd": "2026-11-20",
+      "periodStart": "2026-10-23",
+      "periodEnd": "2026-11-21",
       "calendarDays": 30,
-      "filesAnalyzed": 6,
-      "missingDays": 24,
+      "filesAnalyzed": 7,
+      "missingDays": 23,
       "quality": {
-        "total": 794,
-        "eligible": 582,
-        "held": 171,
+        "total": 962,
+        "eligible": 740,
+        "held": 181,
         "weatherComplete": 0,
         "unsettled": 41
       },
       "allEligibleBaseline": {
-        "races": 747,
-        "stake": 373500,
-        "payout": 310890,
-        "hits": 244,
-        "roiPercent": 83.24
+        "races": 915,
+        "stake": 457500,
+        "payout": 364610,
+        "hits": 290,
+        "roiPercent": 79.7
       },
       "strategies": {
         "baseline": {
-          "races": 582,
-          "stake": 291000,
-          "payout": 247230,
-          "hits": 188,
-          "roiPercent": 84.96
+          "races": 740,
+          "stake": 370000,
+          "payout": 295140,
+          "hits": 231,
+          "roiPercent": 79.77
         },
         "favorite": {
-          "races": 574,
-          "stake": 287000,
-          "payout": 246660,
-          "hits": 187,
-          "roiPercent": 85.94
+          "races": 730,
+          "stake": 365000,
+          "payout": 294570,
+          "hits": 230,
+          "roiPercent": 80.7
         },
         "medium": {
-          "races": 346,
-          "stake": 173000,
-          "payout": 150130,
-          "hits": 114,
-          "roiPercent": 86.78
+          "races": 446,
+          "stake": 223000,
+          "payout": 184420,
+          "hits": 145,
+          "roiPercent": 82.7
         },
         "long": {
-          "races": 98,
-          "stake": 49000,
-          "payout": 51440,
-          "hits": 30,
-          "roiPercent": 104.98
+          "races": 123,
+          "stake": 61500,
+          "payout": 55290,
+          "hits": 33,
+          "roiPercent": 89.9
         },
         "selected": {
-          "races": 444,
-          "stake": 222000,
-          "payout": 201570,
-          "hits": 144,
-          "roiPercent": 90.8
+          "races": 569,
+          "stake": 284500,
+          "payout": 239710,
+          "hits": 178,
+          "roiPercent": 84.26
         },
         "skipped": {
-          "races": 138,
-          "stake": 69000,
-          "payout": 45660,
-          "hits": 44,
-          "roiPercent": 66.17
+          "races": 171,
+          "stake": 85500,
+          "payout": 55430,
+          "hits": 53,
+          "roiPercent": 64.83
         }
       }
     },
     "90d": {
-      "periodStart": "2026-08-23",
-      "periodEnd": "2026-11-20",
+      "periodStart": "2026-08-24",
+      "periodEnd": "2026-11-21",
       "calendarDays": 90,
-      "filesAnalyzed": 6,
-      "missingDays": 84,
+      "filesAnalyzed": 7,
+      "missingDays": 83,
       "quality": {
-        "total": 794,
-        "eligible": 582,
-        "held": 171,
+        "total": 962,
+        "eligible": 740,
+        "held": 181,
         "weatherComplete": 0,
         "unsettled": 41
       },
       "allEligibleBaseline": {
-        "races": 747,
-        "stake": 373500,
-        "payout": 310890,
-        "hits": 244,
-        "roiPercent": 83.24
+        "races": 915,
+        "stake": 457500,
+        "payout": 364610,
+        "hits": 290,
+        "roiPercent": 79.7
       },
       "strategies": {
         "baseline": {
-          "races": 582,
-          "stake": 291000,
-          "payout": 247230,
-          "hits": 188,
-          "roiPercent": 84.96
+          "races": 740,
+          "stake": 370000,
+          "payout": 295140,
+          "hits": 231,
+          "roiPercent": 79.77
         },
         "favorite": {
-          "races": 574,
-          "stake": 287000,
-          "payout": 246660,
-          "hits": 187,
-          "roiPercent": 85.94
+          "races": 730,
+          "stake": 365000,
+          "payout": 294570,
+          "hits": 230,
+          "roiPercent": 80.7
         },
         "medium": {
-          "races": 346,
-          "stake": 173000,
-          "payout": 150130,
-          "hits": 114,
-          "roiPercent": 86.78
+          "races": 446,
+          "stake": 223000,
+          "payout": 184420,
+          "hits": 145,
+          "roiPercent": 82.7
         },
         "long": {
-          "races": 98,
-          "stake": 49000,
-          "payout": 51440,
-          "hits": 30,
-          "roiPercent": 104.98
+          "races": 123,
+          "stake": 61500,
+          "payout": 55290,
+          "hits": 33,
+          "roiPercent": 89.9
         },
         "selected": {
-          "races": 444,
-          "stake": 222000,
-          "payout": 201570,
-          "hits": 144,
-          "roiPercent": 90.8
+          "races": 569,
+          "stake": 284500,
+          "payout": 239710,
+          "hits": 178,
+          "roiPercent": 84.26
         },
         "skipped": {
-          "races": 138,
-          "stake": 69000,
-          "payout": 45660,
-          "hits": 44,
-          "roiPercent": 66.17
+          "races": 171,
+          "stake": 85500,
+          "payout": 55430,
+          "hits": 53,
+          "roiPercent": 64.83
         }
       }
     }
