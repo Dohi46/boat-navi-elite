@@ -27,7 +27,7 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
 (async()=>{
  const a=await runCase({results:null});
  assert.match(a.ids.morningVenues.children[0].children[1].textContent,/朝の買い目 1-2-3、1-3-2/);
- assert.match(a.ids.morningVenues.children[0].children[1].textContent,/結果未確定/);
+ assert.match(a.ids.morningVenues.children[0].children[1].textContent,/結果未判定（中止・取得待ち含む）/);
  const b=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]}});
  assert.match(b.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.match(b.ids.morningVenues.children[0].children[1].textContent,/2,500円/);
@@ -38,6 +38,6 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const e=await runCase({results:{winningCombinations:[{combination:'3-4-2',amount:3500}]}});
  assert.match(e.ids.morningVenues.children[0].children[1].textContent,/不的中/);
  assert.match(e.ids.morningVenues.children[0].children[1].textContent,/朝の買い目 1-2-3、1-3-2/);
- assert.equal(e.ids.morningTotals.children[0].children.length,6);
+ assert.equal(e.ids.morningTotals.children[0].children.length,7);
  console.log('PASS: syntax, pending picks, settled hits, misses, totals, missing file, wrong date');
 })().catch(e=>{console.error(e);process.exitCode=1});
