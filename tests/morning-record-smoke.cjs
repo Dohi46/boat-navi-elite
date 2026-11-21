@@ -9,12 +9,12 @@ function node(tag='div') {
   addEventListener(name,fn){(this.events??={})[name]=fn}, closest(){return this},
   get childElementCount(){return this.children.length}};
 }
-async function runCase({date='2026-11-19', savedDate=date, results=null, missing=false}) {
+async function runCase({date='2026-11-19', savedDate=date, results=null, missing=false, apiResponses=[]}) {
  const ids=Object.fromEntries(['morningTracker','morningDate','morningRefresh','morningStatus','morningTotals','morningVenues'].map(x=>[x,node()]));
  const document={getElementById:id=>ids[id],createElement:node,querySelectorAll:()=>[],visibilityState:'visible'};
  const daily={date:savedDate,races:[{venue:1,race:1,picks:[{pick:'1-2-3',stake:100},{pick:'1-3-2',stake:100}],result:results}]};
  const calls=[];
- const fetch=async url=>{calls.push(url);if(url.startsWith('./data/auto/'))return {ok:!missing,status:missing?404:200,json:async()=>daily};return {ok:false,status:503}};
+ const fetch=async url=>{calls.push(url);if(url.startsWith('./data/auto/'))return {ok:!missing,status:missing?404:200,json:async()=>daily};const response=apiResponses.shift();return response ?? {ok:false,status:503};};
  const ctx={document,fetch,Intl,Date,Number,String,Map,Array,Error,Math,AbortController,setTimeout,clearTimeout,setInterval:()=>0,STADIUMS:{1:'桐生'}};
  vm.runInNewContext(source,ctx);
  await new Promise(resolve=>setTimeout(resolve,20));
@@ -31,6 +31,9 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const b=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]}});
  assert.match(b.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.match(b.ids.morningVenues.children[0].children[1].textContent,/2,500円/);
+ const retry=await runCase({results:null,apiResponses:[{ok:false,status:503},{ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}}})}]});
+ assert.match(retry.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
+ assert.ok(retry.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length>=2);
  const c=await runCase({missing:true});
  assert.match(c.ids.morningStatus.textContent,/未生成/);
  const d=await runCase({savedDate:'2026-11-18'});
@@ -39,5 +42,5 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  assert.match(e.ids.morningVenues.children[0].children[1].textContent,/不的中/);
  assert.match(e.ids.morningVenues.children[0].children[1].textContent,/朝の買い目 1-2-3、1-3-2/);
  assert.equal(e.ids.morningTotals.children[0].children.length,7);
- console.log('PASS: syntax, pending picks, settled hits, misses, totals, missing file, wrong date');
+ console.log('PASS: syntax, retry after 503, pending picks, settled hits, misses, totals, missing file, wrong date');
 })().catch(e=>{console.error(e);process.exitCode=1});
