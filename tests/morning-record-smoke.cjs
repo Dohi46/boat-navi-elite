@@ -42,6 +42,11 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  assert.match(wrongDate.ids.morningVenues.children[0].children[1].textContent,/結果未判定/);
  const partial=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'2':{races:{}}}}})}]});
  assert.match(partial.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
+ const malformed=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[{combination:'1-2-3',amount:0}]}}}}}}}})})]});
+ assert.match(malformed.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
+ const emptyPayout=await runCase({results:null,apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[]}}}}}}}})})]});
+ assert.match(emptyPayout.ids.morningVenues.children[0].children[1].textContent,/結果未判定/);
+ assert.doesNotMatch(emptyPayout.ids.morningVenues.children[0].children[1].textContent,/中止確定/);
  const c=await runCase({missing:true});
  assert.match(c.ids.morningStatus.textContent,/未生成/);
  const d=await runCase({savedDate:'2026-11-18'});
