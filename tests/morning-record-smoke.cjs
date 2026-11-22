@@ -31,14 +31,14 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const b=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]}});
  assert.match(b.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.match(b.ids.morningVenues.children[0].children[1].textContent,/2,500円/);
- const retry=await runCase({results:null,apiResponses:[{ok:false,status:503},{ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}}})}]});
+ const retry=await runCase({results:null,apiResponses:[{ok:false,status:503},({ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}})})]});
  assert.match(retry.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.ok(retry.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length>=2);
  const fallback=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:false,status:503},{ok:false,status:503},{ok:false,status:503}]});
  assert.match(fallback.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.match(fallback.ids.morningStatus.textContent,/GitHub保存済み結果のみ反映/);
  assert.equal(fallback.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length,3);
- const wrongDate=await runCase({results:null,apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-18',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}}})}]});
+ const wrongDate=await runCase({results:null,apiResponses:[({ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-18',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}})})]});
  assert.match(wrongDate.ids.morningVenues.children[0].children[1].textContent,/結果未判定/);
  const partial=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'2':{races:{}}}}})}]});
  assert.match(partial.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
