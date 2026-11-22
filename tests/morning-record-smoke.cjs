@@ -34,9 +34,6 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const retry=await runCase({results:null,apiResponses:[{ok:false,status:503},({ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}})})]});
  assert.match(retry.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.ok(retry.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length>=2);
- const invalidShapeRetry=await runCase({results:null,apiResponses:[{ok:true,json:async()=>({programs:{}})},{ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}})}]});
- assert.match(invalidShapeRetry.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
- assert.equal(invalidShapeRetry.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length,2);
  const fallback=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:false,status:503},{ok:false,status:503},{ok:false,status:503}]});
  assert.match(fallback.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.match(fallback.ids.morningStatus.textContent,/GitHub保存済み結果のみ反映/);
