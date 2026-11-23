@@ -9,6 +9,10 @@ function node(tag='div') {
   addEventListener(name,fn){(this.events??={})[name]=fn}, closest(){return this},
   get childElementCount(){return this.children.length}};
 }
+// Build API fixtures without deeply nested inline object literals.
+function liveResponse(date, trifecta) {
+ return {ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date,result:{payouts:{trifecta}}}}}}}})};
+}
 async function runCase({date='2026-11-19', savedDate=date, results=null, missing=false, apiResponses=[]}) {
  const ids=Object.fromEntries(['morningTracker','morningDate','morningRefresh','morningStatus','morningTotals','morningVenues'].map(x=>[x,node()]));
  const document={getElementById:id=>ids[id],createElement:node,querySelectorAll:()=>[],visibilityState:'visible'};
@@ -31,20 +35,20 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const b=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]}});
  assert.match(b.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.match(b.ids.morningVenues.children[0].children[1].textContent,/2,500円/);
- const retry=await runCase({results:null,apiResponses:[{ok:false,status:503},({ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}})})]});
+ const retry=await runCase({results:null,apiResponses:[{ok:false,status:503},liveResponse('2026-11-19',[{combination:'1-2-3',amount:2500}])]});
  assert.match(retry.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.ok(retry.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length>=2);
  const fallback=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:false,status:503},{ok:false,status:503},{ok:false,status:503}]});
  assert.match(fallback.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.match(fallback.ids.morningStatus.textContent,/GitHub保存済み結果のみ反映/);
  assert.equal(fallback.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length,3);
- const wrongDate=await runCase({results:null,apiResponses:[({ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-18',result:{payouts:{trifecta:[{combination:'1-2-3',amount:2500}]}}}}}}}})})]});
+ const wrongDate=await runCase({results:null,apiResponses:[liveResponse('2026-11-18',[{combination:'1-2-3',amount:2500}])]});
  assert.match(wrongDate.ids.morningVenues.children[0].children[1].textContent,/結果未判定/);
  const partial=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'2':{races:{}}}}})}]});
  assert.match(partial.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
- const malformed=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[{combination:'1-2-3',amount:0}]}}}}}}}})})]});
+ const malformed=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[liveResponse('2026-11-19',[{combination:'1-2-3',amount:0}])]});
  assert.match(malformed.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
- const emptyPayout=await runCase({results:null,apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'1':{races:{'1':{date:'2026-11-19',result:{payouts:{trifecta:[]}}}}}}}})})]});
+ const emptyPayout=await runCase({results:null,apiResponses:[liveResponse('2026-11-19',[])]});
  assert.match(emptyPayout.ids.morningVenues.children[0].children[1].textContent,/結果未判定/);
  assert.doesNotMatch(emptyPayout.ids.morningVenues.children[0].children[1].textContent,/中止確定/);
  const c=await runCase({missing:true});
