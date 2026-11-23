@@ -38,6 +38,12 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const retry=await runCase({results:null,apiResponses:[{ok:false,status:503},liveResponse('2026-11-19',[{combination:'1-2-3',amount:2500}])]});
  assert.match(retry.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.ok(retry.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length>=2);
+ const networkRecovery=await runCase({results:null,apiResponses:[Promise.reject(new Error('network unavailable')),liveResponse('2026-11-19',[{combination:'1-2-3',amount:2500}])]});
+ assert.match(networkRecovery.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
+ assert.equal(networkRecovery.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length,2);
+ const malformedRecovery=await runCase({results:null,apiResponses:[{ok:true,json:async()=>({unexpected:true})},liveResponse('2026-11-19',[{combination:'1-2-3',amount:2500}])]});
+ assert.match(malformedRecovery.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
+ assert.equal(malformedRecovery.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length,2);
  const fallback=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:false,status:503},{ok:false,status:503},{ok:false,status:503}]});
  assert.match(fallback.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.match(fallback.ids.morningStatus.textContent,/GitHub保存済み結果のみ反映/);
@@ -59,5 +65,5 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  assert.match(e.ids.morningVenues.children[0].children[1].textContent,/不的中/);
  assert.match(e.ids.morningVenues.children[0].children[1].textContent,/朝の買い目 1-2-3、1-3-2/);
  assert.equal(e.ids.morningTotals.children[0].children.length,7);
- console.log('PASS: syntax, retry after 503, saved fallback after 3 failures, stale live date, partial live venue, pending picks, settled hits, misses, totals, missing file, wrong date');
+ console.log('PASS: syntax, retry after 503, network rejection and invalid schema, saved fallback after 3 failures, stale live date, partial live venue, pending picks, settled hits, misses, totals, missing file, wrong date');
 })().catch(e=>{console.error(e);process.exitCode=1});
