@@ -50,6 +50,9 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  assert.equal(fallback.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length,3);
  const wrongDate=await runCase({results:null,apiResponses:[liveResponse('2026-11-18',[{combination:'1-2-3',amount:2500}])]});
  assert.match(wrongDate.ids.morningVenues.children[0].children[1].textContent,/結果未判定/);
+ const staleFallback=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[liveResponse('2026-11-18',[{combination:'1-3-2',amount:9000}])]});
+ assert.match(staleFallback.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
+ assert.doesNotMatch(staleFallback.ids.morningVenues.children[0].children[1].textContent,/1-3-2（/);
  const partial=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[{ok:true,json:async()=>({programs:{stadiums:{'2':{races:{}}}}})}]});
  assert.match(partial.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  const malformed=await runCase({results:{winningCombinations:[{combination:'1-2-3',amount:2500}]},apiResponses:[liveResponse('2026-11-19',[{combination:'1-2-3',amount:0}])]});
