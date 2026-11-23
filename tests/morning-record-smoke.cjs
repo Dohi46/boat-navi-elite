@@ -18,7 +18,7 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const document={getElementById:id=>ids[id],createElement:node,querySelectorAll:()=>[],visibilityState:'visible'};
  const daily={date:savedDate,races:[{venue:1,race:1,picks:[{pick:'1-2-3',stake:100},{pick:'1-3-2',stake:100}],result:results}]};
  const calls=[];
- const fetch=async url=>{calls.push(url);if(url.startsWith('./data/auto/'))return {ok:!missing,status:missing?404:200,json:async()=>daily};const response=apiResponses.shift();return response ?? {ok:false,status:503};};
+ const fetch=async url=>{calls.push(url);if(url.startsWith('./data/auto/'))return {ok:!missing,status:missing?404:200,json:async()=>daily};const response=apiResponses.shift();return (typeof response==='function'?response():response) ?? {ok:false,status:503};};
  const ctx={document,fetch,Intl,Date,Number,String,Map,Array,Error,Math,AbortController,setTimeout,clearTimeout,setInterval:()=>0,STADIUMS:{1:'桐生'}};
  vm.runInNewContext(source,ctx);
  await new Promise(resolve=>setTimeout(resolve,20));
@@ -38,7 +38,7 @@ async function runCase({date='2026-11-19', savedDate=date, results=null, missing
  const retry=await runCase({results:null,apiResponses:[{ok:false,status:503},liveResponse('2026-11-19',[{combination:'1-2-3',amount:2500}])]});
  assert.match(retry.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.ok(retry.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length>=2);
- const networkRecovery=await runCase({results:null,apiResponses:[Promise.reject(new Error('network unavailable')),liveResponse('2026-11-19',[{combination:'1-2-3',amount:2500}])]});
+ const networkRecovery=await runCase({results:null,apiResponses:[()=>Promise.reject(new Error('network unavailable')),liveResponse('2026-11-19',[{combination:'1-2-3',amount:2500}])]});
  assert.match(networkRecovery.ids.morningVenues.children[0].children[1].textContent,/🎯 1-2-3/);
  assert.equal(networkRecovery.calls.filter(x=>x.startsWith('https://boatraceopenapi.github.io/')).length,2);
  const malformedRecovery=await runCase({results:null,apiResponses:[{ok:true,json:async()=>({unexpected:true})},liveResponse('2026-11-19',[{combination:'1-2-3',amount:2500}])]});
