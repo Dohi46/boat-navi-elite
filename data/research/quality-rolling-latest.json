@@ -1,8 +1,8 @@
 {
   "schema": "boat-nexus-quality-rolling-v1",
-  "generatedAt": "2026-11-23T16:17:52.266Z",
+  "generatedAt": "2026-11-24T16:22:26.853Z",
   "source": "existing data/auto files only",
-  "files": 9,
+  "files": 10,
   "checks": {
     "errors": 0,
     "warnings": 1
@@ -16,35 +16,34 @@
   ],
   "windows": {
     "7d": {
-      "races": 1032,
-      "settled": 986,
-      "eligible": 986,
-      "stake": 493000,
-      "payout": 402670,
-      "hits": 317,
-      "excluded": 46,
+      "races": 1080,
+      "settled": 1021,
+      "eligible": 1021,
+      "stake": 510500,
+      "payout": 426540,
+      "hits": 338,
+      "excluded": 59,
       "days": 7,
       "calendarDays": 7,
       "missingDays": 0,
       "missingDates": [],
-      "roiPercent": 81.68,
-      "profit": -90330,
-      "periodStart": "2026-11-17",
-      "periodEnd": "2026-11-23"
+      "roiPercent": 83.55,
+      "profit": -83960,
+      "periodStart": "2026-11-18",
+      "periodEnd": "2026-11-24"
     },
     "30d": {
-      "races": 1286,
-      "settled": 1240,
-      "eligible": 1239,
-      "stake": 619500,
-      "payout": 508910,
-      "hits": 403,
-      "excluded": 47,
-      "days": 9,
+      "races": 1466,
+      "settled": 1407,
+      "eligible": 1406,
+      "stake": 703000,
+      "payout": 571490,
+      "hits": 456,
+      "excluded": 60,
+      "days": 10,
       "calendarDays": 30,
-      "missingDays": 21,
+      "missingDays": 20,
       "missingDates": [
-        "2026-10-25",
         "2026-10-26",
         "2026-10-27",
         "2026-10-28",
@@ -66,24 +65,23 @@
         "2026-11-13",
         "2026-11-14"
       ],
-      "roiPercent": 82.15,
-      "profit": -110590,
-      "periodStart": "2026-10-25",
-      "periodEnd": "2026-11-23"
+      "roiPercent": 81.29,
+      "profit": -131510,
+      "periodStart": "2026-10-26",
+      "periodEnd": "2026-11-24"
     },
     "90d": {
-      "races": 1286,
-      "settled": 1240,
-      "eligible": 1239,
-      "stake": 619500,
-      "payout": 508910,
-      "hits": 403,
-      "excluded": 47,
-      "days": 9,
+      "races": 1466,
+      "settled": 1407,
+      "eligible": 1406,
+      "stake": 703000,
+      "payout": 571490,
+      "hits": 456,
+      "excluded": 60,
+      "days": 10,
       "calendarDays": 90,
-      "missingDays": 81,
+      "missingDays": 80,
       "missingDates": [
-        "2026-08-26",
         "2026-08-27",
         "2026-08-28",
         "2026-08-29",
@@ -165,10 +163,10 @@
         "2026-11-13",
         "2026-11-14"
       ],
-      "roiPercent": 82.15,
-      "profit": -110590,
-      "periodStart": "2026-08-26",
-      "periodEnd": "2026-11-23"
+      "roiPercent": 81.29,
+      "profit": -131510,
+      "periodStart": "2026-08-27",
+      "periodEnd": "2026-11-24"
     }
   },
   "days": [
@@ -279,6 +277,18 @@
       "excluded": 0,
       "roiPercent": 81.37,
       "profit": -14530
+    },
+    {
+      "date": "2026-11-24",
+      "races": 180,
+      "settled": 167,
+      "eligible": 167,
+      "stake": 83500,
+      "payout": 62580,
+      "hits": 53,
+      "excluded": 13,
+      "roiPercent": 74.95,
+      "profit": -20920
     }
   ],
   "note": "Virtual v13 picks, not real bets. Calendar windows end at the latest stored date. Missing dates are reported, never counted as zero-return racing days. No profitability guarantee."
