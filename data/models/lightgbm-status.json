@@ -1,10 +1,20 @@
 {
-  "updatedAt": "2026-11-24T17:00:35.023377+00:00",
+  "updatedAt": "2026-11-25T17:02:00.833695+00:00",
   "model": "LightGBM experimental lane-win",
   "featureSchema": "lane-v1",
-  "settledFeatureRaces": 1273,
-  "distinctDates": 9,
+  "settledFeatureRaces": 1429,
+  "distinctDates": 10,
   "activeForPredictions": false,
-  "state": "collecting_data",
-  "reason": "Requires at least 300 settled feature races over 10 distinct dates"
+  "state": "evaluated_not_deployed",
+  "trainingRaces": 1106,
+  "testRaces": 323,
+  "trainingThrough": "2026-11-23",
+  "testingFrom": "2026-11-24",
+  "top1Accuracy": 0.5573,
+  "v13Top1Accuracy": 0.5387,
+  "v13Comparison": "same chronological held-out races; top-1 only",
+  "sixWayLogLoss": 1.30899,
+  "simpleLaneBaselineLogLoss": 1.37976,
+  "betterThanLaneBaseline": true,
+  "note": "v13 top-1 accuracy comparison uses same held-out races. Model is not deployed. Trifecta ROI is not compared."
 }
