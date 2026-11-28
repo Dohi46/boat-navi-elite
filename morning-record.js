@@ -19,12 +19,30 @@
    if(!pred.ok)throw Error(pred.status===404?'この日の朝の予想ファイルが未生成です。GitHub Actionsの朝の自動実行を確認してください。':'予想取得 HTTP '+pred.status);
    const doc=await pred.json();if(doc.date!==d||!Array.isArray(doc.races)||!doc.races.length)throw Error('指定日の朝の予想データがありません（ファイル日付または形式を確認してください）');
    if(date.value!==d)return; // Ignore a stale response after date selection changes.
-   let live=null,liveError='';
-   try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),5000);try{const res=await fetch(resultsUrl(d)+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});if(!res.ok)throw Error('HTTP '+res.status);live=await res.json();if(!live?.programs?.stadiums)throw Error('結果形式が不正です');}finally{clearTimeout(timeout);}}
-   catch(e){liveError=e.message;}
+   const collected=new Map();let liveError='';
+   const key=r=>String(r.venue)+':'+String(r.race);
+   const pending=()=>doc.races.filter(r=>!collected.has(key(r))&&!valid(r.result?.winningCombinations));
+   for(let attempt=0;attempt<3&&pending().length&&date.value===d;attempt++){
+    try{
+     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),5000);
+     try{
+      const res=await fetch(resultsUrl(d)+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});
+      if(!res.ok)throw Error('HTTP '+res.status);
+      const live=await res.json();if(!live?.programs?.stadiums)throw Error('結果形式が不正です');
+      for(const r of doc.races){
+       const race=live.programs.stadiums[String(r.venue)]?.races?.[String(r.race)];
+       const p=race?.date===d?race?.result?.payouts?.trifecta:null;
+       if(valid(p))collected.set(key(r),p);
+      }
+      liveError='';
+     }finally{clearTimeout(timeout);}
+    }catch(e){liveError=e.message;}
+    if(attempt<2&&pending().length&&date.value===d)await new Promise(resolve=>setTimeout(resolve,500*(attempt+1)));
+   }
+   if(date.value!==d)return;
+   if(pending().length)liveError=[liveError,'未確定・欠損 '+pending().length+'R'].filter(Boolean).join(' / ');
    const rows=doc.races.map(r=>{
-    const race=live?.programs?.stadiums?.[String(r.venue)]?.races?.[String(r.race)];
-    const p=race?.date===d?race?.result?.payouts?.trifecta:null;
+    const p=collected.get(key(r));
     const payoutList=valid(p)?p:(Array.isArray(r.result?.winningCombinations)&&valid(r.result.winningCombinations)?r.result.winningCombinations:null);
     const picks=Array.isArray(r.picks)?r.picks:[];
     if(!payoutList)return {r,done:false,hits:[],stake:0,returned:0};
@@ -52,7 +70,7 @@
      group.append(line);
     });venues.append(group);
    });
-   status.textContent=d+' の朝の予想 '+rows.length+'Rを読み込み済み ／ 最終確認 '+new Date().toLocaleTimeString('ja-JP')+' ／ '+(liveError?'公開結果の取得不可（GitHub保存済み結果のみ反映）：'+liveError:'最新の公開結果を確認')+' ／ 予想は読み取り専用・購入額は仮想';
+   status.textContent=d+' の朝の予想 '+rows.length+'Rを読み込み済み ／ 最終確認 '+new Date().toLocaleTimeString('ja-JP')+' ／ '+(liveError?'公開結果の一部未取得：'+liveError:'最新の公開結果を確認')+' ／ 予想は読み取り専用・購入額は仮想';
   }catch(e){if(date.value===d){status.textContent='朝の自動予想を表示できません（'+d+'）：'+e.message+'。再読み込み後も続く場合は、このエラーを確認してください。';totals.replaceChildren();venues.replaceChildren();}}
   finally{loading=false;refresh.disabled=false;if(date.value!==d)update();}
  }
