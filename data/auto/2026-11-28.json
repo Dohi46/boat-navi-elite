@@ -489,7 +489,51 @@
           "stake": 100
         }
       ],
-      "result": null
+      "result": {
+        "source": "boatraceopenapi-unofficial",
+        "checkedAt": "2026-11-28T08:42:34.230Z",
+        "winningCombinations": [
+          {
+            "combination": "1-3-4",
+            "amount": 10620
+          }
+        ],
+        "stake": 500,
+        "payout": 0,
+        "hits": 0,
+        "picks": [
+          {
+            "pick": "1-3-5",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-5-3",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "3-5-1",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "3-5-2",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-3-2",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          }
+        ]
+      }
     },
     {
       "venue": 1,
@@ -578,7 +622,51 @@
           "stake": 100
         }
       ],
-      "result": null
+      "result": {
+        "source": "boatraceopenapi-unofficial",
+        "checkedAt": "2026-11-28T08:42:34.231Z",
+        "winningCombinations": [
+          {
+            "combination": "2-1-4",
+            "amount": 1690
+          }
+        ],
+        "stake": 500,
+        "payout": 1690,
+        "hits": 1,
+        "picks": [
+          {
+            "pick": "1-2-4",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-2-3",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-2-6",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-2-5",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "2-1-4",
+            "stake": 100,
+            "hit": true,
+            "payout": 1690
+          }
+        ]
+      }
     },
     {
       "venue": 1,
@@ -6477,7 +6565,51 @@
           "stake": 100
         }
       ],
-      "result": null
+      "result": {
+        "source": "boatraceopenapi-unofficial",
+        "checkedAt": "2026-11-28T08:42:34.231Z",
+        "winningCombinations": [
+          {
+            "combination": "4-1-2",
+            "amount": 12350
+          }
+        ],
+        "stake": 500,
+        "payout": 0,
+        "hits": 0,
+        "picks": [
+          {
+            "pick": "2-3-1",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "2-1-3",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "2-3-4",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "2-1-4",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "2-4-3",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          }
+        ]
+      }
     },
     {
       "venue": 7,
@@ -6566,7 +6698,51 @@
           "stake": 100
         }
       ],
-      "result": null
+      "result": {
+        "source": "boatraceopenapi-unofficial",
+        "checkedAt": "2026-11-28T08:42:34.231Z",
+        "winningCombinations": [
+          {
+            "combination": "1-5-6",
+            "amount": 2820
+          }
+        ],
+        "stake": 500,
+        "payout": 0,
+        "hits": 0,
+        "picks": [
+          {
+            "pick": "1-2-6",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-6-2",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-2-3",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-2-4",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          },
+          {
+            "pick": "1-2-5",
+            "stake": 100,
+            "hit": false,
+            "payout": 0
+          }
+        ]
+      }
     },
     {
       "venue": 7,
@@ -19711,14 +19887,14 @@
   "skipped": [],
   "lastRunAt": "2026-11-27T23:11:19.680Z",
   "settlement": {
-    "checkedAt": "2026-11-28T07:44:13.727Z",
-    "settledRaces": 108,
-    "pendingRaces": 60,
-    "settledPicks": 540,
-    "hitPicks": 35,
-    "hitRatePercent": 6.48,
-    "stake": 54000,
-    "payout": 46080,
-    "returnRatePercent": 85.33
+    "checkedAt": "2026-11-28T08:42:34.231Z",
+    "settledRaces": 112,
+    "pendingRaces": 56,
+    "settledPicks": 560,
+    "hitPicks": 36,
+    "hitRatePercent": 6.43,
+    "stake": 56000,
+    "payout": 47770,
+    "returnRatePercent": 85.3
   }
 }
